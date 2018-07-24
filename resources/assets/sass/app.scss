@@ -1,14 +1,134 @@
+.case__topbar {
+	position: fixed;
+	top: 55px;
+	left: 0;
+	right: 0;
+	height: 100px;
+	padding: 5px 15px;
+	box-shadow: 0 1px 3px rgba(black, 0.2);
+	z-index: 5000;
+}
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+.case__sidebar {
+	position: fixed;
+	top: 55px + 100px;
+	left: 0;
+	width: 300px;
+	height: 100%;
+	bottom: 0;
 
-// Variables
-@import 'variables';
+	background-color: #f8f9fa;
+	box-shadow: inset -1px 0 0 rgba(black, 0.1);
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+	.case__sidebar-link {
+		display: block;
+		height: 45px;
+		line-height: 45px;
+		padding: 0 15px;
+		border-bottom: 1px solid #ececec;
+		color: black;
+		cursor: pointer;
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+		&.active {
+			background-color: white;
+			color: #007bff;
+		}
+
+		&:hover {
+			text-decoration: none;
+			background-color: #ececec;
+		}
+
+		i { vertical-align: middle; }
+	}
+
+	hr {
+		margin: 0;
+		height: 10px;
+		background: white;
+		border-bottom: 1px solid #ececec;
+	}
+
+}
+
+.case__detail {
+	position: fixed;
+	top: 55px + 100px;
+	left: 300px;
+	width: calc(100% - 300px);
+	bottom: 0;
+	padding: 15px;
+}
+
+.tree__container {
+
+	display: block;
+
+	.tree__leaf {
+		display: block;
+		height: 45px;
+		line-height: 45px;
+		padding: 0 15px;
+		border-bottom: 1px solid #ececec;
+		color: black;
+		cursor: pointer;
+
+		&.active {
+			background: white;
+			color: #007bff;
+		}
+
+		&:hover {
+			text-decoration: none;
+			background-color: #ececec;
+		}
+
+		i { vertical-align: middle; }
+	}
+
+	.tree__children {
+		position: relative;
+		height: 0;
+		overflow: hidden;
+		padding-left: 25px;
+
+		&::before {
+			position: absolute;
+			left: 24px;
+			top: 0;
+			bottom: 24px;
+			width: 1px;
+			border-right: 1px dotted #ccc;
+			content: '';
+		}
+
+		&.open { height: auto; }
+
+		.tree__leaf {
+			position: relative;
+			border-bottom: none;
+
+			&.active {
+				border-bottom: 1px solid #ececec;
+			}
+
+			&::before {
+				position: absolute;
+				top: 23px;
+				left: 0;
+				width: 10px;
+				height: 1px;
+				border-bottom: 1px dotted #ccc;
+				content: '';
+			}
+		}
+	}
+
+}
+
+.detail__label {
+	text-transform: uppercase;
+	font-size: 14px;
+	margin: 5px 0;
+	color: #999;
 }
