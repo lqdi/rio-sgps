@@ -4,4 +4,4 @@ Route::get('/', function() {
 });
 
 Route::get('/wireframe')->uses('WireframeController@index')->name('wireframe.index');
-Route::get('/wireframe/{view}')->uses('WireframeController@view_page')->name('wireframe.view');
+Route::any('/wireframe/{view}')->uses('WireframeController@view_page')->name('wireframe.view');
