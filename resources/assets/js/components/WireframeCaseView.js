@@ -1,7 +1,7 @@
 export default {
 
 	data: () => { return {
-		openTab: 'member1',
+		openTab: 'overview',
 		isFamilyOpen: false,
 	}},
 

@@ -45,6 +45,129 @@
 
 			<div class="case__detail">
 
+				<div v-if="openTab === 'overview'">
+					<div class="row">
+						<div class="col-md-8">
+							<label class="detail__label">VISÃO GERAL</label>
+							<h3>Caso #RJ001887 - {{$faker->streetAddress}}</h3>
+							<div>Alerta registrado por <i class="fa fa-user"></i> {{$faker->name}}</div>
+							<div>Caso aberto por <i class="fa fa-user"></i> {{$faker->name}}</div>
+						</div>
+						<div class="col-md-4">
+							<label class="detail__label">LOCALIZAÇÃO</label>
+							<div>
+								<i v-b-tooltip title="Região censitária" class="fa fa-map"></i> RJ {{rand(10,99)}} {{$faker->city}}<br />
+								<i v-b-tooltip title="Endereço" class="fa fa-map-marker"></i> {{$faker->streetName}}
+							</div>
+						</div>
+					</div>
+
+					<br />
+
+					<div class="row">
+						<div class="col-md-8">
+							<label class="detail__label">EQUIPAMENTOS</label>
+							<div><i class="fa fa-university"></i> CRAS {{$faker->city}}</div>
+							<div><i class="fa fa-university"></i> CRE {{$faker->city}}</div>
+							<div><i class="fa fa-university"></i> CSF {{$faker->city}}</div>
+							<div><i class="fa fa-university"></i> CASDH {{$faker->city}}</div>
+						</div>
+						<div class="col-md-4">
+							<label class="detail__label">SITUAÇÃO</label>
+							<div>
+								<h3 class="text-danger">2.3 <br /><small>pontos no IPM</small></h3>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div v-if="openTab === 'discussion'">
+					<div class="row">
+						<div class="col-md-12">
+							<label class="detail__label">DISCUSSÃO</label>
+
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Data e hora</th>
+										<th>Operador</th>
+										<th>Secretaria</th>
+										<th>Anotação</th>
+									</tr>
+								</thead>
+								<tbody>
+									@for($i = 0; $i < 24; $i++)
+										<tr>
+											<td>{{$faker->date('d/m/Y H:i:s')}}</td>
+											<td><i class="fa fa-user"></i> {{$faker->name}}</td>
+											<td>{{$faker->randomElement(['SME', 'SMASDH', 'CRAS', 'CSF'])}}</td>
+											<td>{{$faker->words(rand(8, 24), true)}}</td>
+										</tr>
+									@endfor
+								</tbody>
+							</table>
+
+							<div class="card">
+								<div class="card-header"><i class="fa fa-plus"></i> Nova anotação</div>
+								<div class="card-body">
+									<textarea placeholder="Digite sua anotação aqui ... " class="form-control" style="height: 100px"></textarea>
+								</div>
+								<div class="card-footer">
+									<button type="button" class="btn btn-sm btn-primary pull-right">Registrar anotação <i class="fa fa-edit"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div v-if="openTab === 'files'">
+					<div class="row">
+						<div class="col-md-12">
+							<label class="detail__label">ARQUIVOS</label>
+
+							<table class="table">
+								<thead>
+								<tr>
+									<th>Data e hora</th>
+									<th>Operador</th>
+									<th>Secretaria</th>
+									<th>Arquivo</th>
+									<th>Descrição</th>
+								</tr>
+								</thead>
+								<tbody>
+								@for($i = 0; $i < 24; $i++)
+									<tr>
+										<td>{{$faker->date('d/m/Y H:i:s')}}</td>
+										<td><i class="fa fa-user"></i> {{$faker->name}}</td>
+										<td>{{$faker->randomElement(['SME', 'SMASDH', 'CRAS', 'CSF'])}}</td>
+										<td><a class="btn btn-outline-secondary btn-sm"><i class="fa fa-download"></i> {{$faker->ean8}}.{{$faker->fileExtension}}</a></td>
+										<td>{{$faker->words(rand(2, 6), true)}}</td>
+									</tr>
+								@endfor
+								</tbody>
+							</table>
+
+							<div class="card">
+								<div class="card-header"><i class="fa fa-plus"></i> Enviar arquivo</div>
+								<div class="card-body">
+									<label>Descrição</label>
+									<input class="form-control" type="text" placeholder="Descreva o arquivo... " />
+
+									<label>Arquivo</label>
+									<input class="form-control" type="file" placeholder="Escolha o arquivo ... " />
+								</div>
+								<div class="card-footer">
+									<button type="button" class="btn btn-sm btn-primary pull-right">Enviar <i class="fa fa-upload"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
 				<div v-if="openTab === 'member1' || openTab === 'member2' || openTab === 'member3'">
 					<div class="row">
 						<div class="col-md-8">

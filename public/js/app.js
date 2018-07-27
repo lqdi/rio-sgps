@@ -20218,16 +20218,16 @@ module.exports = __webpack_require__(227);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_WireframeCaseView__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bootstrap_vue__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_bootstrap_dist_css_bootstrap_css__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_bootstrap_dist_css_bootstrap_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_bootstrap_dist_css_bootstrap_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_bootstrap_vue_dist_bootstrap_vue_css__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_bootstrap_vue_dist_bootstrap_vue_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_bootstrap_vue_dist_bootstrap_vue_css__);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_bootstrap_vue__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bootstrap_dist_css_bootstrap_css__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bootstrap_dist_css_bootstrap_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_bootstrap_dist_css_bootstrap_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_bootstrap_vue_dist_bootstrap_vue_css__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_bootstrap_vue_dist_bootstrap_vue_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_bootstrap_vue_dist_bootstrap_vue_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_WireframeCaseView__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_WireframeAlertUpdate__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_WireframeAlertUpdate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_WireframeAlertUpdate__);
 __webpack_require__(77);
 
 
@@ -20236,15 +20236,19 @@ __webpack_require__(77);
 
 
 
-window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_bootstrap_vue__["a" /* default */]);
 
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('example-component', __webpack_require__(221));
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('tags-filter-modal', __webpack_require__(224));
-__WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('wireframe-case-view', __WEBPACK_IMPORTED_MODULE_0__components_WireframeCaseView__["a" /* default */]);
 
-var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
+window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_bootstrap_vue__["a" /* default */]);
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('example-component', __webpack_require__(221));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('tags-filter-modal', __webpack_require__(224));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('wireframe-case-view', __WEBPACK_IMPORTED_MODULE_4__components_WireframeCaseView__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('wireframe-alert-update', __WEBPACK_IMPORTED_MODULE_5__components_WireframeAlertUpdate___default.a);
+
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app'
 });
 
@@ -20257,7 +20261,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
 
 	data: function data() {
 		return {
-			openTab: 'member1',
+			openTab: 'overview',
 			isFamilyOpen: false
 		};
 	},
@@ -64724,6 +64728,164 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 228 */,
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(73)
+/* script */
+var __vue_script__ = __webpack_require__(230)
+/* template */
+var __vue_template__ = __webpack_require__(231)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/WireframeAlertUpdate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4fc93454", Component.options)
+  } else {
+    hotAPI.reload("data-v-4fc93454", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['options', 'id'],
+
+	data: function data() {
+		return {
+			isOpen: false,
+			selected: []
+		};
+	},
+
+	mounted: function mounted() {},
+
+	methods: {
+		closeModal: function closeModal() {
+			this.isOpen = false;
+		}
+	}
+});
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "b-modal",
+    {
+      ref: "modal",
+      attrs: { id: _vm.id, "hide-footer": "", title: "Dar baixa em Alerta" },
+      model: {
+        value: _vm.isOpen,
+        callback: function($$v) {
+          _vm.isOpen = $$v
+        },
+        expression: "isOpen"
+      }
+    },
+    [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-block btn-success",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.closeModal()
+            }
+          }
+        },
+        [_vm._v("Ficha de encaminhamento foi entregue")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-block btn-danger",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.closeModal()
+            }
+          }
+        },
+        [_vm._v("Endereço não existe / Mudou-se")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-block btn-danger",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.closeModal()
+            }
+          }
+        },
+        [_vm._v("Família não aceitou participar")]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4fc93454", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

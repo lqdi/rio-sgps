@@ -58,6 +58,8 @@
 	width: calc(100% - 300px);
 	bottom: 0;
 	padding: 15px;
+
+	overflow-y: scroll;
 }
 
 .tree__container {
