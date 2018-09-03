@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => SGPS\User::class,
+            'model' => SGPS\Entity\User::class,
         ],
 
         // 'users' => [

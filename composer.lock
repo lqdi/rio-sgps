@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "290ad0f30662aecd4be722375c7bd881",
+    "content-hash": "67edf6419605c83fe0593ccac30a7e19",
     "packages": [
+        {
+            "name": "anahkiasen/underscore-php",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Anahkiasen/underscore-php.git",
+                "reference": "48f97b295c82d99c1fe10d8b0684c43f051b5580"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Anahkiasen/underscore-php/zipball/48f97b295c82d99c1fe10d8b0684c43f051b5580",
+                "reference": "48f97b295c82d99c1fe10d8b0684c43f051b5580",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "^1.0",
+                "patchwork/utf8": "^1.2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "2.0.*@dev",
+                "phpunit/phpunit": "^4.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Underscore\\": [
+                        "src",
+                        "tests"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Fabre",
+                    "email": "ehtnam6@gmail.com"
+                }
+            ],
+            "description": "A redacted port of Underscore.js for PHP",
+            "keywords": [
+                "internals",
+                "laravel",
+                "toolkit"
+            ],
+            "time": "2015-05-16T19:24:58+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "1.2.0",
@@ -310,6 +360,63 @@
             "time": "2016-06-13T19:28:20+00:00"
         },
         {
+            "name": "cakephp/chronos",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cakephp/chronos.git",
+                "reference": "30f5b26bcf76a5e53ecc274700ad1ec49dc05567"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/30f5b26bcf76a5e53ecc274700ad1ec49dc05567",
+                "reference": "30f5b26bcf76a5e53ecc274700ad1ec49dc05567",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|^7"
+            },
+            "require-dev": {
+                "athletic/athletic": "~0.1",
+                "cakephp/cakephp-codesniffer": "^3.0",
+                "phpbench/phpbench": "@dev",
+                "phpstan/phpstan": "^0.6.4",
+                "phpunit/phpunit": "<6.0 || ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cake\\Chronos\\": "src/"
+                },
+                "files": [
+                    "src/carbon_compat.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Nesbitt",
+                    "email": "brian@nesbot.com",
+                    "homepage": "http://nesbot.com"
+                },
+                {
+                    "name": "The CakePHP Team",
+                    "homepage": "http://cakephp.org"
+                }
+            ],
+            "description": "A simple API extension for DateTime.",
+            "homepage": "http://cakephp.org",
+            "keywords": [
+                "date",
+                "datetime",
+                "time"
+            ],
+            "time": "2018-07-11T18:51:56+00:00"
+        },
+        {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
             "source": {
@@ -341,6 +448,234 @@
             ],
             "description": "implementation of xdg base directory specification for php",
             "time": "2014-10-24T07:27:01+00:00"
+        },
+        {
+            "name": "doctrine/cache",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/cache.git",
+                "reference": "d768d58baee9a4862ca783840eca1b9add7a7f57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/d768d58baee9a4862ca783840eca1b9add7a7f57",
+                "reference": "d768d58baee9a4862ca783840eca1b9add7a7f57",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.1"
+            },
+            "conflict": {
+                "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "alcaeus/mongo-php-adapter": "^1.1",
+                "doctrine/coding-standard": "^4.0",
+                "mongodb/mongodb": "^1.1",
+                "phpunit/phpunit": "^7.0",
+                "predis/predis": "~1.0"
+            },
+            "suggest": {
+                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Caching library offering an object-oriented API for many cache backends",
+            "homepage": "https://www.doctrine-project.org",
+            "keywords": [
+                "cache",
+                "caching"
+            ],
+            "time": "2018-08-21T18:01:43+00:00"
+        },
+        {
+            "name": "doctrine/dbal",
+            "version": "v2.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "5140a64c08b4b607b9bedaae0cedd26f04a0e621"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/5140a64c08b4b607b9bedaae0cedd26f04a0e621",
+                "reference": "5140a64c08b4b607b9bedaae0cedd26f04a0e621",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "^1.0",
+                "doctrine/event-manager": "^1.0",
+                "ext-pdo": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^4.0",
+                "jetbrains/phpstorm-stubs": "^2018.1.2",
+                "phpstan/phpstan": "^0.10.1",
+                "phpunit/phpunit": "^7.1.2",
+                "phpunit/phpunit-mock-objects": "!=3.2.4,!=3.2.5",
+                "symfony/console": "^2.0.5|^3.0|^4.0",
+                "symfony/phpunit-bridge": "^3.4.5|^4.0.5"
+            },
+            "suggest": {
+                "symfony/console": "For helpful console commands such as SQL execution and import of files."
+            },
+            "bin": [
+                "bin/doctrine-dbal"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8.x-dev",
+                    "dev-develop": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\DBAL\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                }
+            ],
+            "description": "Database Abstraction Layer",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "database",
+                "dbal",
+                "persistence",
+                "queryobject"
+            ],
+            "time": "2018-07-13T03:16:35+00:00"
+        },
+        {
+            "name": "doctrine/event-manager",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/event-manager.git",
+                "reference": "a520bc093a0170feeb6b14e9d83f3a14452e64b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/a520bc093a0170feeb6b14e9d83f3a14452e64b3",
+                "reference": "a520bc093a0170feeb6b14e9d83f3a14452e64b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "conflict": {
+                "doctrine/common": "<2.9@dev"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^4.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\": "lib/Doctrine/Common"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                },
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com"
+                }
+            ],
+            "description": "Doctrine Event Manager component",
+            "homepage": "https://www.doctrine-project.org/projects/event-manager.html",
+            "keywords": [
+                "event",
+                "eventdispatcher",
+                "eventmanager"
+            ],
+            "time": "2018-06-11T11:59:03+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -995,6 +1330,74 @@
             "time": "2018-07-17T14:15:36+00:00"
         },
         {
+            "name": "laravel/horizon",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/horizon.git",
+                "reference": "342c4ddf6dda7c7ed21e57566f202b96e28afb6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/342c4ddf6dda7c7ed21e57566f202b96e28afb6b",
+                "reference": "342c4ddf6dda7c7ed21e57566f202b96e28afb6b",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/chronos": "^1.0",
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "illuminate/contracts": "~5.5",
+                "illuminate/queue": "~5.5",
+                "illuminate/support": "~5.5",
+                "php": ">=7.1.0",
+                "predis/predis": "^1.1",
+                "ramsey/uuid": "^3.5",
+                "symfony/debug": "~3.3|~4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "orchestra/database": "~3.5",
+                "orchestra/testbench": "~3.5",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Horizon\\HorizonServiceProvider"
+                    ],
+                    "aliases": {
+                        "Horizon": "Laravel\\Horizon\\Horizon"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Horizon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Dashboard and code-driven configuration for Laravel queues.",
+            "keywords": [
+                "laravel",
+                "queue"
+            ],
+            "time": "2018-06-21T09:19:40+00:00"
+        },
+        {
             "name": "laravel/tinker",
             "version": "v1.0.7",
             "source": {
@@ -1056,6 +1459,46 @@
                 "psysh"
             ],
             "time": "2018-05-17T13:42:07+00:00"
+        },
+        {
+            "name": "laravellegends/pt-br-validator",
+            "version": "5.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelLegends/pt-br-validator.git",
+                "reference": "68ac76ee3b57c9ed887c97008e0e6908fcc306bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelLegends/pt-br-validator/zipball/68ac76ee3b57c9ed887c97008e0e6908fcc306bf",
+                "reference": "68ac76ee3b57c9ed887c97008e0e6908fcc306bf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.*"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.1.*",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LaravelLegends\\PtBrValidator\\": "src/pt-br-validator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wallace de Souza Vizerra",
+                    "email": "wallacemaxters@gmail.com"
+                }
+            ],
+            "description": "Uma biblioteca contendo validações de formatos Brasileiros, para o Laravel 5",
+            "time": "2017-07-24T16:48:53+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1621,6 +2064,115 @@
             "time": "2018-07-02T15:55:56+00:00"
         },
         {
+            "name": "patchwork/utf8",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tchwork/utf8.git",
+                "reference": "30ec6451aec7d2536f0af8fe535f70c764f2c47a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tchwork/utf8/zipball/30ec6451aec7d2536f0af8fe535f70c764f2c47a",
+                "reference": "30ec6451aec7d2536f0af8fe535f70c764f2c47a",
+                "shasum": ""
+            },
+            "require": {
+                "lib-pcre": ">=7.3",
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-iconv": "Use iconv for best performance",
+                "ext-intl": "Use Intl for best performance",
+                "ext-mbstring": "Use Mbstring for best performance",
+                "ext-wfio": "Use WFIO for UTF-8 filesystem access on Windows"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Patchwork\\": "src/Patchwork/"
+                },
+                "classmap": [
+                    "src/Normalizer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(Apache-2.0 or GPL-2.0)"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                }
+            ],
+            "description": "Portable and performant UTF-8, Unicode and Grapheme Clusters for PHP",
+            "homepage": "https://github.com/tchwork/utf8",
+            "keywords": [
+                "grapheme",
+                "i18n",
+                "unicode",
+                "utf-8",
+                "utf8"
+            ],
+            "time": "2016-05-18T13:57:10+00:00"
+        },
+        {
+            "name": "pda/pheanstalk",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pda/pheanstalk.git",
+                "reference": "430e77c551479aad0c6ada0450ee844cf656a18b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pda/pheanstalk/zipball/430e77c551479aad0c6ada0450ee844cf656a18b",
+                "reference": "430e77c551479aad0c6ada0450ee844cf656a18b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pheanstalk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Annesley",
+                    "email": "paul@annesley.cc",
+                    "homepage": "http://paul.annesley.cc/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP client for beanstalkd queue",
+            "homepage": "https://github.com/pda/pheanstalk",
+            "keywords": [
+                "beanstalkd"
+            ],
+            "time": "2015-08-07T21:42:41+00:00"
+        },
+        {
             "name": "phpoffice/phpspreadsheet",
             "version": "1.3.1",
             "source": {
@@ -1705,6 +2257,56 @@
                 "xlsx"
             ],
             "time": "2018-06-12T13:40:21+00:00"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/container",
@@ -2005,6 +2607,56 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
+            "name": "spatie/eloquent-sortable",
+            "version": "3.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/eloquent-sortable.git",
+                "reference": "92fe48922c6b3ec10646f5b628c7abf53728e083"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/eloquent-sortable/zipball/92fe48922c6b3ec10646f5b628c7abf53728e083",
+                "reference": "92fe48922c6b3ec10646f5b628c7abf53728e083",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.2|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\EloquentSortable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be"
+                }
+            ],
+            "description": "Sortable behaviour for eloquent models",
+            "homepage": "https://github.com/spatie/eloquent-sortable",
+            "keywords": [
+                "behaviour",
+                "eloquent",
+                "laravel",
+                "model",
+                "sort",
+                "sortable"
+            ],
+            "time": "2018-08-24T09:36:35+00:00"
+        },
+        {
             "name": "spatie/fractalistic",
             "version": "2.7.1",
             "source": {
@@ -2054,6 +2706,76 @@
                 "transform"
             ],
             "time": "2018-01-15T09:17:52+00:00"
+        },
+        {
+            "name": "spatie/laravel-activitylog",
+            "version": "2.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-activitylog.git",
+                "reference": "354cf7122fc5333b055447bc7f81ec6ff8c7fb3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/354cf7122fc5333b055447bc7f81ec6ff8c7fb3d",
+                "reference": "354cf7122fc5333b055447bc7f81ec6ff8c7fb3d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "php": "^7.0",
+                "spatie/string": "^2.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.2|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Activitylog\\ActivitylogServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Activitylog\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A very simple activity logger to monitor the users of your website or application",
+            "homepage": "https://github.com/spatie/activitylog",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "spatie",
+                "user"
+            ],
+            "time": "2018-09-01T06:37:32+00:00"
         },
         {
             "name": "spatie/laravel-blade-javascript",
@@ -2123,32 +2845,29 @@
         },
         {
             "name": "spatie/laravel-collection-macros",
-            "version": "3.8.1",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-collection-macros.git",
-                "reference": "0cd4b922e6da290104ebdb22756e82a7ccbba5ae"
+                "reference": "f60de1dcf5f312e6ab8c4ffae8ffd1911149f69b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-collection-macros/zipball/0cd4b922e6da290104ebdb22756e82a7ccbba5ae",
-                "reference": "0cd4b922e6da290104ebdb22756e82a7ccbba5ae",
+                "url": "https://api.github.com/repos/spatie/laravel-collection-macros/zipball/f60de1dcf5f312e6ab8c4ffae8ffd1911149f69b",
+                "reference": "f60de1dcf5f312e6ab8c4ffae8ffd1911149f69b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/pagination": "~5.5.0|~5.6.0",
-                "illuminate/support": "~5.5.0|~5.6.0",
-                "illuminate/validation": "~5.5.0|~5.6.0",
-                "illuminate/view": "~5.5.0|~5.6.0",
-                "php": "^7.0"
+                "laravel/framework": "~5.6.0|~5.7.0",
+                "php": "^7.1"
             },
             "require-dev": {
                 "amphp/parallel": "^0.2.0",
                 "amphp/parallel-functions": "^0.1.2",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "~3.5.0|~3.6.0",
-                "phpunit/phpunit": "^6.0|^7.0",
-                "symfony/stopwatch": "^3.4|^4.0"
+                "orchestra/testbench": "~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^7.3",
+                "symfony/stopwatch": "^4.0"
             },
             "suggest": {
                 "amphp/parallel-functions": "Required when using the parallel*-macros."
@@ -2190,30 +2909,29 @@
                 "laravel-collection-macros",
                 "spatie"
             ],
-            "time": "2018-02-23T10:32:16+00:00"
+            "time": "2018-08-27T13:03:35+00:00"
         },
         {
             "name": "spatie/laravel-fractal",
-            "version": "5.4.0",
+            "version": "5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-fractal.git",
-                "reference": "9d1752ec5c48db2e968db10129ee692f4a3ffc81"
+                "reference": "0f18df001833fc82e6502229565347290cecda85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-fractal/zipball/9d1752ec5c48db2e968db10129ee692f4a3ffc81",
-                "reference": "9d1752ec5c48db2e968db10129ee692f4a3ffc81",
+                "url": "https://api.github.com/repos/spatie/laravel-fractal/zipball/0f18df001833fc82e6502229565347290cecda85",
+                "reference": "0f18df001833fc82e6502229565347290cecda85",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "~5.5.0|~5.6.0",
-                "illuminate/support": "~5.5.0|~5.6.0",
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
                 "php": "^7.0",
                 "spatie/fractalistic": "^2.5"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
                 "phpunit/phpunit": "^6.2|^7.0"
             },
             "type": "library",
@@ -2258,25 +2976,258 @@
                 "spatie",
                 "transform"
             ],
-            "time": "2018-07-19T16:40:01+00:00"
+            "time": "2018-08-24T09:21:38+00:00"
         },
         {
-            "name": "spatie/laravel-tail",
-            "version": "3.1.0",
+            "name": "spatie/laravel-model-status",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/laravel-tail.git",
-                "reference": "48d5ab722d2298d67505f5928f75152fce5dfc5a"
+                "url": "https://github.com/spatie/laravel-model-status.git",
+                "reference": "b41c5b78e404c6f08f2a687d40a90178f2c25333"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-tail/zipball/48d5ab722d2298d67505f5928f75152fce5dfc5a",
-                "reference": "48d5ab722d2298d67505f5928f75152fce5dfc5a",
+                "url": "https://api.github.com/repos/spatie/laravel-model-status/zipball/b41c5b78e404c6f08f2a687d40a90178f2c25333",
+                "reference": "b41c5b78e404c6f08f2a687d40a90178f2c25333",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "~5.5.0|~5.6.0",
-                "illuminate/support": "~5.5.0|~5.6.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.5|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\ModelStatus\\ModelStatusServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ModelStatus\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Thomas Verhelst",
+                    "email": "tvke91@gmail.com",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package to enable assigning statuses to Eloquent Models",
+            "homepage": "https://github.com/spatie/laravel-model-status",
+            "keywords": [
+                "laravel-status",
+                "spatie"
+            ],
+            "time": "2018-09-03T14:43:07+00:00"
+        },
+        {
+            "name": "spatie/laravel-permission",
+            "version": "2.17.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "a0e05fd4f5729d96be20dfc768c5b1a4d2586838"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/a0e05fd4f5729d96be20dfc768c5b1a4d2586838",
+                "reference": "a0e05fd4f5729d96be20dfc768c5b1a4d2586838",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.4.0|~5.5.0|~5.6.0|~5.7.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.3.0|~3.4.2|^3.5.0",
+                "phpunit/phpunit": "^5.7|6.2|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 5.4 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "security",
+                "spatie"
+            ],
+            "time": "2018-08-28T14:20:07+00:00"
+        },
+        {
+            "name": "spatie/laravel-query-builder",
+            "version": "1.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-query-builder.git",
+                "reference": "f1465f764c3d93f623bef292362de19529250a75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/f1465f764c3d93f623bef292362de19529250a75",
+                "reference": "f1465f764c3d93f623bef292362de19529250a75",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0",
+                "phpunit/phpunit": "^6.1|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\QueryBuilder\\QueryBuilderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\QueryBuilder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Vanderbist",
+                    "email": "alex@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily build Eloquent queries from API requests",
+            "homepage": "https://github.com/spatie/laravel-query-builder",
+            "keywords": [
+                "laravel-query-builder",
+                "spatie"
+            ],
+            "time": "2018-08-21T06:50:03+00:00"
+        },
+        {
+            "name": "spatie/laravel-tags",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-tags.git",
+                "reference": "60d075d1a871b7d4fbb9253ffda5459e239735cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/60d075d1a871b7d4fbb9253ffda5459e239735cb",
+                "reference": "60d075d1a871b7d4fbb9253ffda5459e239735cb",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
+                "php": "^7.0",
+                "spatie/eloquent-sortable": "^3.0",
+                "spatie/laravel-translatable": "^2.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.2|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Tags\\TagsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Tags\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Add tags and taggable behaviour to your Laravel app",
+            "homepage": "https://github.com/spatie/laravel-tags",
+            "keywords": [
+                "laravel-tags",
+                "spatie"
+            ],
+            "time": "2018-08-27T08:12:14+00:00"
+        },
+        {
+            "name": "spatie/laravel-tail",
+            "version": "3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-tail.git",
+                "reference": "a47d8b2b477bd687e1e1b69bc016231f6fe01c79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-tail/zipball/a47d8b2b477bd687e1e1b69bc016231f6fe01c79",
+                "reference": "a47d8b2b477bd687e1e1b69bc016231f6fe01c79",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
                 "php": "^7.0",
                 "symfony/process": "^3.3|^4.0"
             },
@@ -2314,7 +3265,132 @@
                 "log",
                 "tail"
             ],
-            "time": "2018-04-12T12:07:07+00:00"
+            "time": "2018-08-20T21:21:50+00:00"
+        },
+        {
+            "name": "spatie/laravel-translatable",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-translatable.git",
+                "reference": "107df7d9a75046a7552a995ed3d1971a9f98f833"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/107df7d9a75046a7552a995ed3d1971a9f98f833",
+                "reference": "107df7d9a75046a7552a995ed3d1971a9f98f833",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^6.3|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Translatable\\TranslatableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Translatable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Mohamed Said",
+                    "email": "theMohamedSaid@gmail.com",
+                    "role": "Original idea"
+                }
+            ],
+            "description": "A trait to make an Eloquent model hold translations",
+            "homepage": "https://github.com/spatie/laravel-translatable",
+            "keywords": [
+                "eloquent",
+                "i8n",
+                "laravel-translatable",
+                "model",
+                "multilingual",
+                "spatie",
+                "translate"
+            ],
+            "time": "2018-08-24T09:34:12+00:00"
+        },
+        {
+            "name": "spatie/string",
+            "version": "2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/string.git",
+                "reference": "28607b9925b4f0499d48570553ca419c6298e26b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/string/zipball/28607b9925b4f0499d48570553ca419c6298e26b",
+                "reference": "28607b9925b4f0499d48570553ca419c6298e26b",
+                "shasum": ""
+            },
+            "require": {
+                "anahkiasen/underscore-php": "^2.0",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/string_functions.php"
+                ],
+                "psr-4": {
+                    "Spatie\\String\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://murze.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "String handling evolved",
+            "homepage": "https://github.com/spatie/string",
+            "keywords": [
+                "handling",
+                "handy",
+                "spatie",
+                "string"
+            ],
+            "time": "2017-11-08T14:28:57+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5324,7 +6400,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3"
+        "php": "^7.2.0"
     },
     "platform-dev": []
 }
