@@ -11,10 +11,13 @@
 
 namespace SGPS\Entity;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -25,12 +28,21 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $email
  * @property string $password
  * @property string $remember_token
+ *
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Carbon $deleted_at
+ *
+ * @property Group[]|Collection $groups
  */
 class User extends Authenticatable {
 
 	use IndexedByUUID;
 	use SoftDeletes;
 	use Notifiable;
+	use HasRoles;
+
+	protected $table = "users";
 
 	protected $fillable = [
 		'name',
@@ -42,4 +54,8 @@ class User extends Authenticatable {
 		'password',
 		'remember_token',
 	];
+
+	public function groups() {
+		return $this->belongsToMany(Group::class, 'user_groups');
+	}
 }
