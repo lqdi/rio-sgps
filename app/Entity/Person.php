@@ -17,6 +17,8 @@ namespace SGPS\Entity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use SGPS\Traits\IndexedByUUID;
 
 /**
  * Class Person
@@ -42,6 +44,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Person extends Model {
 
+	use IndexedByUUID;
+	use SoftDeletes;
+
 	protected $table = "persons";
 
 	protected $fillable = [
@@ -64,7 +69,7 @@ class Person extends Model {
 	}
 
 	public function flags() {
-		return $this->morphMany(Flag::class, 'entity');
+		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities');
 	}
 
 }

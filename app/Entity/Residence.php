@@ -58,6 +58,11 @@ class Residence extends Model {
 		'gis_global_id',
 	];
 
+	protected $casts = [
+		'lat' => 'float',
+		'lng' => 'float',
+	];
+
 	public function families() {
 		return $this->hasMany(Family::class, 'residence_id', 'id');
 	}
@@ -67,7 +72,7 @@ class Residence extends Model {
 	}
 
 	public function flags() {
-		return $this->morphMany(Flag::class, 'entity');
+		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities');
 	}
 
 }

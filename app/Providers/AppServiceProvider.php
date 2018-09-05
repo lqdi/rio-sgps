@@ -2,7 +2,14 @@
 
 namespace SGPS\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use SGPS\Entity\Family;
+use SGPS\Entity\Flag;
+use SGPS\Entity\Group;
+use SGPS\Entity\Person;
+use SGPS\Entity\Residence;
+use SGPS\Entity\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +35,16 @@ class AppServiceProvider extends ServiceProvider
 
         \View::share('faker', $faker);
         \View::share('labels', $labels);
+
+	    Relation::morphMap([
+		    'residence' => Residence::class,
+		    'family' => Family::class,
+		    'person' => Person::class,
+		    'group' => Group::class,
+		    'flag' => Flag::class,
+		    'user' => User::class,
+	    ]);
+
     }
 
     /**

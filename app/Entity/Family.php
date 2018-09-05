@@ -81,7 +81,7 @@ class Family extends Model {
 	}
 
 	public function flags() {
-		return $this->morphMany(Flag::class, 'entity');
+		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities');
 	}
 
 }

@@ -159,8 +159,7 @@ class AddBaseModels extends Migration
         });
 
         Schema::create('flagged_entities', function (Blueprint $table) {
-        	$table->uuid('id');
-        	$table->primary('id');
+        	$table->increments('id');
 
         	$table->uuid('flag_id')->index();
         	$table->string('entity_type')->index();

@@ -62,7 +62,7 @@ class Flag extends Model {
 	}
 
 	public function persons() {
-		return $this->morphedByMany(Person::class, 'entity');
+		return $this->morphedByMany(Person::class, 'entity', 'flagged_entities');
 	}
 
 }
