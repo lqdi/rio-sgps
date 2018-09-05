@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('wireframe.layout')
 @section('main')
 	<div class="container">
 		<div class="py-2">

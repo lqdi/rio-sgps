@@ -22,11 +22,11 @@ class WireframeController extends Controller {
 				return str_replace('.blade.php', '', basename($viewFile));
 			});
 		
-		return view('wireframe_index', compact('pages'));
+		return view('wireframe.wireframe_index', compact('pages'));
 	}
 
 	public function view_page($view) {
-		return view($view);
+		return view('wireframe.' . $view);
 	}
 
 }

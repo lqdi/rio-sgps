@@ -12,22 +12,28 @@
 namespace SGPS\Entity;
 
 use Carbon\Carbon;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use SGPS\Traits\IndexedByUUID;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
  * Class User
  * @package SGPS\Entity
  *
  * @property string $id
- * @property string $name
+ * @property string $group_id
+ * @property string $registration_number
+ * @property string $cpf
  * @property string $email
+ * @property string $name
  * @property string $password
- * @property string $remember_token
  *
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -35,7 +41,10 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @property Group[]|Collection $groups
  */
-class User extends Authenticatable {
+class User extends Model implements AuthenticatableContract, AuthorizableContract {
+
+	use Authenticatable;
+	use Authorizable;
 
 	use IndexedByUUID;
 	use SoftDeletes;
@@ -48,6 +57,9 @@ class User extends Authenticatable {
 		'name',
 		'email',
 		'password',
+		'group_id',
+		'registration_number',
+		'cpf',
 	];
 
 	protected $hidden = [

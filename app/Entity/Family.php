@@ -41,6 +41,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Residence $residence
  * @property Person $personInCharge
  * @property Person[]|Collection $members
+ * @property Flag[]|Collection $flags
  */
 class Family extends Model {
 
@@ -77,6 +78,10 @@ class Family extends Model {
 
 	public function members() {
 		return $this->hasMany(Person::class, 'family_id', 'id');
+	}
+
+	public function flags() {
+		return $this->morphMany(Flag::class, 'entity');
 	}
 
 }

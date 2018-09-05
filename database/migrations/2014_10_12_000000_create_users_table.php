@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->uuid('id');
             $table->primary('id');
 
-            $table->string('role')->index()->default('operator');
             $table->uuid('group_id')->index()->nullable();
 
             $table->string('registration_number')->index()->nullable();
@@ -26,6 +25,8 @@ class CreateUsersTable extends Migration
 
             $table->string('name');
             $table->string('password');
+
+            $table->string('remember_token')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.6.28 on 2018-09-03 20:31:10.
+ * Generated for Laravel 5.6.28 on 2018-09-05 22:12:40.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1613,7 +1613,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \SGPS\User|null 
+         * @return \SGPS\Entity\User|null 
          * @static 
          */ 
         public static function user()
@@ -1648,7 +1648,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \SGPS\User|false 
+         * @return \SGPS\Entity\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1712,7 +1712,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \SGPS\User|false 
+         * @return \SGPS\Entity\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -1774,7 +1774,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \SGPS\User 
+         * @return \SGPS\Entity\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -1876,7 +1876,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \SGPS\User|null 
+         * @return \SGPS\Entity\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -1922,7 +1922,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \SGPS\User 
+         * @return \SGPS\Entity\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 
@@ -2974,6 +2974,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Get a lock instance.
+         *
+         * @param string $name
+         * @param int $seconds
+         * @return \Illuminate\Contracts\Cache\Lock 
+         * @static 
+         */ 
+        public static function lock($name, $seconds = 0)
+        {
+            return \Illuminate\Cache\MemcachedStore::lock($name, $seconds);
+        }
+        
+        /**
          * Remove all items from the cache.
          *
          * @return bool 
@@ -2981,29 +2994,18 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function flush()
         {
-            return \Illuminate\Cache\FileStore::flush();
+            return \Illuminate\Cache\MemcachedStore::flush();
         }
         
         /**
-         * Get the Filesystem instance.
+         * Get the underlying Memcached connection.
          *
-         * @return \Illuminate\Filesystem\Filesystem 
+         * @return \Memcached 
          * @static 
          */ 
-        public static function getFilesystem()
+        public static function getMemcached()
         {
-            return \Illuminate\Cache\FileStore::getFilesystem();
-        }
-        
-        /**
-         * Get the working directory of the cache.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getDirectory()
-        {
-            return \Illuminate\Cache\FileStore::getDirectory();
+            return \Illuminate\Cache\MemcachedStore::getMemcached();
         }
         
         /**
@@ -3014,7 +3016,19 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function getPrefix()
         {
-            return \Illuminate\Cache\FileStore::getPrefix();
+            return \Illuminate\Cache\MemcachedStore::getPrefix();
+        }
+        
+        /**
+         * Set the cache key prefix.
+         *
+         * @param string $prefix
+         * @return void 
+         * @static 
+         */ 
+        public static function setPrefix($prefix)
+        {
+            \Illuminate\Cache\MemcachedStore::setPrefix($prefix);
         }
          
     }
@@ -6444,30 +6458,29 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the size of the queue.
+         * Get the number of queue jobs that are ready to process.
          *
-         * @param string $queue
+         * @param string|null $queue
          * @return int 
          * @static 
          */ 
-        public static function size($queue = null)
+        public static function readyNow($queue = null)
         {
-            return \Illuminate\Queue\SyncQueue::size($queue);
+            return \Laravel\Horizon\RedisQueue::readyNow($queue);
         }
         
         /**
          * Push a new job onto the queue.
          *
-         * @param string $job
+         * @param object|string $job
          * @param mixed $data
-         * @param string $queue
+         * @param string|null $queue
          * @return mixed 
-         * @throws \Exception|\Throwable
          * @static 
          */ 
         public static function push($job, $data = '', $queue = null)
         {
-            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
+            return \Laravel\Horizon\RedisQueue::push($job, $data, $queue);
         }
         
         /**
@@ -6481,7 +6494,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function pushRaw($payload, $queue = null, $options = array())
         {
-            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
+            return \Laravel\Horizon\RedisQueue::pushRaw($payload, $queue, $options);
         }
         
         /**
@@ -6496,7 +6509,7 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function later($delay, $job, $data = '', $queue = null)
         {
-            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
+            return \Laravel\Horizon\RedisQueue::later($delay, $job, $data, $queue);
         }
         
         /**
@@ -6508,7 +6521,85 @@ namespace Illuminate\Support\Facades {
          */ 
         public static function pop($queue = null)
         {
-            return \Illuminate\Queue\SyncQueue::pop($queue);
+            return \Laravel\Horizon\RedisQueue::pop($queue);
+        }
+        
+        /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @return void 
+         * @static 
+         */ 
+        public static function migrateExpiredJobs($from, $to)
+        {
+            \Laravel\Horizon\RedisQueue::migrateExpiredJobs($from, $to);
+        }
+        
+        /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteReserved($queue, $job)
+        {
+            \Laravel\Horizon\RedisQueue::deleteReserved($queue, $job);
+        }
+        
+        /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+            \Laravel\Horizon\RedisQueue::deleteAndRelease($queue, $job, $delay);
+        }
+        
+        /**
+         * Get the size of the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function size($queue = null)
+        {
+            //Method inherited from \Illuminate\Queue\RedisQueue            
+            return \Laravel\Horizon\RedisQueue::size($queue);
+        }
+        
+        /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */ 
+        public static function getQueue($queue)
+        {
+            //Method inherited from \Illuminate\Queue\RedisQueue            
+            return \Laravel\Horizon\RedisQueue::getQueue($queue);
+        }
+        
+        /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {
+            //Method inherited from \Illuminate\Queue\RedisQueue            
+            return \Laravel\Horizon\RedisQueue::getRedis();
         }
         
         /**
@@ -6523,7 +6614,7 @@ namespace Illuminate\Support\Facades {
         public static function pushOn($queue, $job, $data = '')
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
+            return \Laravel\Horizon\RedisQueue::pushOn($queue, $job, $data);
         }
         
         /**
@@ -6539,7 +6630,7 @@ namespace Illuminate\Support\Facades {
         public static function laterOn($queue, $delay, $job, $data = '')
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
+            return \Laravel\Horizon\RedisQueue::laterOn($queue, $delay, $job, $data);
         }
         
         /**
@@ -6554,7 +6645,7 @@ namespace Illuminate\Support\Facades {
         public static function bulk($jobs, $data = '', $queue = null)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
+            return \Laravel\Horizon\RedisQueue::bulk($jobs, $data, $queue);
         }
         
         /**
@@ -6567,7 +6658,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobExpiration($job)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::getJobExpiration($job);
+            return \Laravel\Horizon\RedisQueue::getJobExpiration($job);
         }
         
         /**
@@ -6579,7 +6670,7 @@ namespace Illuminate\Support\Facades {
         public static function getConnectionName()
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::getConnectionName();
+            return \Laravel\Horizon\RedisQueue::getConnectionName();
         }
         
         /**
@@ -6592,7 +6683,7 @@ namespace Illuminate\Support\Facades {
         public static function setConnectionName($name)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::setConnectionName($name);
+            return \Laravel\Horizon\RedisQueue::setConnectionName($name);
         }
         
         /**
@@ -6605,7 +6696,7 @@ namespace Illuminate\Support\Facades {
         public static function setContainer($container)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setContainer($container);
+            \Laravel\Horizon\RedisQueue::setContainer($container);
         }
          
     }

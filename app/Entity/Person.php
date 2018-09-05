@@ -15,6 +15,7 @@ namespace SGPS\Entity;
 
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Residence $residence
  * @property Family $family
+ * @property Flag[]|Collection $flags
  */
 class Person extends Model {
 
@@ -59,6 +61,10 @@ class Person extends Model {
 
 	public function family() {
 		return $this->hasOne(Family::class, 'id', 'family_id');
+	}
+
+	public function flags() {
+		return $this->morphMany(Flag::class, 'entity');
 	}
 
 }
