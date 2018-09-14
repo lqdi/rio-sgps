@@ -14,7 +14,8 @@ window.Vue = Vue;
 Vue.use(BootstrapVue);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('tags-filter-modal', require('./components/TagsFilterModal.vue'));
+Vue.component('flags-filter-modal', require('./components/FlagsFilterModal.vue'));
+Vue.component('flag-display-tooltip', require('./components/FlagDisplayTooltip.vue'));
 Vue.component('wireframe-case-view', WireframeCaseView);
 Vue.component('wireframe-alert-update', WireframeAlertUpdate);
 

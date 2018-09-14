@@ -8,15 +8,21 @@
 
 <script>
 	export default {
-		props: ['options', 'id'],
+		props: ['flags', 'id'],
 
 		data: () => { return {
 			isOpen: false,
 			selected: [],
+			options: [],
 		}},
 
 		mounted: function() {
-
+			this.options = this.flags.map((option) => {
+				return {
+					text: option.name,
+					value: option.id
+				}
+			})
 		},
 
 		methods: {

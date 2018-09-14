@@ -31,10 +31,15 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 					'residence_id' => $residence->id,
 				])->each(function (Family $family) use ($residence) {
 
-					$family->_persons = factory(Person::class, rand(1, 6))->create([
+					$persons = factory(Person::class, rand(1, 6))->create([
 						'residence_id' => $residence->id,
 						'family_id' => $family->id,
 					]);
+
+					$family->person_in_charge_id = $persons->first()->id;
+					$family->save();
+
+					$family->_persons = $persons;
 
 				});
 

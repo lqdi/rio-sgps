@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 
 /**
@@ -25,6 +26,7 @@ use SGPS\Traits\IndexedByUUID;
  * @package SGPS\Entity
  *
  * @property string $id
+ * @property string $shortcode
  * @property string $name
  *
  * @property Carbon $created_at
@@ -37,6 +39,7 @@ class Group extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
+	use HasShortCode;
 
 	protected $table = "groups";
 	protected $fillable = ['name'];

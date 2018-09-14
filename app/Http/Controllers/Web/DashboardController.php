@@ -19,7 +19,7 @@ use SGPS\Http\Controllers\Controller;
 class DashboardController extends Controller {
 
 	public function index() {
-		return view('cases.alerts_index');
+		return view('dashboard.operator_dashboard');
 	}
 
 }

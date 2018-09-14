@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -28,6 +29,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @package SGPS\Entity
  *
  * @property string $id
+ * @property string $shortcode
  * @property string $group_id
  * @property string $registration_number
  * @property string $cpf
@@ -50,6 +52,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	use SoftDeletes;
 	use Notifiable;
 	use HasRoles;
+	use HasShortCode;
 
 	protected $table = "users";
 

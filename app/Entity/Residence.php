@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 
 /**
@@ -25,6 +26,7 @@ use SGPS\Traits\IndexedByUUID;
  * @package SGPS\Entity
  *
  * @property string $id
+ * @property string $shortcode
  * @property string $sector_code
  * @property string $lat
  * @property string $lng
@@ -45,6 +47,7 @@ class Residence extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
+	use HasShortCode;
 
 	protected $table = 'residences';
 
