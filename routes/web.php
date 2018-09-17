@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::delete('/admin/users/{user}', 'Admin\UsersController@destroy')->name('admin.users.destroy');
 
 		Route::get('/admin/groups', 'Admin\GroupsController@index')->name('admin.groups.index');
+		Route::get('/admin/groups/new', 'Admin\GroupsController@create')->name('admin.groups.create');
+		Route::get('/admin/groups/{group}', 'Admin\GroupsController@show')->name('admin.groups.show');
+		Route::post('/admin/groups/{group?}', 'Admin\GroupsController@save')->name('admin.groups.save');
+		Route::delete('/admin/groups/{group}', 'Admin\GroupsController@destroy')->name('admin.groups.destroy');
 
 		Route::get('/admin/flags', 'Admin\FlagsController@index')->name('admin.flags.index');
 

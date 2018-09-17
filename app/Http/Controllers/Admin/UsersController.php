@@ -14,6 +14,7 @@
 namespace SGPS\Http\Controllers\Admin;
 
 
+use SGPS\Entity\Group;
 use SGPS\Entity\User;
 use SGPS\Http\Controllers\Controller;
 
@@ -26,11 +27,17 @@ class UsersController extends Controller {
 
 	public function create() {
 		$user = new User();
-		return view('admin.users_edit', compact('user'));
+		$groups = Group::all();
+		$currentGroups = [];
+
+		return view('admin.users_edit', compact('user', 'groups', 'currentGroups'));
 	}
 
 	public function show(User $user) {
-		return view('admin.users_edit', compact('user'));
+		$groups = Group::all();
+		$currentGroups = $user->groups()->pluck('id')->toArray();
+
+		return view('admin.users_edit', compact('user', 'groups', 'currentGroups'));
 	}
 
 	public function save(?User $user = null) {
@@ -43,6 +50,10 @@ class UsersController extends Controller {
 		}
 
 		$user->save();
+
+		if(request()->has('groups')) {
+			$user->groups()->sync(request('groups'));
+		}
 
 		return redirect()->route('admin.users.show', [$user->id]);
 	}

@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 .sgps__topbar {
 	position: fixed;
 	top: 55px;
@@ -24,7 +26,7 @@
 	background-color: #f8f9fa;
 	box-shadow: inset -1px 0 0 rgba(black, 0.1);
 
-	&.topbar--compact {
+	&.has-compact-topbar {
 		top: 55px + 60px;
 	}
 
@@ -59,7 +61,7 @@
 
 }
 
-.sgps {
+.sgps__panel {
 	position: fixed;
 	top: 55px + 100px;
 	left: 300px;
@@ -68,6 +70,10 @@
 	padding: 15px;
 
 	overflow-y: scroll;
+
+	&.has-compact-topbar {
+		top: 55px + 60px;
+	}
 }
 
 .tree__container {

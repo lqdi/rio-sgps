@@ -16,7 +16,7 @@
 
 			</div>
 
-			<div class="sgps__sidebar topbar--compact">
+			<div class="sgps__sidebar has-compact-topbar">
 
 				<a class="sgps__sidebar-link @if(Route::is('admin.users.*')) active @endif" href="{{route('admin.users.index')}}"><i class="fa fa-user"></i> Operadores</a>
 				<a class="sgps__sidebar-link @if(Route::is('admin.groups.*')) active @endif" href="{{route('admin.groups.index')}}"><i class="fa fa-users"></i> Secretarias</a>
@@ -25,7 +25,7 @@
 
 			</div>
 
-			<div class="sgps">
+			<div class="sgps__panel has-compact-topbar">
 				@yield('admin_content')
 			</div>
 		</div>
