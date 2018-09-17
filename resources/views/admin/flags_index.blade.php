@@ -25,7 +25,7 @@
 					@elseif($flag->entity_type === 'residence')
 						<span class="badge badge-success"><i class="fa fa-home"></i> Residência</span>
 					@elseif($flag->entity_type === 'person')
-						<span class="badge badge-warning"><i class="fa fa-male"></i> Indivíduo</span>
+						<span class="badge badge-info"><i class="fa fa-male"></i> Indivíduo</span>
 					@endif
 				</td>
 				<td>

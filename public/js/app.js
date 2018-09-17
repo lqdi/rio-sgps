@@ -64642,6 +64642,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 	methods: {
+		getColorClass: function getColorClass(flag) {
+
+			switch (flag.entity_type) {
+				case 'family':
+					return 'text-primary';
+				case 'residence':
+					return 'text-success';
+				case 'person':
+					return 'text-info';
+				default:
+					return 'text-default';
+			}
+		},
 		buildPopoverHTML: function buildPopoverHTML() {
 			return this.flags.map(function (flag) {
 				return '&bull; ' + flag.name;
@@ -64663,9 +64676,14 @@ var render = function() {
     "div",
     [
       _vm._l(_vm.visibleFlags, function(flag) {
-        return _c("span", { staticClass: "badge badge-secondary mr-1" }, [
-          _vm._v(_vm._s(flag.name))
-        ])
+        return _c(
+          "span",
+          {
+            staticClass: "badge badge-light mr-1",
+            class: [_vm.getColorClass(flag)]
+          },
+          [_vm._v(_vm._s(flag.name))]
+        )
       }),
       _vm._v(" "),
       _vm.flags.length > 2

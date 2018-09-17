@@ -5,7 +5,7 @@
 	<div class="card-body">
 		@if($flag->pivot->entity_type === 'family')<div class="text-primary"><i class="fa fa-users"></i> Família</div>@endif
 		@if($flag->pivot->entity_type === 'residence')<div class="text-success"><i class="fa fa-home"></i> Domicílio</div>@endif
-		@if($flag->pivot->entity_type === 'person')<div class="text-warning"><i class="fa fa-male"></i> Indivíduo: {{$person->name ?? '---'}}</div>@endif
+		@if($flag->pivot->entity_type === 'person')<div class="text-info"><i class="fa fa-male"></i> Indivíduo: {{$person->name ?? '---'}}</div>@endif
 
 		<div><i v-b-tooltip title="Data de atribuição" class="fa fa-calendar"></i> {{$flag->pivot->reference_date}}</div>
 		<div><i v-b-tooltip title="Operador responsável" class="fa fa-user"></i> ---</div>

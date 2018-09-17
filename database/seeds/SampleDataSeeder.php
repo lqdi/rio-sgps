@@ -46,7 +46,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 			});
 
 		factory(Group::class, 6)->create();
-		factory(Flag::class, 30)->create()
+		factory(Flag::class, 15)->create()
 			->each(function (Flag $flag) use ($faker, $residences) {
 
 				switch($flag->entity_type) {

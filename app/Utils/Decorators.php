@@ -21,9 +21,9 @@ class Decorators {
 	public static function getFlagBackgroundClass(Flag $flag) {
 
 		switch($flag->pivot->entity_type) {
-			case 'family': return 'bg-primary';
-			case 'residence': return 'bg-success';
-			case 'person': return 'bg-warning';
+			case 'family': return 'text-primary';
+			case 'residence': return 'text-success';
+			case 'person': return 'text-info';
 			default: return '';
 		}
 
