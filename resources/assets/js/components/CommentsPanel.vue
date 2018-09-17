@@ -40,13 +40,12 @@
 	import API from "../services/API";
 	import Endpoints from "../config/Endpoints";
 	import axios from "axios";
-	const NEW_COMMENT = {message: ''};
 
 	export default {
 		props: ['entityType', 'entityId'],
 
 		data: () => { return {
-			newComment: NEW_COMMENT,
+			newComment: {message: ''},
 			comments: [],
 			isLoading: false,
 		}},
@@ -67,7 +66,7 @@
 				).then((res) => {
 					this.isLoading = false;
 					this.comments = res.data.comments;
-					this.newComment = NEW_COMMENT;
+					this.newComment.message = '';
 				}).catch((err) => {
 					this.isLoading = false;
 					console.error("CommentsPanel -> failed to fetch thread: ", err);

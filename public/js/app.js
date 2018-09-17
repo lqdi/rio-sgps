@@ -65689,14 +65689,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var NEW_COMMENT = { message: '' };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['entityType', 'entityId'],
 
 	data: function data() {
 		return {
-			newComment: NEW_COMMENT,
+			newComment: { message: '' },
 			comments: [],
 			isLoading: false
 		};
@@ -65715,7 +65714,7 @@ var NEW_COMMENT = { message: '' };
 			__WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_0__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_1__config_Endpoints__["a" /* default */].Comments.FetchThread, { type: this.entityType, id: this.entityId }), __WEBPACK_IMPORTED_MODULE_0__services_API__["a" /* default */].headers()).then(function (res) {
 				_this.isLoading = false;
 				_this.comments = res.data.comments;
-				_this.newComment = NEW_COMMENT;
+				_this.newComment.message = '';
 			}).catch(function (err) {
 				_this.isLoading = false;
 				console.error("CommentsPanel -> failed to fetch thread: ", err);
