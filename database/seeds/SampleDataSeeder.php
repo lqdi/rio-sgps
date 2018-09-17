@@ -49,7 +49,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 		factory(Flag::class, 30)->create()
 			->each(function (Flag $flag) use ($faker, $residences) {
 
-				switch($flag->entity) {
+				switch($flag->entity_type) {
 					case 'residence':
 						$residences->random(rand(4,8))->each(function (Residence $residence) use ($faker, $flag) {
 							$residence->flags()->attach($flag->id, ['reference_date' => $faker->date()]);
