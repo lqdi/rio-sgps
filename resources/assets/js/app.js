@@ -15,7 +15,10 @@ Vue.use(BootstrapVue);
 Vue.component('flags-filter-modal', require('./components/FlagsFilterModal.vue'));
 Vue.component('flag-display-tooltip', require('./components/FlagDisplayTooltip.vue'));
 Vue.component('loading-feedback', require('./components/LoadingFeedback.vue'));
-Vue.component('comments-panel', require('./components/CommentsPanel.vue'));
+
+// Panels
+Vue.component('comments-panel', require('./panels/CommentsPanel.vue'));
+Vue.component('forms-panel', require('./panels/FormsPanel.vue'));
 
 // Modals
 Vue.component('alert-update-modal', require('./modals/AlertUpdateModal.vue'));

@@ -40,7 +40,7 @@
 
 			</div>
 
-			<div class="sgps">
+			<div class="sgps__panel">
 
 				<div v-if="openTab === 'overview'">
 					@include('families.panel_overview', ['family' => $family])

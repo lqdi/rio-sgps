@@ -29,6 +29,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $shortcode
  * @property string $code
  * @property string $name
+ * @property string $entity_type
  * @property string $description
  * @property string $triggers
  * @property string $is_visible
@@ -51,21 +52,30 @@ class Flag extends Model {
 	protected $fillable = [
 		'code',
 		'name',
+		'entity_type',
 		'description',
 		'triggers',
 		'is_visible',
 	];
 
 	public function families() {
-		return $this->morphedByMany(Family::class, 'entity');
+		return $this->morphedByMany(Family::class, 'entity', 'flagged_entities');
 	}
 
 	public function residences() {
-		return $this->morphedByMany(Residence::class, 'entity');
+		return $this->morphedByMany(Residence::class, 'entity', 'flagged_entities');
 	}
 
 	public function persons() {
 		return $this->morphedByMany(Person::class, 'entity', 'flagged_entities');
+	}
+
+	public function delete() {
+		$this->families()->sync([]);
+		$this->residences()->sync([]);
+		$this->persons()->sync([]);
+
+		parent::delete();
 	}
 
 }

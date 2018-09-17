@@ -9,6 +9,7 @@
 		<tr>
 			<th>#</th>
 			<th>Nome</th>
+			<th>Tipo</th>
 			<th>Opções</th>
 		</tr>
 		</thead>
@@ -18,6 +19,15 @@
 			<tr>
 				<td><a href="{{route('admin.flags.show', [$flag->id])}}" class="btn btn-sm btn-block btn-outline-danger"><code>{{$flag->shortcode}}</code></a></td>
 				<td>{{$flag->name}}</td>
+				<td>
+					@if($flag->entity_type === 'family')
+						<span class="badge badge-primary"><i class="fa fa-users"></i> Família</span>
+					@elseif($flag->entity_type === 'residence')
+						<span class="badge badge-success"><i class="fa fa-home"></i> Residência</span>
+					@elseif($flag->entity_type === 'person')
+						<span class="badge badge-warning"><i class="fa fa-male"></i> Indivíduo</span>
+					@endif
+				</td>
 				<td>
 					<a href="{{route('admin.flags.show', [$flag->id])}}" class="btn btn-sm btn-outline-dark"><i class="fa fa-edit"></i> Editar</a>
 					<form class="d-inline-block" method="POST" action="{{route('admin.flags.destroy', [$flag->id])}}">

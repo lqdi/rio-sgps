@@ -20241,7 +20241,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_boot
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flags-filter-modal', __webpack_require__(227));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flag-display-tooltip', __webpack_require__(230));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('loading-feedback', __webpack_require__(243));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('comments-panel', __webpack_require__(254));
+
+// Panels
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('comments-panel', __webpack_require__(259));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('forms-panel', __webpack_require__(262));
 
 // Modals
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('alert-update-modal', __webpack_require__(239));
@@ -65545,15 +65548,68 @@ if (false) {
 }
 
 /***/ }),
-/* 254 */
+/* 254 */,
+/* 255 */,
+/* 256 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	getToken: function getToken() {
+		return window.SGPS_TOKEN || null;
+	},
+	getUserId: function getUserId() {
+		return window.SGPS_USER_ID || null;
+	},
+	isLoggedIn: function isLoggedIn() {
+		return !!window.SGPS_USER_ID;
+	},
+	headers: function headers() {
+		if (!this.isLoggedIn()) return {};
+		return { headers: { Authorization: 'Bearer ' + this.getToken() } };
+	},
+	connectUser: function connectUser(userId, token) {
+		window.SGPS_USER_ID = userId;
+		window.SGPS_TOKEN = token;
+	},
+	url: function url(endpoint, params) {
+		if (!params) {
+			params = this.isLoggedIn() ? { user: this.getUserId() } : {};
+		}
+
+		Object.keys(params).forEach(function (key) {
+			endpoint = ("" + endpoint).replace(new RegExp('\@' + key + '\@', 'g'), params[key]);
+		});
+
+		return window.SGPS_API_URL + endpoint;
+	}
+});
+
+/***/ }),
+/* 257 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+	Comments: {
+		FetchThread: 'api/comments/thread/@type@/@id@',
+		PostComment: 'api/comments/thread/@type@/@id@'
+	}
+
+});
+
+/***/ }),
+/* 258 */,
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(24)
 /* script */
-var __vue_script__ = __webpack_require__(255)
+var __vue_script__ = __webpack_require__(260)
 /* template */
-var __vue_template__ = __webpack_require__(258)
+var __vue_template__ = __webpack_require__(261)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65570,7 +65626,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/CommentsPanel.vue"
+Component.options.__file = "resources/assets/js/panels/CommentsPanel.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -65579,9 +65635,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3845586e", Component.options)
+    hotAPI.createRecord("data-v-09580062", Component.options)
   } else {
-    hotAPI.reload("data-v-3845586e", Component.options)
+    hotAPI.reload("data-v-09580062", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -65592,7 +65648,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 255 */
+/* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65690,57 +65746,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 256 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-	getToken: function getToken() {
-		return window.SGPS_TOKEN || null;
-	},
-	getUserId: function getUserId() {
-		return window.SGPS_USER_ID || null;
-	},
-	isLoggedIn: function isLoggedIn() {
-		return !!window.SGPS_USER_ID;
-	},
-	headers: function headers() {
-		if (!this.isLoggedIn()) return {};
-		return { headers: { Authorization: 'Bearer ' + this.getToken() } };
-	},
-	connectUser: function connectUser(userId, token) {
-		window.SGPS_USER_ID = userId;
-		window.SGPS_TOKEN = token;
-	},
-	url: function url(endpoint, params) {
-		if (!params) {
-			params = this.isLoggedIn() ? { user: this.getUserId() } : {};
-		}
-
-		Object.keys(params).forEach(function (key) {
-			endpoint = ("" + endpoint).replace(new RegExp('\@' + key + '\@', 'g'), params[key]);
-		});
-
-		return window.SGPS_API_URL + endpoint;
-	}
-});
-
-/***/ }),
-/* 257 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-
-	Comments: {
-		FetchThread: 'api/comments/thread/@type@/@id@',
-		PostComment: 'api/comments/thread/@type@/@id@'
-	}
-
-});
-
-/***/ }),
-/* 258 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -65879,9 +65885,544 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3845586e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-09580062", module.exports)
   }
 }
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(24)
+/* script */
+var __vue_script__ = __webpack_require__(264)
+/* template */
+var __vue_template__ = __webpack_require__(263)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/panels/FormsPanel.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-12585fda", Component.options)
+  } else {
+    hotAPI.reload("data-v-12585fda", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "panels__container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("label", { staticClass: "detail__label" }, [
+          _vm._v("Categorias de dados")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "list-group mt-3" }, [
+          _c(
+            "a",
+            {
+              staticClass: "list-group-item small p-2 list-group-item-action",
+              class: { "list-group-item-primary": _vm.openCategory === "IPM" },
+              on: {
+                click: function($event) {
+                  _vm.openCategory = "IPM"
+                }
+              }
+            },
+            [
+              _c("i", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
+                staticClass: "fa fa-circle text-secondary",
+                attrs: { title: "Não preenchido" }
+              }),
+              _vm._v(" IPM")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "list-group-item small p-2 list-group-item-action",
+              class: {
+                "list-group-item-primary": _vm.openCategory === "Saúde"
+              },
+              on: {
+                click: function($event) {
+                  _vm.openCategory = "Saúde"
+                }
+              }
+            },
+            [
+              _c("i", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
+                staticClass: "fa fa-circle text-secondary",
+                attrs: { title: "Não preenchido" }
+              }),
+              _vm._v(" Saúde")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "list-group-item small p-2 list-group-item-action",
+              class: {
+                "list-group-item-primary": _vm.openCategory === "Educação"
+              },
+              on: {
+                click: function($event) {
+                  _vm.openCategory = "Educação"
+                }
+              }
+            },
+            [
+              _c("i", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
+                staticClass: "fa fa-circle text-secondary",
+                attrs: { title: "Não preenchido" }
+              }),
+              _vm._v(" Educação")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "list-group-item small p-2 list-group-item-action",
+              class: {
+                "list-group-item-primary":
+                  _vm.openCategory === "Emprego e Renda"
+              },
+              on: {
+                click: function($event) {
+                  _vm.openCategory = "Emprego e Renda"
+                }
+              }
+            },
+            [
+              _c("i", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
+                staticClass: "fa fa-circle text-secondary",
+                attrs: { title: "Não preenchido" }
+              }),
+              _vm._v(" Emprego e Renda")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "list-group-item small p-2 list-group-item-action",
+              class: {
+                "list-group-item-primary":
+                  _vm.openCategory === "Assistência Social"
+              },
+              on: {
+                click: function($event) {
+                  _vm.openCategory = "Assistência Social"
+                }
+              }
+            },
+            [
+              _c("i", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
+                staticClass: "fa fa-circle text-secondary",
+                attrs: { title: "Não preenchido" }
+              }),
+              _vm._v(" Assistência Social")
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-9" }, [
+        _c("label", { staticClass: "detail__label" }, [
+          _vm._v("Dados: "),
+          _c("strong", [_vm._v(_vm._s(_vm.openCategory))])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { staticClass: "card mt-3" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "fld-test" } }, [
+            _vm._v("Demo Campo S/N")
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("div", { staticClass: "form-radio form-radio-inline" }, [
+              _c("input", {
+                staticClass: "form-radio-input",
+                attrs: {
+                  type: "radio",
+                  name: "yesNo",
+                  id: "yesNo-yes",
+                  value: "yes"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-radio-label",
+                  attrs: { for: "yesNo-yes" }
+                },
+                [_vm._v("Sim")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-radio form-radio-inline" }, [
+              _c("input", {
+                staticClass: "form-radio-input",
+                attrs: {
+                  type: "radio",
+                  name: "yesNo",
+                  id: "yesNo-no",
+                  value: "no"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "form-radio-label", attrs: { for: "yesNo-no" } },
+                [_vm._v("Não")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "fld-test" } }, [
+            _vm._v("Demo Campo TEXT")
+          ]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
+          _vm._v(" "),
+          _c("small", [_vm._v("Preencha o endereço completo, com CEP.")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "fld-test" } }, [
+            _vm._v("Demo Campo NUM")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "number" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "fld-test" } }, [
+            _vm._v("Demo Campo CHECKBOX OPTIONS")
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("div", { staticClass: "form-check form-check-inline" }, [
+              _c("input", {
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "checkbox",
+                  name: "missingDocuments",
+                  id: "doc-rg",
+                  value: "rg"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "form-check-label", attrs: { for: "doc-rg" } },
+                [_vm._v("RG")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-check form-check-inline" }, [
+              _c("input", {
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "checkbox",
+                  name: "missingDocuments",
+                  id: "doc-cpf",
+                  value: "cpf"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "form-check-label", attrs: { for: "doc-cpf" } },
+                [_vm._v("CPF")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-check form-check-inline" }, [
+              _c("input", {
+                staticClass: "form-check-input",
+                attrs: {
+                  type: "checkbox",
+                  name: "missingDocuments",
+                  id: "doc-ctps",
+                  value: "ctps"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "form-check-label", attrs: { for: "doc-ctps" } },
+                [_vm._v("Carteira de Trabalho (CTPS)")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("small", [
+              _vm._v(
+                "Indique acima quais documentos estão faltando ao indivíduo."
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "fld-test" } }, [
+            _vm._v("Demo Campo RADIO OPTIONS")
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("div", { staticClass: "form-radio form-radio-inline" }, [
+              _c("input", {
+                staticClass: "form-radio-input",
+                attrs: {
+                  type: "radio",
+                  name: "familyIncome",
+                  id: "income-upTo500",
+                  value: "upTo500"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-radio-label",
+                  attrs: { for: "income-upTo500" }
+                },
+                [_vm._v("até R$ 500 / mês")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-radio form-radio-inline" }, [
+              _c("input", {
+                staticClass: "form-radio-input",
+                attrs: {
+                  type: "radio",
+                  name: "familyIncome",
+                  id: "income-500to1000",
+                  value: "500to1000"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-radio-label",
+                  attrs: { for: "income-500to1000" }
+                },
+                [_vm._v("R$ 500 a R$ 1.000 / mês")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-radio form-radio-inline" }, [
+              _c("input", {
+                staticClass: "form-radio-input",
+                attrs: {
+                  type: "radio",
+                  name: "familyIncome",
+                  id: "income-over1000",
+                  value: "over1000"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-radio-label",
+                  attrs: { for: "income-over1000" }
+                },
+                [_vm._v("acima de R$ 1.000 / mês")]
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-footer" }, [
+        _c(
+          "a",
+          { staticClass: "btn btn-primary pull-right", attrs: { href: "#" } },
+          [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Salvar dados")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-12585fda", module.exports)
+  }
+}
+
+/***/ }),
+/* 264 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+	data: function data() {
+		return {
+			openCategory: 'IPM'
+		};
+	}
+
+});
 
 /***/ })
 /******/ ]);

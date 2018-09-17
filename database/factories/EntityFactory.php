@@ -38,6 +38,7 @@ $factory->define(\SGPS\Entity\Flag::class, function (Faker $faker) {
 		'id' => $faker->uuid,
 		'code' => $faker->ean8,
 		'name' => $faker->words(3, true),
+		'entity_type' => $faker->randomElement(['family', 'residence', 'person']),
 		'description' => $faker->paragraph,
 		'triggers' => null,
 		'is_visible' => true,
