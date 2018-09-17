@@ -3,7 +3,7 @@
 @section('main')
 	<div is="family-view" inline-template>
 		<div class="case__container">
-			<div class="case__topbar">
+			<div class="sgps__topbar">
 
 				<div class="row">
 					<div class="col-md-9">
@@ -19,15 +19,15 @@
 
 			</div>
 
-			<div class="case__sidebar">
+			<div class="sgps__sidebar">
 
-				<a @click="openTab = 'overview'" :class="{active: openTab === 'overview'}" class="case__sidebar-link"><i class="fa fa-info-circle"></i> Visão Geral</a>
-				<a @click="openTab = 'discussion'" :class="{active: openTab === 'discussion'}" class="case__sidebar-link"><i class="fa fa-comments"></i> Discussão</a>
-				<a @click="openTab = 'tags'" :class="{active: openTab === 'tags'}" class="case__sidebar-link"><i class="fa fa-tags"></i> Etiquetas</a>
+				<a @click="openTab = 'overview'" :class="{active: openTab === 'overview'}" class="sgps__sidebar-link"><i class="fa fa-info-circle"></i> Visão Geral</a>
+				<a @click="openTab = 'discussion'" :class="{active: openTab === 'discussion'}" class="sgps__sidebar-link"><i class="fa fa-comments"></i> Discussão</a>
+				<a @click="openTab = 'tags'" :class="{active: openTab === 'tags'}" class="sgps__sidebar-link"><i class="fa fa-tags"></i> Etiquetas</a>
 
 				<hr />
 
-				<a @click="openTab = 'residence'" :class="{active: openTab === 'residence'}" class="case__sidebar-link"><i class="fa fa-home"></i> Domicílio</a>
+				<a @click="openTab = 'residence'" :class="{active: openTab === 'residence'}" class="sgps__sidebar-link"><i class="fa fa-home"></i> Domicílio</a>
 
 				<div class="tree__container">
 					<a @click="openTab = 'family'" :class="{active: openTab === 'family'}" class="tree__leaf"><i class="fa fa-sitemap"></i> Família</a>
@@ -40,7 +40,7 @@
 
 			</div>
 
-			<div class="case__detail">
+			<div class="sgps">
 
 				<div v-if="openTab === 'overview'">
 					@include('families.panel_overview', ['family' => $family])

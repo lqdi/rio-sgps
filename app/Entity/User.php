@@ -61,7 +61,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	protected $fillable = [
 		'name',
 		'email',
-		'password',
 		'group_id',
 		'registration_number',
 		'cpf',
@@ -77,6 +76,24 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—
+
+	/**
+	 * Updates the hashed password for the user.
+	 * Does not persist the change.
+	 * @param string $password
+	 */
+	public function setPassword(string $password) {
+		$this->password = password_hash($password, PASSWORD_DEFAULT);
+	}
+
+	/**
+	 * Checks if a given password matches the hash
+	 * @param string $password
+	 * @return bool
+	 */
+	public function validatePassword(string $password) : bool {
+		return password_verify($password, $this->password);
+	}
 
 	/**
 	 * Gets the JWT token for this user

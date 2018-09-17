@@ -17,7 +17,22 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/alerts/{family}', 'Web\AlertsController@show')->name('alerts.show');
 
 	Route::get('/reports', 'Web\AlertsController@index')->name('reports.index');
-	Route::get('/admin', 'Web\AdminController@index')->name('admin.index');
+
+	Route::group(['prefix' => 'admin'], function() { // TODO: middleware to filter out admins
+		Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard.index');
+
+		Route::get('/admin/users', 'Admin\UsersController@index')->name('admin.users.index');
+		Route::get('/admin/users/new', 'Admin\UsersController@create')->name('admin.users.create');
+		Route::get('/admin/users/{user}', 'Admin\UsersController@show')->name('admin.users.show');
+		Route::post('/admin/users/{user?}', 'Admin\UsersController@save')->name('admin.users.save');
+		Route::delete('/admin/users/{user}', 'Admin\UsersController@destroy')->name('admin.users.destroy');
+
+		Route::get('/admin/groups', 'Admin\GroupsController@index')->name('admin.groups.index');
+
+		Route::get('/admin/flags', 'Admin\FlagsController@index')->name('admin.flags.index');
+
+		Route::get('/admin/settings', 'Admin\SettingsController@index')->name('admin.settings.index');
+	});
 
 
 });

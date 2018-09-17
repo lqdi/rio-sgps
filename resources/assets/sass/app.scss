@@ -1,4 +1,4 @@
-.case__topbar {
+.sgps__topbar {
 	position: fixed;
 	top: 55px;
 	left: 0;
@@ -7,9 +7,13 @@
 	padding: 5px 15px;
 	box-shadow: 0 1px 3px rgba(black, 0.2);
 	z-index: 5000;
+
+	&.topbar--compact {
+		height: 60px;
+	}
 }
 
-.case__sidebar {
+.sgps__sidebar {
 	position: fixed;
 	top: 55px + 100px;
 	left: 0;
@@ -20,7 +24,11 @@
 	background-color: #f8f9fa;
 	box-shadow: inset -1px 0 0 rgba(black, 0.1);
 
-	.case__sidebar-link {
+	&.topbar--compact {
+		top: 55px + 60px;
+	}
+
+	.sgps__sidebar-link {
 		display: block;
 		height: 45px;
 		line-height: 45px;
@@ -51,7 +59,7 @@
 
 }
 
-.case__detail {
+.sgps {
 	position: fixed;
 	top: 55px + 100px;
 	left: 300px;
