@@ -33,4 +33,12 @@ class FamiliesController extends Controller {
 
 	}
 
+	public function show(Family $family) {
+
+		$family->load(['members', 'residence', 'personInCharge', 'flags']);
+
+		return view('families.families_view', compact('family'));
+
+	}
+
 }

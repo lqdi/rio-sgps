@@ -1,0 +1,102 @@
+<?php
+/**
+ * rio-sgps
+ * Comment.php
+ *
+ * Copyright (c) LQDI Digital
+ * www.lqdi.net - 2018
+ *
+ * @author Aryel Tupinamba <aryel.tupinamba@lqdi.net>
+ *
+ * Created at: 17/09/2018, 16:58
+ */
+
+namespace SGPS\Entity;
+
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use SGPS\Traits\IndexedByUUID;
+
+/**
+ * Class Comment
+ * @package SGPS\Entity
+ *
+ * @property string $id
+ * @property string $entity_id
+ * @property string $entity_type
+ * @property string $user_id
+ * @property string $message
+ * @property object $metadata
+ *
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property Model $entity
+ * @property User $user
+ */
+class Comment extends Model {
+
+	use IndexedByUUID;
+	use SoftDeletes;
+
+	protected $table = 'comments';
+	protected $fillable = [
+		'entity_id',
+		'entity_type',
+		'user_id',
+		'message',
+	];
+
+	protected $casts = [
+		'metadata' => 'object',
+	];
+
+	public function entity() {
+		return $this->morphTo('entity');
+	}
+
+	public function user() {
+		return $this->hasOne(User::class, 'id', 'user_id');
+	}
+
+	/**
+	 * Fetches a thread of comments attached to a specific entity.
+	 * @param string $type The entity type.
+	 * @param string $id The entity ID.
+	 * @param int $max The max records to return (default: 24)
+	 * @param int $offset The records' offset (default: 0)
+	 * @return Comment[]|Collection
+	 */
+	public static function fetchThreadFromEntity(string $type, string $id, int $max = 24, int $offset = 0) {
+		return self::query()
+			->where('entity_type', $type)
+			->where('entity_id', $id)
+			->with(['user'])
+			->skip($offset)
+			->take($max)
+			->orderBy('created_at', 'desc')
+			->get();
+	}
+
+	/**
+	 * Posts a comment in an entity thread.
+	 * @param string $type The entity type.
+	 * @param string $id The entity ID.
+	 * @param User $post The poster.
+	 * @param string $message The message.
+	 * @return Comment
+	 */
+	public static function post(string $type, string $id, User $post, string $message) : Comment {
+		return self::create([
+			'entity_type' => $type,
+			'entity_id' => $id,
+			'user_id' => $post->id,
+			'message' => $message
+		]);
+	}
+
+}

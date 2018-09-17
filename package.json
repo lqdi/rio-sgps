@@ -23,6 +23,7 @@
         "bootstrap-vue": "^2.0.0-rc.11",
         "vue-modal-dialogs": "^3.0.0",
         "vue-router": "^3.0.1",
+        "vue-spinner": "^1.0.3",
         "vuex": "^3.0.1"
     }
 }

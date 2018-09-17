@@ -23,6 +23,8 @@ use SGPS\Traits\IndexedByUUID;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\JWTAuth;
 
 /**
  * Class User
@@ -43,7 +45,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  *
  * @property Group[]|Collection $groups
  */
-class User extends Model implements AuthenticatableContract, AuthorizableContract {
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject {
 
 	use Authenticatable;
 	use Authorizable;
@@ -72,5 +74,33 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 	public function groups() {
 		return $this->belongsToMany(Group::class, 'user_groups');
+	}
+
+	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—
+
+	/**
+	 * Gets the JWT token for this user
+	 * @return string
+	 */
+	public function toJWT() : string {
+		return auth('api')->tokenById($this->id);
+	}
+
+	/**
+	 * Get the identifier that will be stored in the subject claim of the JWT.
+	 *
+	 * @return mixed
+	 */
+	public function getJWTIdentifier() {
+		return $this->id;
+	}
+
+	/**
+	 * Return a key value array, containing any custom claims to be added to the JWT.
+	 *
+	 * @return array
+	 */
+	public function getJWTCustomClaims() {
+		return [];
 	}
 }

@@ -81,5 +81,5 @@
 		}));
 	@endphp
 
-	<wireframe-alert-update id="updatewnd"></wireframe-alert-update>
+	<alert-update-modal id="updatewnd"></alert-update-modal>
 @endsection

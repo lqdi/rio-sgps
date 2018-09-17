@@ -72,7 +72,13 @@ class Person extends Model {
 	}
 
 	public function flags() {
-		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities');
+		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities')
+			->withPivot('reference_date', 'deadline', 'flagged_by_operator_id', 'created_at');
+	}
+
+	public function getAge() {
+		// TODO: cache this?
+		return 0;
 	}
 
 }
