@@ -28,11 +28,11 @@ class CreateAdminAccount extends Command {
 		$email = $this->ask("E-mail", "dev@lqdi.net");
 		$password = $this->ask("Password", "demo");
 
-		$user = User::create([
-			'name' => $name,
-			'email' => $email,
-			'password' => password_hash($password, PASSWORD_DEFAULT),
-		]); /* @var user User */
+		$user = new User();
+		$user->name = $name;
+		$user->email = $email;
+		$user->setPassword($password);
+		$user->save();
 
 		$user->assignRole(Role::ADMIN);
 
