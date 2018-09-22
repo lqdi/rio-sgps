@@ -35,7 +35,7 @@ class AuthController extends Controller {
 				->with('error', 'invalid_credentials');
 		}
 
-		return redirect()->route('dashboard');
+		return redirect()->route('dashboard.index');
 	}
 
 	public function logout() {
