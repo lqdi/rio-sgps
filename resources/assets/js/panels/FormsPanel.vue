@@ -1,82 +1,82 @@
 <template>
-	<div class="panels__container">
+	<div class="panels__container forms__panel">
 		<div class="row">
 			<div class="col-md-3">
 				<label class="detail__label">Categorias de dados</label>
 
 				<div class="list-group mt-3">
-					<a @click="openCategory = 'IPM'" :class="{'list-group-item-primary': openCategory === 'IPM'}" class="list-group-item small p-2 list-group-item-action"><i v-b-tooltip title="Não preenchido" class="fa fa-circle text-secondary"></i> IPM</a>
-					<a @click="openCategory = 'Saúde'" :class="{'list-group-item-primary': openCategory === 'Saúde'}" class="list-group-item small p-2 list-group-item-action"><i v-b-tooltip title="Não preenchido" class="fa fa-circle text-secondary"></i> Saúde</a>
-					<a @click="openCategory = 'Educação'" :class="{'list-group-item-primary': openCategory === 'Educação'}" class="list-group-item small p-2 list-group-item-action"><i v-b-tooltip title="Não preenchido" class="fa fa-circle text-secondary"></i> Educação</a>
-					<a @click="openCategory = 'Emprego e Renda'" :class="{'list-group-item-primary': openCategory === 'Emprego e Renda'}" class="list-group-item small p-2 list-group-item-action"><i v-b-tooltip title="Não preenchido" class="fa fa-circle text-secondary"></i> Emprego e Renda</a>
-					<a @click="openCategory = 'Assistência Social'" :class="{'list-group-item-primary': openCategory === 'Assistência Social'}" class="list-group-item small p-2 list-group-item-action"><i v-b-tooltip title="Não preenchido" class="fa fa-circle text-secondary"></i> Assistência Social</a>
+					<a v-for="category in categories" @click="openCategory(category)" :class="{'list-group-item-primary': isCategoryOpen(category)}" class="list-group-item small p-2 list-group-item-action forms__category-link">
+						<i v-if="isCategoryOpen(category)" class="fa fa-circle text-success"></i>
+						<i v-if="!isCategoryOpen(category)" class="fa fa-circle text-secondary"></i>
+						<span>{{category.name}}</span>
+					</a>
 				</div>
 			</div>
 			<div class="col-md-9">
-				<label class="detail__label">Dados: <strong>{{openCategory}}</strong></label>
+				<label class="detail__label">Dados: <strong>{{view.openCategory.name}}</strong></label>
 
 				<form class="card mt-3">
 					<div class="card-body">
-						<div class="form-group">
-							<label for="fld-test">Demo Campo S/N</label>
-							<div>
-								<div class="form-radio form-radio-inline">
-									<input class="form-radio-input" type="radio" name="yesNo" id="yesNo-yes" value="yes">
-									<label class="form-radio-label" for="yesNo-yes">Sim</label>
-								</div>
-								<div class="form-radio form-radio-inline">
-									<input class="form-radio-input" type="radio" name="yesNo" id="yesNo-no" value="no">
-									<label class="form-radio-label" for="yesNo-no">Não</label>
+						<div class="form-group forms__question" v-for="question in questions">
+							<label :for="'q_' + question.id">
+								<span class="badge badge-secondary">{{question.code}}</span>
+								<strong>{{question.title}}</strong>
+							</label>
+
+							<div v-if="question.field_type === 'yesno'" class="form-control">
+								<div class="row">
+									<div class="form-radio col-md-6">
+										<input class="form-radio-input" type="radio" name="yesNo" :id="'yesno_' + question.id + '_yes'" :value="1">
+										<label class="form-radio-label" :for="'yesno_' + question.id + '_yes'">Sim</label>
+									</div>
+									<div class="form-radio col-md-6">
+										<input class="form-radio-input" type="radio" name="yesNo" :id="'yesno_' + question.id + '_no'" :value="0">
+										<label class="form-radio-label" :for="'yesno_' + question.id + '_no'">Não</label>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label for="fld-test">Demo Campo TEXT</label>
-							<input class="form-control" type="text" />
-							<small>Preencha o endereço completo, com CEP.</small>
-						</div>
 
-						<div class="form-group">
-							<label for="fld-test">Demo Campo NUM</label>
-							<input class="form-control" type="number" />
-						</div>
-
-						<div class="form-group">
-							<label for="fld-test">Demo Campo CHECKBOX OPTIONS</label>
-							<div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox" name="missingDocuments" id="doc-rg" value="rg">
-									<label class="form-check-label" for="doc-rg">RG</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox" name="missingDocuments" id="doc-cpf" value="cpf">
-									<label class="form-check-label" for="doc-cpf">CPF</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox" name="missingDocuments" id="doc-ctps" value="ctps">
-									<label class="form-check-label" for="doc-ctps">Carteira de Trabalho (CTPS)</label>
+							<div v-if="question.field_type === 'yesnonullable'" class="form-control">
+								<div class="row">
+									<div class="form-radio col-md-4">
+										<input class="form-radio-input" type="radio" name="yesNo" :id="'yesno_' + question.id + '_yes'" :value="1">
+										<label class="form-radio-label" :for="'yesno_' + question.id + '_yes'">Sim</label>
+									</div>
+									<div class="form-radio col-md-4">
+										<input class="form-radio-input" type="radio" name="yesNo" :id="'yesno_' + question.id + '_no'" :value="0">
+										<label class="form-radio-label" :for="'yesno_' + question.id + '_no'">Não</label>
+									</div>
+									<div class="form-radio col-md-4">
+										<input class="form-radio-input" type="radio" name="yesNo" :id="'yesno_' + question.id + '_null'" :value="null">
+										<label class="form-radio-label" :for="'yesno_' + question.id + '_null'">Não sabe / Não respondeu</label>
+									</div>
 								</div>
 							</div>
-							<div>
-								<small>Indique acima quais documentos estão faltando ao indivíduo.</small>
-							</div>
-						</div>
 
-						<div class="form-group">
-							<label for="fld-test">Demo Campo RADIO OPTIONS</label>
-							<div>
-								<div class="form-radio form-radio-inline">
-									<input class="form-radio-input" type="radio" name="familyIncome" id="income-upTo500" value="upTo500">
-									<label class="form-radio-label" for="income-upTo500">até R$ 500 / mês</label>
+							<div v-if="question.field_type === 'text'">
+								<input class="form-control" type="text" />
+							</div>
+
+							<div v-if="question.field_type === 'date'">
+								<input class="form-control" type="date" />
+							</div>
+
+							<div v-if="question.field_type === 'number'">
+								<input class="form-control" type="number" />
+							</div>
+
+							<div v-if="question.field_type === 'select_one'" class="form-control">
+								<div class="form-radio" v-for="(label, value) in question.field_options">
+									<input class="form-radio-input" type="radio" v-model="question.answer" :id="'rd_' + question.id + '_' + value" :value="value">
+									<label class="form-radio-label" :for="'chk_' + question.id + '_' + value">{{label}}</label>
 								</div>
-								<div class="form-radio form-radio-inline">
-									<input class="form-radio-input" type="radio" name="familyIncome" id="income-500to1000" value="500to1000">
-									<label class="form-radio-label" for="income-500to1000">R$ 500 a R$ 1.000 / mês</label>
-								</div>
-								<div class="form-radio form-radio-inline">
-									<input class="form-radio-input" type="radio" name="familyIncome" id="income-over1000" value="over1000">
-									<label class="form-radio-label" for="income-over1000">acima de R$ 1.000 / mês</label>
+							</div>
+
+							<div v-if="question.field_type === 'select_many'" class="form-control">
+								<div class="form-check">
+									<input class="form-radio-input" type="checkbox" v-model="question.answer" :id="'rd_' + question.id + '_' + value" :value="value">
+									<label class="form-radio-label" :for="'chk_' + question.id + '_' + value">{{label}}</label>
 								</div>
 							</div>
 						</div>
@@ -90,11 +90,70 @@
 	</div>
 </template>
 <script>
+	import axios from "axios";
+	import Endpoints from "../config/Endpoints";
+	import API from "../services/API";
+
 	export default {
 
+		props: ['entityType', 'entityId'],
+
 		data: () => { return {
-			openCategory: 'IPM',
-		}}
+			view: {
+				openCategory: null
+			},
+			categories: [],
+			questions: [],
+			answers: {},
+		}},
+
+		mounted() {
+			this.fetchCategories()
+				.then((categories) => {
+					this.openCategory(categories[0]);
+				})
+		},
+
+		methods: {
+
+			fetchCategories() {
+				return axios
+					.get(
+						API.url(Endpoints.Questions.FetchCategories),
+						API.headers()
+					)
+					.then((res) => {
+						this.categories = res.data.categories;
+						return this.categories;
+					})
+			},
+
+			fetchQuestionsByCategory(category) {
+				return axios
+					.get(
+						API.url(Endpoints.Questions.FetchQuestionsByEntity, {category: category.id, type: this.entityType, id: this.entityId}),
+						API.headers()
+					)
+					.then((res) => {
+						this.questions = res.data.questions;
+						return this.questions
+					})
+			},
+
+			isCategoryOpen(category) {
+				if(!this.view.openCategory) return false;
+				return category.id === this.view.openCategory.id;
+			},
+
+			openCategory(category) {
+
+				this.fetchQuestionsByCategory(category).then(() => {
+					this.view.openCategory = category;
+				})
+
+			}
+
+		}
 
 	}
 </script>

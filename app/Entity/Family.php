@@ -45,7 +45,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Person[]|Collection $members
  * @property Flag[]|Collection $flags
  */
-class Family extends Model {
+class Family extends Entity {
 
 	use IndexedByUUID;
 	use SoftDeletes;

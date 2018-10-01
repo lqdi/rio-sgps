@@ -13,4 +13,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('comments/thread/{type}/{id}', 'API\CommentsController@fetch_thread')->name('api.comments.fetch_thread');
 	Route::post('comments/thread/{type}/{id}', 'API\CommentsController@post_comment')->name('api.comments.post_comment');
 
+
+	Route::get('questions/categories', 'API\QuestionsController@fetch_categories')->name('api.questions.fetch_categories');
+	Route::get('questions/categories/{category}', 'API\QuestionsController@fetch_questions_by_category')->name('api.questions.fetch_questions_by_category');
+	Route::get('questions/{category}/{entity_type}/{entity_id}', 'API\QuestionsController@fetch_questions_for_entity')->name('api.questions.fetch_questions_for_entity');
+
 });

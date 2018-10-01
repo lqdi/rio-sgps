@@ -1,6 +1,7 @@
 export default {
 	data: () => { return {
-		openTab: 'overview',
+		currentTab: 'overview',
+		currentID: null,
 		isFamilyOpen: false,
 	}},
 
@@ -9,6 +10,14 @@ export default {
 	},
 
 	methods: {
+		isOpen: function(tab, id) {
+			if(!id) return this.currentTab === tab;
+			return this.currentTab === tab && this.currentID === id;
+		},
 
+		openTab: function(tab, id) {
+			this.currentTab = tab;
+			this.currentID = id;
+		}
 	}
 }

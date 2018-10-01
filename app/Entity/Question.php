@@ -27,7 +27,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $id
  * @property string $entity_type
  * @property string $answer_type
- * @property string $question
+ * @property string $title
  * @property string $description
  * @property \stdClass|null $options
  * @property \stdClass|null $metadata
@@ -69,7 +69,7 @@ class Question extends Model {
 		'field_options',
 		'entity_type',
 		'order',
-		'name',
+		'title',
 		'description',
 		'triggers',
 		'conditions',
@@ -86,8 +86,12 @@ class Question extends Model {
 		// TODO: implement
 	}
 
+	public function scopeOrdered($query) {
+		return $query->orderBy('order', 'asc');
+	}
+
 	public function categories() {
-		return $this->belongsToMany(QuestionCategory::class, 'category_questions', 'category_id', 'question_id');
+		return $this->belongsToMany(QuestionCategory::class, 'question_categories_pivot', 'category_id', 'question_id');
 	}
 
 }

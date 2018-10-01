@@ -10657,3 +10657,13 @@ a.text-dark:focus {
   border-top-right-radius: 0;
 }
 
+.forms__category-link {
+  cursor: pointer;
+}
+
+.forms__question {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+}
+
