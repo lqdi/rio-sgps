@@ -81,4 +81,14 @@ class Person extends Entity {
 		return 0;
 	}
 
+
+
+	public function getEntityID(): string {
+		return $this->id;
+	}
+
+	public function getEntityType(): string {
+		return 'person';
+	}
+
 }

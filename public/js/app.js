@@ -65595,6 +65595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	Questions: {
 		FetchCategories: 'api/questions/categories',
+		SaveAnswers: 'api/questions/answers/@type@/@id@',
 		FetchQuestionsByCategory: 'api/questions/categories/@category@',
 		FetchQuestionsByEntity: 'api/questions/@category@/@type@/@id@'
 	}
@@ -65893,6 +65894,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -65921,8 +65926,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		});
 	},
 
-
 	methods: {
+
 		fetchCategories: function fetchCategories() {
 			var _this2 = this;
 
@@ -65931,25 +65936,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this2.categories;
 			});
 		},
+
 		fetchQuestionsByCategory: function fetchQuestionsByCategory(category) {
 			var _this3 = this;
 
 			return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(__WEBPACK_IMPORTED_MODULE_2__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_1__config_Endpoints__["a" /* default */].Questions.FetchQuestionsByEntity, { category: category.id, type: this.entityType, id: this.entityId }), __WEBPACK_IMPORTED_MODULE_2__services_API__["a" /* default */].headers()).then(function (res) {
 				_this3.questions = res.data.questions;
+				_this3.answers = res.data.answers;
 				return _this3.questions;
 			});
 		},
+
+		saveAnswers: function saveAnswers() {
+			var _this4 = this;
+
+			return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put(__WEBPACK_IMPORTED_MODULE_2__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_1__config_Endpoints__["a" /* default */].Questions.SaveAnswers, { type: this.entityType, id: this.entityId }), { answers: this.answers }, __WEBPACK_IMPORTED_MODULE_2__services_API__["a" /* default */].headers()).then(function (res) {
+				return _this4.fetchQuestionsByCategory(_this4.view.openCategory);
+			});
+		},
+
 		isCategoryOpen: function isCategoryOpen(category) {
 			if (!this.view.openCategory) return false;
 			return category.id === this.view.openCategory.id;
 		},
+
 		openCategory: function openCategory(category) {
-			var _this4 = this;
+			var _this5 = this;
 
 			this.fetchQuestionsByCategory(category).then(function () {
-				_this4.view.openCategory = category;
+				_this5.view.openCategory = category;
 			});
 		}
+
 	}
 
 });
@@ -66003,306 +66021,554 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("label", { staticClass: "detail__label" }, [
-          _vm._v("Dados: "),
-          _c("strong", [_vm._v(_vm._s(_vm.view.openCategory.name))])
-        ]),
-        _vm._v(" "),
-        _c("form", { staticClass: "card mt-3" }, [
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            _vm._l(_vm.questions, function(question) {
-              return _c("div", { staticClass: "form-group forms__question" }, [
-                _c("label", { attrs: { for: "q_" + question.id } }, [
-                  _c("span", { staticClass: "badge badge-secondary" }, [
-                    _vm._v(_vm._s(question.code))
-                  ]),
-                  _vm._v(" "),
-                  _c("strong", [_vm._v(_vm._s(question.title))])
-                ]),
-                _vm._v(" "),
-                question.field_type === "yesno"
-                  ? _c("div", { staticClass: "form-control" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "form-radio col-md-6" }, [
-                          _c("input", {
-                            staticClass: "form-radio-input",
-                            attrs: {
-                              type: "radio",
-                              name: "yesNo",
-                              id: "yesno_" + question.id + "_yes"
-                            },
-                            domProps: { value: 1 }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-radio-label",
-                              attrs: { for: "yesno_" + question.id + "_yes" }
-                            },
-                            [_vm._v("Sim")]
-                          )
+      _vm.view.openCategory
+        ? _c("div", { staticClass: "col-md-9" }, [
+            _c("label", { staticClass: "detail__label" }, [
+              _vm._v("Dados: "),
+              _c("strong", [_vm._v(_vm._s(_vm.view.openCategory.name))])
+            ]),
+            _vm._v(" "),
+            _c("form", { staticClass: "card mt-3" }, [
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                _vm._l(_vm.questions, function(question) {
+                  return _c(
+                    "div",
+                    { staticClass: "form-group forms__question" },
+                    [
+                      _c("label", { attrs: { for: "q_" + question.id } }, [
+                        _c("span", { staticClass: "badge badge-secondary" }, [
+                          _vm._v(_vm._s(question.code))
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "form-radio col-md-6" }, [
-                          _c("input", {
-                            staticClass: "form-radio-input",
-                            attrs: {
-                              type: "radio",
-                              name: "yesNo",
-                              id: "yesno_" + question.id + "_no"
-                            },
-                            domProps: { value: 0 }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-radio-label",
-                              attrs: { for: "yesno_" + question.id + "_no" }
-                            },
-                            [_vm._v("Não")]
-                          )
-                        ])
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                question.field_type === "yesnonullable"
-                  ? _c("div", { staticClass: "form-control" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "form-radio col-md-4" }, [
-                          _c("input", {
-                            staticClass: "form-radio-input",
-                            attrs: {
-                              type: "radio",
-                              name: "yesNo",
-                              id: "yesno_" + question.id + "_yes"
-                            },
-                            domProps: { value: 1 }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-radio-label",
-                              attrs: { for: "yesno_" + question.id + "_yes" }
-                            },
-                            [_vm._v("Sim")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-radio col-md-4" }, [
-                          _c("input", {
-                            staticClass: "form-radio-input",
-                            attrs: {
-                              type: "radio",
-                              name: "yesNo",
-                              id: "yesno_" + question.id + "_no"
-                            },
-                            domProps: { value: 0 }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-radio-label",
-                              attrs: { for: "yesno_" + question.id + "_no" }
-                            },
-                            [_vm._v("Não")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-radio col-md-4" }, [
-                          _c("input", {
-                            staticClass: "form-radio-input",
-                            attrs: {
-                              type: "radio",
-                              name: "yesNo",
-                              id: "yesno_" + question.id + "_null"
-                            },
-                            domProps: { value: null }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-radio-label",
-                              attrs: { for: "yesno_" + question.id + "_null" }
-                            },
-                            [_vm._v("Não sabe / Não respondeu")]
-                          )
-                        ])
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                question.field_type === "text"
-                  ? _c("div", [
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: { type: "text" }
-                      })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                question.field_type === "date"
-                  ? _c("div", [
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: { type: "date" }
-                      })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                question.field_type === "number"
-                  ? _c("div", [
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: { type: "number" }
-                      })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                question.field_type === "select_one"
-                  ? _c(
-                      "div",
-                      { staticClass: "form-control" },
-                      _vm._l(question.field_options, function(label, value) {
-                        return _c("div", { staticClass: "form-radio" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: question.answer,
-                                expression: "question.answer"
-                              }
-                            ],
-                            staticClass: "form-radio-input",
-                            attrs: {
-                              type: "radio",
-                              id: "rd_" + question.id + "_" + value
-                            },
-                            domProps: {
-                              value: value,
-                              checked: _vm._q(question.answer, value)
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.$set(question, "answer", value)
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "form-radio-label",
-                              attrs: { for: "chk_" + question.id + "_" + value }
-                            },
-                            [_vm._v(_vm._s(label))]
-                          )
-                        ])
-                      })
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                question.field_type === "select_many"
-                  ? _c("div", { staticClass: "form-control" }, [
-                      _c("div", { staticClass: "form-check" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: question.answer,
-                              expression: "question.answer"
-                            }
-                          ],
-                          staticClass: "form-radio-input",
-                          attrs: {
-                            type: "checkbox",
-                            id: "rd_" + question.id + "_" + _vm.value
-                          },
-                          domProps: {
-                            value: _vm.value,
-                            checked: Array.isArray(question.answer)
-                              ? _vm._i(question.answer, _vm.value) > -1
-                              : question.answer
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = question.answer,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = _vm.value,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      question,
-                                      "answer",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      question,
-                                      "answer",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
+                        _c("strong", [_vm._v(_vm._s(question.title))])
+                      ]),
+                      _vm._v(" "),
+                      question.field_type === "yesno"
+                        ? _c("div", { staticClass: "form-control" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "form-radio col-md-6" },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.answers[question.id],
+                                        expression: "answers[question.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-radio-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "yesno_" + question.id,
+                                      id: "yesno_" + question.id + "_yes"
+                                    },
+                                    domProps: {
+                                      value: true,
+                                      checked: _vm._q(
+                                        _vm.answers[question.id],
+                                        true
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(_vm.answers, question.id, true)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-radio-label",
+                                      attrs: {
+                                        for: "yesno_" + question.id + "_yes"
+                                      }
+                                    },
+                                    [_vm._v("Sim")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-radio col-md-6" },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.answers[question.id],
+                                        expression: "answers[question.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-radio-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "yesno_" + question.id,
+                                      id: "yesno_" + question.id + "_no"
+                                    },
+                                    domProps: {
+                                      value: false,
+                                      checked: _vm._q(
+                                        _vm.answers[question.id],
+                                        false
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(
+                                          _vm.answers,
+                                          question.id,
+                                          false
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-radio-label",
+                                      attrs: {
+                                        for: "yesno_" + question.id + "_no"
+                                      }
+                                    },
+                                    [_vm._v("Não")]
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "yesnonullable"
+                        ? _c("div", { staticClass: "form-control" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "form-radio col-md-4" },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.answers[question.id],
+                                        expression: "answers[question.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-radio-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "yesno_" + question.id,
+                                      id: "yesno_" + question.id + "_yes"
+                                    },
+                                    domProps: {
+                                      value: true,
+                                      checked: _vm._q(
+                                        _vm.answers[question.id],
+                                        true
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(_vm.answers, question.id, true)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-radio-label",
+                                      attrs: {
+                                        for: "yesno_" + question.id + "_yes"
+                                      }
+                                    },
+                                    [_vm._v("Sim")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-radio col-md-4" },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.answers[question.id],
+                                        expression: "answers[question.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-radio-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "yesno_" + question.id,
+                                      id: "yesno_" + question.id + "_no"
+                                    },
+                                    domProps: {
+                                      value: false,
+                                      checked: _vm._q(
+                                        _vm.answers[question.id],
+                                        false
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(
+                                          _vm.answers,
+                                          question.id,
+                                          false
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-radio-label",
+                                      attrs: {
+                                        for: "yesno_" + question.id + "_no"
+                                      }
+                                    },
+                                    [_vm._v("Não")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-radio col-md-4" },
+                                [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.answers[question.id],
+                                        expression: "answers[question.id]"
+                                      }
+                                    ],
+                                    staticClass: "form-radio-input",
+                                    attrs: {
+                                      type: "radio",
+                                      name: "yesno_" + question.id,
+                                      id: "yesno_" + question.id + "_null"
+                                    },
+                                    domProps: {
+                                      value: null,
+                                      checked: _vm._q(
+                                        _vm.answers[question.id],
+                                        null
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(_vm.answers, question.id, null)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-radio-label",
+                                      attrs: {
+                                        for: "yesno_" + question.id + "_null"
+                                      }
+                                    },
+                                    [_vm._v("Não sabe / Não respondeu")]
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "text"
+                        ? _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.answers[question.id],
+                                  expression: "answers[question.id]"
                                 }
-                              } else {
-                                _vm.$set(question, "answer", $$c)
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.answers[question.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.answers,
+                                    question.id,
+                                    $event.target.value
+                                  )
+                                }
                               }
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-radio-label",
-                            attrs: {
-                              for: "chk_" + question.id + "_" + _vm.value
-                            }
-                          },
-                          [_vm._v(_vm._s(_vm.label))]
-                        )
-                      ])
-                    ])
-                  : _vm._e()
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "date"
+                        ? _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.answers[question.id],
+                                  expression: "answers[question.id]"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "date" },
+                              domProps: { value: _vm.answers[question.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.answers,
+                                    question.id,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "numeric"
+                        ? _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.answers[question.id],
+                                  expression: "answers[question.id]"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "tel" },
+                              domProps: { value: _vm.answers[question.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.answers,
+                                    question.id,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "number"
+                        ? _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.answers[question.id],
+                                  expression: "answers[question.id]"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "number" },
+                              domProps: { value: _vm.answers[question.id] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.answers,
+                                    question.id,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "select_one"
+                        ? _c(
+                            "div",
+                            { staticClass: "form-control" },
+                            _vm._l(question.field_options, function(
+                              label,
+                              value
+                            ) {
+                              return _c("div", { staticClass: "form-radio" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.answers[question.id],
+                                      expression: "answers[question.id]"
+                                    }
+                                  ],
+                                  staticClass: "form-radio-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "rd_" + question.id + "_" + value
+                                  },
+                                  domProps: {
+                                    value: value,
+                                    checked: _vm._q(
+                                      _vm.answers[question.id],
+                                      value
+                                    )
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.$set(_vm.answers, question.id, value)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "form-radio-label",
+                                    attrs: {
+                                      for: "rd_" + question.id + "_" + value
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(label))]
+                                )
+                              ])
+                            })
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      question.field_type === "select_many"
+                        ? _c("div", { staticClass: "form-control" }, [
+                            _c("div", { staticClass: "form-check" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.answers[question.id],
+                                    expression: "answers[question.id]"
+                                  }
+                                ],
+                                staticClass: "form-radio-input",
+                                attrs: {
+                                  type: "checkbox",
+                                  id: "chk_" + question.id + "_" + _vm.value
+                                },
+                                domProps: {
+                                  value: _vm.value,
+                                  checked: Array.isArray(
+                                    _vm.answers[question.id]
+                                  )
+                                    ? _vm._i(
+                                        _vm.answers[question.id],
+                                        _vm.value
+                                      ) > -1
+                                    : _vm.answers[question.id]
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = _vm.answers[question.id],
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = _vm.value,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.answers,
+                                            question.id,
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.answers,
+                                            question.id,
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(_vm.answers, question.id, $$c)
+                                    }
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "form-radio-label",
+                                  attrs: {
+                                    for: "chk_" + question.id + "_" + _vm.value
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.label))]
+                              )
+                            ])
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                })
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary pull-right",
+                    on: {
+                      click: function($event) {
+                        _vm.saveAnswers()
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-upload" }),
+                    _vm._v(" Salvar dados")
+                  ]
+                )
               ])
-            })
-          ),
-          _vm._v(" "),
-          _vm._m(0)
-        ])
-      ])
+            ])
+          ])
+        : _vm._e()
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "a",
-        { staticClass: "btn btn-primary pull-right", attrs: { href: "#" } },
-        [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Salvar dados")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

@@ -17,7 +17,11 @@ namespace SGPS\Entity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class Entity extends Model {
+/**
+ * Class Entity
+ * @package SGPS\Entity
+ */
+abstract class Entity extends Model {
 
 	public static function getQuery(string $type) : ?Builder {
 		switch($type) {
@@ -39,9 +43,12 @@ class Entity extends Model {
 		return $this->morphMany(QuestionAnswer::class, 'entity');
 	}
 
+	abstract public function getEntityID() : string;
+	abstract public function getEntityType() : string;
+
 	public function getAnswers(?array $questionIDs = null) {
 		return $this->answers()
-			->whereIn('id', $questionIDs)
+			->whereIn('question_id', $questionIDs)
 			->get();
 	}
 

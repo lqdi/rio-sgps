@@ -15,6 +15,8 @@ namespace SGPS\Http\Controllers\API;
 
 
 use SGPS\Entity\Entity;
+use SGPS\Entity\Question;
+use SGPS\Entity\QuestionAnswer;
 use SGPS\Entity\QuestionCategory;
 use SGPS\Http\Controllers\Controller;
 
@@ -50,12 +52,35 @@ class QuestionsController extends Controller {
 		$entity = Entity::fetchByID($entity_type, $entity_id);
 
 		$questionIDs = $questions->pluck('id')->toArray();
-		$answers = $entity->getAnswers($questionIDs);
+		$answers = $entity->getAnswers($questionIDs)
+			->keyBy('question_id')
+			->map(function ($answer) { /* @var $answer \SGPS\Entity\QuestionAnswer */
+				return $answer->getValue();
+			})
+			->toArray();
 
 		return $this->api_success([
 			'questions' => $questions,
-			'answers' => $answers,
+			'answers' => (object) $answers,
 		]);
+
+	}
+
+	public function save_answers(string $entity_type, string $entity_id) {
+
+		$answers = request('answers');
+		$entity = Entity::fetchByID($entity_type, $entity_id);
+
+		$questions = Question::query()
+			->whereIn('id', array_keys($answers))
+			->get()
+			->keyBy('id');
+
+		foreach($answers as $questionID => $answerValue) {
+			QuestionAnswer::setAnswerForEntity($entity, $questions[$questionID] ?? null, $answerValue);
+		}
+
+		return $this->api_success();
 
 	}
 

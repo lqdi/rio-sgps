@@ -23,5 +23,5 @@
 
 	<hr />
 
-	<forms-panel entity-type="person" entity-id="{{$member->id}}"></forms-panel>
+	<forms-panel key="forms_person_{{$member->id}}" entity-type="person" entity-id="{{$member->id}}"></forms-panel>
 </div>

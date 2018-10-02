@@ -25,11 +25,17 @@ use SGPS\Traits\IndexedByUUID;
  * @package SGPS\Entity
  *
  * @property string $id
+ * @property string $code
+ * @property string $field_type
+ * @property string $field_settings
+ * @property string $field_options
  * @property string $entity_type
- * @property string $answer_type
+ * @property string $order
  * @property string $title
  * @property string $description
  * @property \stdClass|null $options
+ * @property \stdClass|null $triggers
+ * @property \stdClass|null $conditions
  * @property \stdClass|null $metadata
  *
  * @property Carbon|null $created_at
@@ -44,7 +50,9 @@ class Question extends Model {
 	use SoftDeletes;
 
 	const TYPE_TEXT = 'text';
+	const TYPE_NUMERIC = 'numeric';
 	const TYPE_YESNO = 'yesno';
+	const TYPE_YESNO_NULLABLE = 'yesnonullable';
 	const TYPE_SELECT_ONE = 'select_one';
 	const TYPE_SELECT_MANY = 'select_many';
 	const TYPE_NUMBER = 'number';
@@ -52,7 +60,9 @@ class Question extends Model {
 	
 	const TYPES = [
 		self::TYPE_TEXT,
+		self::TYPE_NUMERIC,
 		self::TYPE_YESNO,
+		self::TYPE_YESNO_NULLABLE,
 		self::TYPE_SELECT_ONE,
 		self::TYPE_SELECT_MANY,
 		self::TYPE_NUMBER,

@@ -75,4 +75,84 @@ class QuestionAnswer extends Model {
 		return $this->morphTo('entity');
 	}
 
+	public function setValue($value) {
+		switch($this->type) {
+			case Question::TYPE_TEXT:
+			case Question::TYPE_NUMERIC:
+			case Question::TYPE_SELECT_ONE:
+				return $this->value_string = strval($value);
+
+			case Question::TYPE_DATE:
+				if(is_object($value)) {
+					return $this->value_string = $value->format('Y-m-d');
+				}
+
+				return $this->value_string = Carbon::parse($value)->format('Y-m-d');
+
+			case Question::TYPE_NUMBER:
+			case Question::TYPE_YESNO:
+				return $this->value_integer = intval($value);
+
+			case Question::TYPE_YESNO_NULLABLE:
+				if($value === null || $value === 'null') {
+					return $this->value_integer = null;
+				}
+
+				return $this->value_integer = intval($value);
+
+			case Question::TYPE_SELECT_MANY:
+				return $this->value_json = (array) $value;
+
+			default:
+				return $this->value_json = $value;
+		}
+
+	}
+
+	public function getValue() {
+		switch($this->type) {
+			case Question::TYPE_TEXT:
+			case Question::TYPE_NUMERIC:
+			case Question::TYPE_SELECT_ONE:
+			case Question::TYPE_DATE:
+				return strval($this->value_string);
+
+			case Question::TYPE_NUMBER:
+				return intval($this->value_integer);
+
+			case Question::TYPE_YESNO:
+			case Question::TYPE_YESNO_NULLABLE:
+				if($this->value_integer === null) return null;
+				return boolval($this->value_integer);
+
+			case Question::TYPE_SELECT_MANY:
+			default:
+				return (array) $this->value_json;
+		}
+	}
+
+	public function updateValue($value) : void {
+		$this->setValue($value);
+		$this->save();
+	}
+
+	public static function fetchOrCreateForEntityQuestion(Entity $entity, Question $question) : QuestionAnswer {
+		return self::query()
+			->where('entity_type', $entity->getEntityType())
+			->where('entity_id', $entity->id)
+			->where('question_id', $question->id)
+			->firstOrNew([
+				'entity_type' => $entity->getEntityType(),
+				'entity_id' => $entity->getEntityID(),
+				'question_id' => $question->id,
+				'question_code' => $question->code,
+				'type' => $question->field_type,
+			]);
+	}
+
+	public static function setAnswerForEntity(Entity $entity, Question $question, $answerValue) : void {
+		$answer = self::fetchOrCreateForEntityQuestion($entity, $question);
+		$answer->updateValue($answerValue);
+	}
+
 }

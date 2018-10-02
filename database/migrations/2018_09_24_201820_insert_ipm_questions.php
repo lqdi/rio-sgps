@@ -61,21 +61,21 @@ class InsertIpmQuestions extends Migration
 			],
 //		    'CE3' => [
 //		    	'code' => 'CE3',
-//			    'field_type' => 'number',
+//			    'field_type' => 'numeric',
 //			    'title' => 'Código do Domicílio',
 //			    'conditions' => null,
 //			    'field_options' => null,
 //		    ],
 //			'CE4' => [
 //				'code' => 'CE4',
-//				'field_type' => 'number',
+//				'field_type' => 'numeric',
 //				'title' => 'Geocod',
 //				'conditions' => null,
 //				'field_options' => null,
 //			],
 			'CE5' => [
 				'code' => 'CE5',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'Setor Censitario',
 				'conditions' => null,
 				'field_options' => null,
@@ -124,7 +124,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE12' => [
 				'code' => 'CE12',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'CAP',
 				'conditions' => null,
 				'field_options' => null,
@@ -159,7 +159,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE17' => [
 				'code' => 'CE17',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'CASDH',
 				'conditions' => null,
 				'field_options' => null,
@@ -255,13 +255,13 @@ class InsertIpmQuestions extends Migration
 				'conditions' => null,
 				'field_options' => null,
 			],
-			'CE31' => [
-				'code' => 'CE31',
-				'field_type' => 'number',
-				'title' => 'Código da família',
-				'conditions' => null,
-				'field_options' => null,
-			],
+//			'CE31' => [
+//				'code' => 'CE31',
+//				'field_type' => 'number',
+//				'title' => 'Código da família',
+//				'conditions' => null,
+//				'field_options' => null,
+//			],
 			'CE32' => [
 				'code' => 'CE32',
 				'field_type' => 'number',
@@ -332,7 +332,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE41' => [
 				'code' => 'CE41',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'Numero do NIS do responsavel',
 				'conditions' => 'pedir formato número NIS',
 				'field_options' => null,
@@ -378,13 +378,13 @@ class InsertIpmQuestions extends Migration
 					99 => 'NS/NR',
 				]
 			],
-			'CE47' => [
-				'code' => 'CE47',
-				'field_type' => 'number',
-				'title' => 'codigo do individuo',
-				'conditions' => null,
-				'field_options' => null,
-			],
+//			'CE47' => [
+//				'code' => 'CE47',
+//				'field_type' => 'number',
+//				'title' => 'codigo do individuo',
+//				'conditions' => null,
+//				'field_options' => null,
+//			],
 			'CE48' => [
 				'code' => 'CE48',
 				'field_type' => 'text',
@@ -474,7 +474,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE57' => [
 				'code' => 'CE57',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'Numero do RG (condição de o individuo é o responsavel-(CE50) e possui o documento-(CE56))',
 				'conditions' => [
 					['CE50', 'eq', 1],
@@ -491,7 +491,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE59' => [
 				'code' => 'CE59',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'Numero do CPF (condição de o individuo é o responsavel-(CE50) e possui o documento - (CE58))',
 				'conditions' => [
 					['CE50', 'eq', 1],
@@ -616,20 +616,20 @@ class InsertIpmQuestions extends Migration
 				'conditions' => null,
 				'field_options' => null,
 			],
-			'CE72' => [
-				'code' => 'CE72',
-				'field_type' => 'text',
-				'title' => 'Login',
-				'conditions' => null,
-				'field_options' => null,
-			],
-			'CE73' => [
-				'code' => 'CE73',
-				'field_type' => 'number',
-				'title' => 'Senha',
-				'conditions' => null,
-				'field_options' => null,
-			],
+//			'CE72' => [
+//				'code' => 'CE72',
+//				'field_type' => 'text',
+//				'title' => 'Login',
+//				'conditions' => null,
+//				'field_options' => null,
+//			],
+//			'CE73' => [
+//				'code' => 'CE73',
+//				'field_type' => 'numeric',
+//				'title' => 'Senha',
+//				'conditions' => null,
+//				'field_options' => null,
+//			],
 			'CE74' => [
 				'code' => 'CE74',
 				'field_type' => 'date',
@@ -858,7 +858,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE99' => [
 				'code' => 'CE99',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'Número de matrícula',
 				'conditions' => [
 					['CE97', 'eq', 1],
@@ -1165,7 +1165,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE133' => [
 				'code' => 'CE133',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'CNS',
 				'conditions' => null,
 				'field_options' => null,
@@ -1179,7 +1179,7 @@ class InsertIpmQuestions extends Migration
 			],
 			'CE135' => [
 				'code' => 'CE135',
-				'field_type' => 'number',
+				'field_type' => 'numeric',
 				'title' => 'NSEC - Núcleo de Saúde na Escola e na Creche',
 				'conditions' => null,
 				'field_options' => null,
@@ -1195,14 +1195,14 @@ class InsertIpmQuestions extends Migration
 				'assistencia' => [],
 			],
 			'family' => [
-				'ipm' => ['CE31', 'CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE71', 'CE72', 'CE73', 'CE74'],
+				'ipm' => ['CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE71', 'CE74'],
 				'saude' => ['CE75', 'CE76', 'CE78', 'CE79', 'CE80', 'CE81', 'CE82', 'CE83'],
 				'educacao' => ['CE96'],
 				'emprego' => [],
 				'assistencia' => ['CE108', 'CE109', 'CE78', 'CE79', 'CE80', 'CE110', 'CE41', 'CE34', 'CE112', 'CE113', 'CE114', 'CE115', 'CE116', 'CE124', 'CE125', 'CE126', 'CE127', 'CE128', 'CE46', 'CE129', 'CE35', 'CE81'],
 			],
 			'person' => [
-				'ipm' => ['CE31', 'CE47', 'CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE63', 'CE70'],
+				'ipm' => ['CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE63', 'CE70'],
 				'saude' => ['CE86', 'CE133', 'CE87', 'CE54', 'CE89', 'CE90', 'CE91', 'CE92', 'CE93', 'CE94', 'CE95'],
 				'educacao' => ['CE97', 'CE98', 'CE99', 'CE100', 'CE101', 'CE102', 'CE66', 'CE67', 'CE68', 'CE69'],
 				'emprego' => ['CE103', 'CE104', 'CE105', 'CE106', 'CE107'],

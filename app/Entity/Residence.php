@@ -79,4 +79,14 @@ class Residence extends Entity {
 			->withPivot('reference_date', 'deadline', 'flagged_by_operator_id', 'created_at');
 	}
 
+
+
+	public function getEntityID(): string {
+		return $this->id;
+	}
+
+	public function getEntityType(): string {
+		return 'residence';
+	}
+
 }
