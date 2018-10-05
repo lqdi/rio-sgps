@@ -88,8 +88,8 @@ class Question extends Model {
 	protected $casts = [
 		'field_settings' => 'object',
 		'field_options' => 'object',
-		'triggers' => 'object',
-		'conditions' => 'object',
+		'triggers' => 'array',
+		'conditions' => 'array',
 	];
 
 	public function answers() {

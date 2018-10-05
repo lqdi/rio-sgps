@@ -39,6 +39,12 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::post('/admin/flags/{flag?}', 'Admin\FlagsController@save')->name('admin.flags.save');
 		Route::delete('/admin/flags/{flag}', 'Admin\FlagsController@destroy')->name('admin.flags.destroy');
 
+		Route::get('/admin/questions', 'Admin\QuestionsController@index')->name('admin.questions.index');
+		Route::get('/admin/questions/new', 'Admin\QuestionsController@create')->name('admin.questions.create');
+		Route::get('/admin/questions/{question}', 'Admin\QuestionsController@show')->name('admin.questions.show');
+		Route::post('/admin/questions/{question?}', 'Admin\QuestionsController@save')->name('admin.questions.save');
+		Route::delete('/admin/questions/{question}', 'Admin\QuestionsController@destroy')->name('admin.questions.destroy');
+
 		Route::get('/admin/settings', 'Admin\SettingsController@index')->name('admin.settings.index');
 	});
 
