@@ -51,9 +51,9 @@ class QuestionsController extends Controller {
 
 		$entity = Entity::fetchByID($entity_type, $entity_id);
 
-		$questionIDs = $questions->pluck('id')->toArray();
-		$answers = $entity->getAnswers($questionIDs)
-			->keyBy('question_id')
+		//$questionIDs = $questions->pluck('id')->toArray();
+		$answers = $entity->getAnswers()
+			->keyBy('question_code')
 			->map(function ($answer) { /* @var $answer \SGPS\Entity\QuestionAnswer */
 				return $answer->getValue();
 			})
@@ -72,12 +72,12 @@ class QuestionsController extends Controller {
 		$entity = Entity::fetchByID($entity_type, $entity_id);
 
 		$questions = Question::query()
-			->whereIn('id', array_keys($answers))
+			->whereIn('code', array_keys($answers))
 			->get()
-			->keyBy('id');
+			->keyBy('code');
 
-		foreach($answers as $questionID => $answerValue) {
-			QuestionAnswer::setAnswerForEntity($entity, $questions[$questionID] ?? null, $answerValue);
+		foreach($answers as $questionCode => $answerValue) {
+			QuestionAnswer::setAnswerForEntity($entity, $questions[$questionCode] ?? null, $answerValue);
 		}
 
 		return $this->api_success();

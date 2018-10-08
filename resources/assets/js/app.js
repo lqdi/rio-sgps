@@ -1,5 +1,8 @@
 require('./bootstrap');
 
+const moment = require('moment');
+require('moment/locale/pt-br');
+
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 
@@ -10,6 +13,7 @@ import FamilyView from "./controllers/FamilyView";
 window.Vue = Vue;
 
 Vue.use(BootstrapVue);
+Vue.use(require('vue-moment'), {moment});
 
 // Components
 Vue.component('flags-filter-modal', require('./components/FlagsFilterModal.vue'));

@@ -47,9 +47,13 @@ abstract class Entity extends Model {
 	abstract public function getEntityType() : string;
 
 	public function getAnswers(?array $questionIDs = null) {
-		return $this->answers()
-			->whereIn('question_id', $questionIDs)
-			->get();
+		$q = $this->answers();
+
+		if($questionIDs !== null) {
+			$q->whereIn('question_id', $questionIDs);
+		}
+
+		return $q->get();
 	}
 
 }
