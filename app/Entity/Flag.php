@@ -33,6 +33,8 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $description
  * @property string $triggers
  * @property string $is_visible
+ * @property integer $default_deadline
+ * @property string $default_assigned_group_id
  *
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -56,6 +58,12 @@ class Flag extends Model {
 		'description',
 		'triggers',
 		'is_visible',
+		'default_deadline',
+		'default_assigned_group_id',
+	];
+
+	protected $casts = [
+		'default_deadline' => 'integer',
 	];
 
 	public function families() {

@@ -42,7 +42,6 @@ use SGPS\Traits\IndexedByUUID;
  *
  * @property Residence $residence
  * @property Family $family
- * @property Flag[]|Collection $flags
  */
 class Person extends Entity {
 
@@ -69,11 +68,6 @@ class Person extends Entity {
 
 	public function family() {
 		return $this->hasOne(Family::class, 'id', 'family_id');
-	}
-
-	public function flags() {
-		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities')
-			->withPivot('reference_date', 'deadline', 'flagged_by_operator_id', 'created_at');
 	}
 
 	public function getAge() {

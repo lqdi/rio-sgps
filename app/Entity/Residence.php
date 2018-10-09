@@ -41,7 +41,6 @@ use SGPS\Traits\IndexedByUUID;
  *
  * @property Family[]|Collection $families
  * @property Person[]|Collection $residents
- * @property Flag[]|Collection $flags
  */
 class Residence extends Entity {
 
@@ -73,13 +72,6 @@ class Residence extends Entity {
 	public function residents() {
 		return $this->hasMany(Person::class, 'residence_id', 'id');
 	}
-
-	public function flags() {
-		return $this->morphToMany(Flag::class, 'entity', 'flagged_entities')
-			->withPivot('reference_date', 'deadline', 'flagged_by_operator_id', 'created_at');
-	}
-
-
 
 	public function getEntityID(): string {
 		return $this->id;

@@ -15,11 +15,14 @@ namespace SGPS\Entity;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Entity
  * @package SGPS\Entity
+ * @property QuestionAnswer[]|Collection $answers
+ * @property Flag[]|Collection $flags
  */
 abstract class Entity extends Model {
 
@@ -41,6 +44,24 @@ abstract class Entity extends Model {
 
 	public function answers() {
 		return $this->morphMany(QuestionAnswer::class, 'entity');
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
+	public function flags() {
+		return $this
+			->morphToMany(Flag::class, 'entity', 'flagged_entities')
+			->withPivot([
+				'reference_date',
+				'deadline',
+				'flagged_by_operator_id',
+				'created_at',
+				'is_default_deadline',
+				'is_late',
+				'is_completed',
+				'is_cancelled',
+			]);
 	}
 
 	abstract public function getEntityID() : string;

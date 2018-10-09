@@ -19,4 +19,5 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('questions/categories/{category}', 'API\QuestionsController@fetch_questions_by_category')->name('api.questions.fetch_questions_by_category');
 	Route::get('questions/{category}/{entity_type}/{entity_id}', 'API\QuestionsController@fetch_questions_for_entity')->name('api.questions.fetch_questions_for_entity');
 
+	Route::get('flags', 'API\FlagsController@index')->name('api.flags.index');
 });

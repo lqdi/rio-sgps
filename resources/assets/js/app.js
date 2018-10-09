@@ -26,6 +26,7 @@ Vue.component('forms-panel', require('./panels/FormsPanel.vue'));
 
 // Modals
 Vue.component('alert-update-modal', require('./modals/AlertUpdateModal.vue'));
+Vue.component('add-flag-modal', require('./modals/AddFlagModal.vue'));
 
 // Controllers
 Vue.component('family-view', FamilyView);
