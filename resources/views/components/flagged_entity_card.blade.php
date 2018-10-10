@@ -1,4 +1,7 @@
 <div class="card @if($flag->pivot->is_cancelled) card-disabled @endif">
+	@php
+		$deadline = \SGPS\Utils\Hydrators::getDeadlineDate($flag->pivot->reference_date, $flag->pivot->deadline);
+	@endphp
 	<div class="card-header {{\SGPS\Utils\Decorators::getFlagBackgroundClass($flag)}} text-white">
 		<strong><i class="fa fa-tag"></i> {{$flag->name}}</strong>
 	</div>
@@ -8,7 +11,10 @@
 		@if($flag->pivot->entity_type === 'person')<div class="text-info"><i class="fa fa-male"></i> Indivíduo: {{$person->name ?? '---'}}</div>@endif
 
 		<div><i v-b-tooltip title="Data de atribuição" class="fa fa-calendar"></i> {{$flag->pivot->reference_date}}</div>
-		<div><i v-b-tooltip title="Prazo para resolução" class="fa fa-clock"></i> {{\SGPS\Utils\Decorators::getFlagDeadline($flag->pivot->reference_date, $flag->pivot->deadline)}}</div>
+
+		@if(!$flag->pivot->is_cancelled && !$flag->pivot->is_completed)
+			<div class="@if($deadline->isPast()) text-danger @endif"><i v-b-tooltip title="Prazo para resolução" class="fa fa-clock"></i> {{\SGPS\Utils\Decorators::getFlagDeadline($deadline)}}</div>
+		@endif
 	</div>
 	<div class="card-footer">
 		@if(!$flag->pivot->is_cancelled && !$flag->pivot->is_completed)

@@ -21,10 +21,6 @@ class Decorators {
 
 	public static function getFlagBackgroundClass(Flag $flag) {
 
-		if($flag->pivot->is_completed) {
-			return 'text-secondary';
-		}
-
 		switch($flag->pivot->entity_type) {
 			case 'family': return 'text-primary';
 			case 'residence': return 'text-success';
@@ -34,8 +30,7 @@ class Decorators {
 
 	}
 
-	public static function getFlagDeadline(string $referenceDate, int $deadlineInDays) {
-		$deadline = Carbon::createFromFormat('Y-m-d', $referenceDate)->addDays($deadlineInDays);
+	public static function getFlagDeadline(Carbon $deadline) {
 		return "{$deadline->toDateString()} ({$deadline->diffForHumans()})";
 	}
 

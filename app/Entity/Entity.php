@@ -52,6 +52,9 @@ abstract class Entity extends Model {
 	public function flags() {
 		return $this
 			->morphToMany(Flag::class, 'entity', 'flagged_entities')
+			->orderBy('is_completed')
+			->orderBy('is_cancelled')
+			->orderBy('created_at', 'desc')
 			->withPivot([
 				'reference_date',
 				'deadline',
