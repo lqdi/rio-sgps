@@ -21,7 +21,33 @@ use SGPS\Entity\Flag;
 class FlagAssignmentService {
 
 	public function doesFlagExistInEntity(Entity $entity, Flag $flag) : bool {
-		return $entity->flags()->where('flag_id', $flag->id)->exists();
+		return $entity->flags()
+			->where('flag_id', $flag->id)
+			->where('is_completed', false)
+			->where('is_cancelled', false)
+			->exists();
+	}
+
+	public function cancelFlagAssignment(Entity $entity, Flag $flag) {
+		$assignment = $entity->flags()
+			->where('flag_id', $flag->id)
+			->first()
+			->pivot;
+
+		$assignment->is_cancelled = true;
+		$assignment->is_completed = false;
+		$assignment->save();
+	}
+
+	public function completeFlagAssignment(Entity $entity, Flag $flag) {
+		$assignment = $entity->flags()
+			->where('flag_id', $flag->id)
+			->first()
+			->pivot;
+
+		$assignment->is_cancelled = false;
+		$assignment->is_completed = true;
+		$assignment->save();
 	}
 
 	public function assignFlagToEntity(Entity $entity, Flag $flag, Carbon $referenceDate, ?int $deadline = null) {

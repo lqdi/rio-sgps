@@ -32,8 +32,30 @@ class FlagsController extends Controller {
 
 	}
 
-	public function cancel(Flag $flag, FlagAssignmentService $service) {
-		// TODO: implement
+	public function cancel(string $entity_type, string $entity_id, Flag $flag, FlagAssignmentService $service) {
+
+		$entity = Entity::fetchByID($entity_type, $entity_id);
+
+		if(!$service->doesFlagExistInEntity($entity, $flag)) {
+			return $this->api_failure('flag_not_assigned');
+		}
+
+		$service->cancelFlagAssignment($entity, $flag);
+
+		return $this->api_success();
+	}
+
+	public function complete(string $entity_type, string $entity_id, Flag $flag, FlagAssignmentService $service) {
+
+		$entity = Entity::fetchByID($entity_type, $entity_id);
+
+		if(!$service->doesFlagExistInEntity($entity, $flag)) {
+			return $this->api_failure('flag_not_assigned');
+		}
+
+		$service->completeFlagAssignment($entity, $flag);
+
+		return $this->api_success();
 	}
 
 	public function add_to_entity(string $entity_type, string $entity_id, FlagAssignmentService $service) {

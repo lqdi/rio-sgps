@@ -10666,3 +10666,8 @@ a.text-dark:focus {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.card-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

@@ -2,6 +2,7 @@
 
 namespace SGPS\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use SGPS\Entity\Family;
@@ -20,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+    	Carbon::setLocale('pt_BR');
+
     	$faker = \Faker\Factory::create('pt_BR');;
 
     	$labels = collect([

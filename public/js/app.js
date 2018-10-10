@@ -11307,7 +11307,9 @@ var ToolTip = function () {
 
 	Flags: {
 		FetchAll: 'api/flags',
-		AddToEntity: 'api/flags/on_entity/@type@/@id@/'
+		AddToEntity: 'api/flags/on_entity/@type@/@id@/',
+		Cancel: 'api/flags/on_entity/@type@/@id@/@flag_id@/cancel',
+		Complete: 'api/flags/on_entity/@type@/@id@/@flag_id@/complete'
 	}
 
 });
@@ -81351,9 +81353,15 @@ exports.push([module.i, ".fade-enter-active, .fade-leave-active {\n    transitio
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__ = __webpack_require__(383);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_AddFlagModal__ = __webpack_require__(375);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_AddFlagModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_AddFlagModal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_Dialogs__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__config_Endpoints__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_API__ = __webpack_require__(40);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+
+
 
 
 
@@ -81391,25 +81399,161 @@ var _addFlag = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create"])
 			this.currentID = id;
 		},
 
-		addFlag: function () {
-			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-				var hasAddedFlag;
-				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+		cancelFlagAssignment: function () {
+			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(entityType, entityID, flagID) {
+				var _this = this;
+
+				var shouldCancel;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
 					while (1) {
-						switch (_context.prev = _context.next) {
+						switch (_context2.prev = _context2.next) {
 							case 0:
-								_context.next = 2;
-								return _addFlag(this.family);
+								_context2.next = 2;
+								return __WEBPACK_IMPORTED_MODULE_3__services_Dialogs__["a" /* default */].confirm("Tem certeza que deseja cancelar essa etiqueta?");
 
 							case 2:
-								hasAddedFlag = _context.sent;
+								shouldCancel = _context2.sent;
 
-								if (hasAddedFlag) {
-									_context.next = 5;
+								if (shouldCancel) {
+									_context2.next = 5;
 									break;
 								}
 
-								return _context.abrupt('return');
+								return _context2.abrupt('return');
+
+							case 5:
+
+								axios.post(__WEBPACK_IMPORTED_MODULE_5__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_4__config_Endpoints__["a" /* default */].Flags.Cancel, { type: entityType, id: entityID, flag_id: flagID }), {}, __WEBPACK_IMPORTED_MODULE_5__services_API__["a" /* default */].headers()).then(function () {
+									var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(res) {
+										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+											while (1) {
+												switch (_context.prev = _context.next) {
+													case 0:
+														_this.isLoading = false;
+														_context.next = 3;
+														return __WEBPACK_IMPORTED_MODULE_3__services_Dialogs__["a" /* default */].alert('A etiqueta foi cancelada com sucesso!');
+
+													case 3:
+														location.reload();
+
+													case 4:
+													case 'end':
+														return _context.stop();
+												}
+											}
+										}, _callee, _this);
+									}));
+
+									return function (_x4) {
+										return _ref2.apply(this, arguments);
+									};
+								}()).catch(function (err) {
+									_this.isLoading = false;
+									__WEBPACK_IMPORTED_MODULE_3__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao cancelar a etiqueta!');
+								});
+
+							case 6:
+							case 'end':
+								return _context2.stop();
+						}
+					}
+				}, _callee2, this);
+			}));
+
+			function cancelFlagAssignment(_x, _x2, _x3) {
+				return _ref.apply(this, arguments);
+			}
+
+			return cancelFlagAssignment;
+		}(),
+
+		completeFlagAssignment: function () {
+			var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(entityType, entityID, flagID) {
+				var _this2 = this;
+
+				var shouldCancel;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+					while (1) {
+						switch (_context4.prev = _context4.next) {
+							case 0:
+								_context4.next = 2;
+								return __WEBPACK_IMPORTED_MODULE_3__services_Dialogs__["a" /* default */].confirm("Tem certeza que deseja concluír essa etiqueta?");
+
+							case 2:
+								shouldCancel = _context4.sent;
+
+								if (shouldCancel) {
+									_context4.next = 5;
+									break;
+								}
+
+								return _context4.abrupt('return');
+
+							case 5:
+
+								axios.post(__WEBPACK_IMPORTED_MODULE_5__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_4__config_Endpoints__["a" /* default */].Flags.Complete, { type: entityType, id: entityID, flag_id: flagID }), {}, __WEBPACK_IMPORTED_MODULE_5__services_API__["a" /* default */].headers()).then(function () {
+									var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(res) {
+										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+											while (1) {
+												switch (_context3.prev = _context3.next) {
+													case 0:
+														_this2.isLoading = false;
+														_context3.next = 3;
+														return __WEBPACK_IMPORTED_MODULE_3__services_Dialogs__["a" /* default */].alert('A etiqueta foi concluída com sucesso!');
+
+													case 3:
+														location.reload();
+
+													case 4:
+													case 'end':
+														return _context3.stop();
+												}
+											}
+										}, _callee3, _this2);
+									}));
+
+									return function (_x8) {
+										return _ref4.apply(this, arguments);
+									};
+								}()).catch(function (err) {
+									_this2.isLoading = false;
+									__WEBPACK_IMPORTED_MODULE_3__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao concluir a etiqueta!');
+								});
+
+							case 6:
+							case 'end':
+								return _context4.stop();
+						}
+					}
+				}, _callee4, this);
+			}));
+
+			function completeFlagAssignment(_x5, _x6, _x7) {
+				return _ref3.apply(this, arguments);
+			}
+
+			return completeFlagAssignment;
+		}(),
+
+		addFlag: function () {
+			var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+				var hasAddedFlag;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+					while (1) {
+						switch (_context5.prev = _context5.next) {
+							case 0:
+								_context5.next = 2;
+								return _addFlag(this.family);
+
+							case 2:
+								hasAddedFlag = _context5.sent;
+
+								if (hasAddedFlag) {
+									_context5.next = 5;
+									break;
+								}
+
+								return _context5.abrupt('return');
 
 							case 5:
 
@@ -81418,14 +81562,14 @@ var _addFlag = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create"])
 
 							case 7:
 							case 'end':
-								return _context.stop();
+								return _context5.stop();
 						}
 					}
-				}, _callee, this);
+				}, _callee5, this);
 			}));
 
 			function addFlag() {
-				return _ref.apply(this, arguments);
+				return _ref5.apply(this, arguments);
 			}
 
 			return addFlag;

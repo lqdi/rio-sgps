@@ -21,4 +21,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 	Route::get('flags', 'API\FlagsController@index')->name('api.flags.index');
 	Route::post('flags/on_entity/{entity_type}/{entity_id}', 'API\FlagsController@add_to_entity')->name('api.flags.add_to_entity');
+	Route::post('flags/on_entity/{entity_type}/{entity_id}/{flag}/cancel', 'API\FlagsController@cancel')->name('api.flags.cancel');
+	Route::post('flags/on_entity/{entity_type}/{entity_id}/{flag}/complete', 'API\FlagsController@complete')->name('api.flags.complete');
 });
