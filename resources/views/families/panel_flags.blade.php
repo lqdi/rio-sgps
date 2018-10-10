@@ -8,7 +8,7 @@
 		<div class="row">
 
 			<div class="col-md-12 text-center">
-				<button type="button" class="btn btn-lg btn-primary" v-b-modal.addflagwnd><i class="fa fa-plus"></i> Adicionar etiqueta</button>
+				<button type="button" class="btn btn-lg btn-primary" @click="addFlag()"><i class="fa fa-plus"></i> Adicionar etiqueta</button>
 				<hr />
 			</div>
 
@@ -34,13 +34,6 @@
 					</div>
 				@endforeach
 			@endforeach
-
-			<add-flag-modal
-					id="addflagwnd"
-					:family="{{json_encode($family)}}"
-					:residence="{{json_encode($family->residence)}}"
-					:members="{{json_encode($family->members)}}"
-			></add-flag-modal>
 		</div>
 	</div>
 </div>

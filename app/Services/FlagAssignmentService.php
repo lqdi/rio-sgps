@@ -20,6 +20,10 @@ use SGPS\Entity\Flag;
 
 class FlagAssignmentService {
 
+	public function doesFlagExistInEntity(Entity $entity, Flag $flag) : bool {
+		return $entity->flags()->where('flag_id', $flag->id)->exists();
+	}
+
 	public function assignFlagToEntity(Entity $entity, Flag $flag, Carbon $referenceDate, ?int $deadline = null) {
 
 		$assignmentProperties = [

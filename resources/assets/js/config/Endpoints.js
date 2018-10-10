@@ -14,6 +14,7 @@ export default {
 
 	Flags: {
 		FetchAll: 'api/flags',
+		AddToEntity: 'api/flags/on_entity/@type@/@id@/',
 	}
 
 }

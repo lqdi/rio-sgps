@@ -10473,7 +10473,7 @@ a.text-dark:focus {
   padding: 5px 15px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  z-index: 5000;
+  z-index: 1000;
 }
 
 .sgps__topbar.topbar--compact {
@@ -10660,5 +10660,9 @@ a.text-dark:focus {
   margin: 10px 0;
   padding: 10px 0;
   border-top: 1px solid #eee;
+}
+
+.sgps__modal {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 

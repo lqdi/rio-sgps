@@ -27,6 +27,9 @@
 	<body>
 		<div id="app">
 			@yield('body')
+
+			<dialogs-wrapper name="default"></dialogs-wrapper>
+			<dialogs-wrapper name="dialogs"></dialogs-wrapper>
 		</div>
 
 		<script src="/js/app.js"></script>

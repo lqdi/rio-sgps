@@ -8,7 +8,7 @@
 	height: 100px;
 	padding: 5px 15px;
 	box-shadow: 0 1px 3px rgba(black, 0.2);
-	z-index: 5000;
+	z-index: 1000;
 
 	&.topbar--compact {
 		height: 60px;
@@ -194,4 +194,8 @@
 	padding: 10px 0;
 	border-top: 1px solid #eee;
 
+}
+
+.sgps__modal {
+	background-color: rgba(black, 0.5);
 }
