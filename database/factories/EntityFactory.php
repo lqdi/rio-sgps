@@ -48,13 +48,41 @@ $factory->define(\SGPS\Entity\Flag::class, function (Faker $faker) {
 $factory->define(\SGPS\Entity\Residence::class, function (Faker $faker) {
 	return [
 		'id' => $faker->uuid,
-		'sector_code' => $faker->postcode,
 		'lat' => $faker->latitude,
 		'lng' => $faker->longitude,
 		'address' => $faker->streetAddress,
 		'territory' => $faker->city,
 		'reference' => null,
 		'gis_global_id' => $faker->uuid,
+	];
+});
+
+$factory->define(\SGPS\Entity\Sector::class, function (Faker $faker) {
+	$sectorID = $faker->numerify('######');
+
+	$randomBairro = $faker->randomElement(config('geo_bairros'));
+	$ra = config('geo_ra.'. $randomBairro['ra_id']);
+	$rp = config('geo_rp')[$ra['rp_id']];
+
+	return [
+		'id' => intval($sectorID),
+		'name' => "{$sectorID} {$faker->city}",
+		'cod_bairro' => $randomBairro['id'],
+		'cod_ra' => $ra['id'],
+		'cod_rp' => $rp['id'],
+		'cod_ap' => $rp['ap_id'],
+	];
+});
+
+$factory->define(\SGPS\Entity\Equipment::class, function (Faker $faker) {
+	$type = $faker->randomElement(\SGPS\Entity\Equipment::TYPES);
+
+	return [
+		'id' => $faker->uuid,
+		'type' => $type,
+		'code' => $faker->numerify('########'),
+		'name' => "{$type} {$faker->city}",
+		'address' => $faker->address,
 	];
 });
 

@@ -27,7 +27,7 @@ use SGPS\Traits\IndexedByUUID;
  *
  * @property string $id
  * @property string $shortcode
- * @property string $sector_code
+ * @property string $sector_id
  * @property string $lat
  * @property string $lng
  * @property string $address
@@ -39,6 +39,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
  *
+ * @property Sector $sector
  * @property Family[]|Collection $families
  * @property Person[]|Collection $residents
  */
@@ -64,6 +65,10 @@ class Residence extends Entity {
 		'lat' => 'float',
 		'lng' => 'float',
 	];
+
+	public function sector() {
+		return $this->hasOne(Sector::class, 'id', 'sector_id');
+	}
 
 	public function families() {
 		return $this->hasMany(Family::class, 'residence_id', 'id');

@@ -40,6 +40,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
  *
+ * @property Sector $sector
  * @property Residence $residence
  * @property Family $family
  */
@@ -61,6 +62,10 @@ class Person extends Entity {
 		'phone_number',
 		'gis_global_id',
 	];
+
+	public function sector() {
+		return $this->hasOne(Sector::class, 'id', 'sector_id');
+	}
 
 	public function residence() {
 		return $this->hasOne(Residence::class, 'id', 'residence_id');

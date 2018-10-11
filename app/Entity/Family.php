@@ -40,6 +40,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
  *
+ * @property Sector $sector
  * @property Residence $residence
  * @property Person $personInCharge
  * @property Person[]|Collection $members
@@ -69,6 +70,10 @@ class Family extends Entity {
 		'visit_attempt' => 'integer',
 		'visit_last' => 'date',
 	];
+
+	public function sector() {
+		return $this->hasOne(Sector::class, 'id', 'sector_id');
+	}
 
 	public function residence() {
 		return $this->hasOne(Residence::class, 'id', 'residence_id');

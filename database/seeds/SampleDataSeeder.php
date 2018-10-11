@@ -5,6 +5,8 @@ use SGPS\Entity\Flag;
 use SGPS\Entity\Group;
 use SGPS\Entity\Person;
 use SGPS\Entity\Residence;
+use SGPS\Entity\Sector;
+use SGPS\Entity\Equipment;
 
 /**
  * rio-sgps
@@ -24,14 +26,34 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 
 		$faker = \Faker\Factory::create('pt_BR');;
 
-		$residences = factory(Residence::class, 20)->create()
-			->each(function (Residence $residence) {
+		$equipmentsPerType = collect(Equipment::TYPES)
+			->map(function ($type) {
+				return factory(Equipment::class, 5)->create(['type' => $type]);
+			});
 
-				$residence->_families = factory(Family::class, rand(1, 3))->create([
+		$sectors = factory(Sector::class, 15)
+			->create()
+			->each(function($sector) use ($equipmentsPerType, $faker) { /* @var $sector Sector */
+
+				foreach($equipmentsPerType as $type => $equipments) {
+					$randomEquipment = $faker->randomElement($equipments);
+					$sector->equipments()->syncWithoutDetaching([$randomEquipment->id]);
+				}
+
+			})
+			->pluck('id');
+
+		$residences = factory(Residence::class, 30)
+			->create(['sector_id' => $faker->randomElement($sectors)])
+			->each(function (Residence $residence) use ($faker) {
+
+				$residence->_families = factory(Family::class, 1)->create([
+					'sector_id' => $residence->sector_id,
 					'residence_id' => $residence->id,
 				])->each(function (Family $family) use ($residence) {
 
-					$persons = factory(Person::class, rand(1, 6))->create([
+					$persons = factory(Person::class, rand(1, 4))->create([
+						'sector_id' => $residence->sector_id,
 						'residence_id' => $residence->id,
 						'family_id' => $family->id,
 					]);
@@ -51,14 +73,14 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 
 				switch($flag->entity_type) {
 					case 'residence':
-						$residences->random(rand(4,8))->each(function (Residence $residence) use ($faker, $flag) {
+						$residences->random(rand(1,3))->each(function (Residence $residence) use ($faker, $flag) {
 							$residence->flags()->attach($flag->id, ['reference_date' => $faker->date()]);
 						});
 
 						break;
 
 					case 'family':
-						$residences->random(rand(8, 12))->each(function (Residence $residence) use ($faker, $flag) {
+						$residences->random(rand(2, 4))->each(function (Residence $residence) use ($faker, $flag) {
 							$residence->_families->random(rand(1, sizeof($residence->_families)))->each(function (Family $family) use ($faker, $flag) {
 								$family->flags()->attach($flag->id, ['reference_date' => $faker->date()]);
 							});
@@ -67,7 +89,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 						break;
 
 					case 'person':
-						$residences->random(rand(12, 20))->each(function (Residence $residence) use ($faker, $flag) {
+						$residences->random(rand(4, 8))->each(function (Residence $residence) use ($faker, $flag) {
 							$residence->_families->random(rand(1, sizeof($residence->_families)))
 								->each(function (Family $family) use ($faker, $flag) {
 
