@@ -45,6 +45,12 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::post('/admin/questions/{question?}', 'Admin\QuestionsController@save')->name('admin.questions.save');
 		Route::delete('/admin/questions/{question}', 'Admin\QuestionsController@destroy')->name('admin.questions.destroy');
 
+		Route::get('/admin/equipments', 'Admin\EquipmentsController@index')->name('admin.equipments.index');
+		Route::get('/admin/equipments/new', 'Admin\EquipmentsController@create')->name('admin.equipments.create');
+		Route::get('/admin/equipments/{equipment}', 'Admin\EquipmentsController@show')->name('admin.equipments.show');
+		Route::post('/admin/equipments/{equipment?}', 'Admin\EquipmentsController@save')->name('admin.equipments.save');
+		Route::delete('/admin/equipments/{equipment}', 'Admin\EquipmentsController@destroy')->name('admin.equipments.destroy');
+
 		Route::get('/admin/settings', 'Admin\SettingsController@index')->name('admin.settings.index');
 	});
 

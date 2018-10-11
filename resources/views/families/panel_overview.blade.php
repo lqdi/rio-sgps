@@ -31,10 +31,14 @@
 			<div><i v-b-tooltip title="Área de Planejamento (AP)" class="fa fa-map-marker"></i> AP {{$family->sector->cod_ap}}</div>
 		</div>
 
+		<hr />
+
 		<div>
 			<label class="detail__label">EQUIPAMENTOS</label>
 			@foreach($family->sector->equipments as $equipment)
 				<div><i class="fa fa-university"></i> {{$equipment->type}} - {{$equipment->name}}</div>
+				<div><small>{{$equipment->address}}</small></div>
+				<br />
 			@endforeach
 		</div>
 	</div>
