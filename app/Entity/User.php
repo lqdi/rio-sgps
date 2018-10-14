@@ -45,6 +45,7 @@ use Tymon\JWTAuth\JWTAuth;
  *
  * @property Group[]|Collection $groups
  * @property Equipment[]|Collection $equipments
+ * @property UserAssignment[]|Collection $assignments
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject {
 
@@ -72,12 +73,30 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		'remember_token',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: users with groups
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function groups() {
 		return $this->belongsToMany(Group::class, 'user_groups');
 	}
 
+	/**
+	 * Relationship: users with equipments
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function equipments() {
 		return $this->belongsToMany(Equipment::class, 'user_equipments');
+	}
+
+	/**
+	 * Relationship: users with user assignments (pivot between user and entities)
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function assignments() {
+		return $this->hasMany(UserAssignment::class, 'user_id', 'id');
 	}
 
 	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—

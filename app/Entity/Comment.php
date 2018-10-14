@@ -55,13 +55,25 @@ class Comment extends Model {
 		'metadata' => 'object',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: comment with target entity
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 */
 	public function entity() {
 		return $this->morphTo('entity');
 	}
 
+	/**
+	 * Relationship: comment with user (poster)
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function user() {
 		return $this->hasOne(User::class, 'id', 'user_id');
 	}
+
+	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * Fetches a thread of comments attached to a specific entity.

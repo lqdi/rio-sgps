@@ -44,6 +44,12 @@ class QuestionCategory extends Model {
 		'name',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: categories with questions
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function questions() {
 		return $this->belongsToMany(Question::class, 'question_categories_pivot', 'question_id', 'category_id');
 	}

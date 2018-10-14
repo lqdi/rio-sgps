@@ -56,30 +56,63 @@ class Sector extends Model {
 		'cod_ap' => 'integer',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Gets the Bairro object associated to this sector, via geo_bairros config
+	 * @return object
+	 */
 	public function getBairro() {
 		return (object) config('geo_bairros.' . $this->cod_bairro, []);
 	}
 
+	/**
+	 * Gets the RA (região administrativa) object associated to this sector, via geo_ra config
+	 * @return object
+	 */
 	public function getRA() {
 		return (object) config('geo_ra.' . $this->cod_ra, []);
 	}
 
+	/**
+	 * Gets the RP (região de planejamento) object associated to this sector, via geo_rp config
+	 * Warning: because RP codes have dots (eg '1.2'), the config keys must be accessed via array syntax instead.
+	 * @return object
+	 */
 	public function getRP() {
 		return (object) (config('geo_rp')[$this->cod_rp] ?? []);
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: sectors with equipments
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function equipments() {
 		return $this->belongsToMany(Equipment::class, 'sector_equipments');
 	}
 
+	/**
+	 * Relationship: sectors with families
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function families() {
 		return $this->hasMany(Family::class, 'sector_id', 'id');
 	}
 
+	/**
+	 * Relationship: sectors with residences
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function residences() {
 		return $this->hasMany(Residence::class, 'sector_id', 'id');
 	}
 
+	/**
+	 * Relationship: sectors with persons
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function persons() {
 		return $this->hasMany(Person::class, 'sector_id', 'id');
 	}

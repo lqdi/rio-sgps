@@ -42,6 +42,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  *
+ * @property QuestionAnswer[]|Collection $answers
  * @property QuestionCategory[]|Collection $categories
  */
 class Question extends Model {
@@ -92,16 +93,32 @@ class Question extends Model {
 		'conditions' => 'array',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: question with answers
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function answers() {
-		// TODO: implement
+		return $this->hasMany(QuestionAnswer::class, 'question_id', 'id');
 	}
 
-	public function scopeOrdered($query) {
-		return $query->orderBy('order', 'asc');
-	}
-
+	/**
+	 * Relationship: question with categories
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function categories() {
 		return $this->belongsToMany(QuestionCategory::class, 'question_categories_pivot', 'category_id', 'question_id');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Query scope: orders the query by the 'order' key, in ascending order.
+	 * @param $query
+	 * @return mixed
+	 */
+	public function scopeOrdered($query) {
+		return $query->orderBy('order', 'asc');
+	}
 }

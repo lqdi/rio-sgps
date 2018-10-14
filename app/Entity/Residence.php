@@ -66,22 +66,46 @@ class Residence extends Entity {
 		'lng' => 'float',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: residences with sectors
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function sector() {
 		return $this->hasOne(Sector::class, 'id', 'sector_id');
 	}
 
+	/**
+	 * Relationship: residences with families
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function families() {
 		return $this->hasMany(Family::class, 'residence_id', 'id');
 	}
 
+	/**
+	 * Relationship: residences with persons (called residents)
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function residents() {
 		return $this->hasMany(Person::class, 'residence_id', 'id');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Concrete: Residences have unique UUID
+	 * @return string
+	 */
 	public function getEntityID(): string {
 		return $this->id;
 	}
 
+	/**
+	 * Concrete: Residences have type 'residence'
+	 * @return string
+	 */
 	public function getEntityType(): string {
 		return 'residence';
 	}

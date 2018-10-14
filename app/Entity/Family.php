@@ -71,26 +71,54 @@ class Family extends Entity {
 		'visit_last' => 'date',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: family with sector
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function sector() {
 		return $this->hasOne(Sector::class, 'id', 'sector_id');
 	}
 
+	/**
+	 * Relationship: family with residence
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function residence() {
 		return $this->hasOne(Residence::class, 'id', 'residence_id');
 	}
 
+	/**
+	 * Relationship: family with person (which is in charge of the family)
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function personInCharge() {
 		return $this->hasOne(Person::class, 'id', 'person_in_charge_id');
 	}
 
+	/**
+	 * Relationship: family with persons (who are members of the family)
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
 	public function members() {
 		return $this->hasMany(Person::class, 'family_id', 'id');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Concrete: Family has unique UUID.
+	 * @return string
+	 */
 	public function getEntityID(): string {
 		return $this->id;
 	}
 
+	/**
+	 * Concrete: Family has type string 'family'
+	 * @return string
+	 */
 	public function getEntityType(): string {
 		return 'family';
 	}

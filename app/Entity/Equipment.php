@@ -46,7 +46,11 @@ class Equipment extends Model {
 	const TYPE_CRAS = "CRAS";
 	const TYPE_SMS = "SMS";
 
-	const TYPES = [self::TYPE_CRE, self::TYPE_CRAS, self::TYPE_SMS];
+	const TYPES = [
+		self::TYPE_CRE,
+		self::TYPE_CRAS,
+		self::TYPE_SMS
+	];
 
 	protected $table = 'equipments';
 	protected $fillable = [
@@ -56,10 +60,20 @@ class Equipment extends Model {
 		'address',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: equipment with sectors
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function sectors() {
 		return $this->belongsToMany(Sector::class, 'sector_equipments');
 	}
 
+	/**
+	 * Relationship: equipment with users
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function users() {
 		return $this->belongsToMany(User::class, 'user_equipments');
 	}

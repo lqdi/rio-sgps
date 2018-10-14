@@ -63,29 +63,57 @@ class Person extends Entity {
 		'gis_global_id',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: person with sector
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function sector() {
 		return $this->hasOne(Sector::class, 'id', 'sector_id');
 	}
 
+	/**
+	 * Relationship: person with residence
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function residence() {
 		return $this->hasOne(Residence::class, 'id', 'residence_id');
 	}
 
+	/**
+	 * Relationship: person with family
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function family() {
 		return $this->hasOne(Family::class, 'id', 'family_id');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Gets the person's age, based on the given date of birth
+	 * @return int
+	 */
 	public function getAge() {
 		// TODO: cache this?
 		return 0;
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
 
-
+	/**
+	 * Concrete: Persons have unique UUIDs.
+	 * @return string
+	 */
 	public function getEntityID(): string {
 		return $this->id;
 	}
 
+	/**
+	 * Concrete: Persons have type string 'person'
+	 * @return string
+	 */
 	public function getEntityType(): string {
 		return 'person';
 	}

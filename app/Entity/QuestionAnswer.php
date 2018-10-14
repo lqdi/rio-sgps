@@ -67,14 +67,31 @@ class QuestionAnswer extends Model {
 		'value_integer' => 'integer',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: answer with question
+	 * @return mixed
+	 */
 	public function question() {
 		return $this->hasOne(Question::class, 'id', 'question_id')->withTrashed();
 	}
 
+	/**
+	 * Relationship: answer with targeted entity
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 */
 	public function entity() {
 		return $this->morphTo('entity');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Sets the value of the answer; will handle answer type and appropriately serialize and store in the right field.
+	 * @param $value
+	 * @return array|int|null|string Returns the serialized value
+	 */
 	public function setValue($value) {
 		switch($this->type) {
 			case Question::TYPE_TEXT:
@@ -109,6 +126,10 @@ class QuestionAnswer extends Model {
 
 	}
 
+	/**
+	 * Gets the value for the answer; will handle answer and appropriately unserialize the correct field.
+	 * @return array|bool|int|null|string The unserialized value.
+	 */
 	public function getValue() {
 		switch($this->type) {
 			case Question::TYPE_TEXT:
@@ -131,11 +152,22 @@ class QuestionAnswer extends Model {
 		}
 	}
 
+	/**
+	 * Sets and saves (persists) the value of the question.
+	 * @see QuestionAnswer::setValue()
+	 * @param mixed $value
+	 */
 	public function updateValue($value) : void {
 		$this->setValue($value);
 		$this->save();
 	}
 
+	/**
+	 * Resolves (finds or creates) the answer for a specific question+entity pair.
+	 * @param Entity $entity The targeted entity
+	 * @param Question $question The question this answer regards to
+	 * @return QuestionAnswer The found answer, or a new one.
+	 */
 	public static function fetchOrCreateForEntityQuestion(Entity $entity, Question $question) : QuestionAnswer {
 		return self::query()
 			->where('entity_type', $entity->getEntityType())
@@ -150,6 +182,15 @@ class QuestionAnswer extends Model {
 			]);
 	}
 
+	/**
+	 * Updates the answer value to a specific entity+question pair.
+	 * Will resolve (find or create) the answer based on the pair.
+	 * Will appropriately serialize and store the answer in the right field.
+	 * Will persist the change on the database.
+	 * @param Entity $entity The targeted entity
+	 * @param Question $question The question the answer regards to
+	 * @param mixed $answerValue The value of the answer
+	 */
 	public static function setAnswerForEntity(Entity $entity, Question $question, $answerValue) : void {
 		$answer = self::fetchOrCreateForEntityQuestion($entity, $question);
 		$answer->updateValue($answerValue);

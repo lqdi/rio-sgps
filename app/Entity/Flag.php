@@ -66,24 +66,45 @@ class Flag extends Model {
 		'default_deadline' => 'integer',
 	];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: flag with families
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
 	public function families() {
 		return $this->morphedByMany(Family::class, 'entity', 'flagged_entities');
 	}
 
+	/**
+	 * Relationship: flag with residences
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
 	public function residences() {
 		return $this->morphedByMany(Residence::class, 'entity', 'flagged_entities');
 	}
 
+	/**
+	 * Relationship: flag with persons
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
 	public function persons() {
 		return $this->morphedByMany(Person::class, 'entity', 'flagged_entities');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Deletes the flag.
+	 * Will permanently remove all relationships with entities.
+	 * @throws \Exception
+	 */
 	public function delete() {
 		$this->families()->sync([]);
 		$this->residences()->sync([]);
 		$this->persons()->sync([]);
 
-		parent::delete();
+		return parent::delete();
 	}
 
 }

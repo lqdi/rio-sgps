@@ -44,6 +44,12 @@ class Group extends Model {
 	protected $table = "groups";
 	protected $fillable = ['name'];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: group with users
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function users() {
 		return $this->belongsToMany(User::class, 'user_groups');
 	}
