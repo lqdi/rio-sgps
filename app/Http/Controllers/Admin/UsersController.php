@@ -14,6 +14,7 @@
 namespace SGPS\Http\Controllers\Admin;
 
 
+use SGPS\Entity\Equipment;
 use SGPS\Entity\Group;
 use SGPS\Entity\User;
 use SGPS\Http\Controllers\Controller;
@@ -27,17 +28,24 @@ class UsersController extends Controller {
 
 	public function create() {
 		$user = new User();
-		$groups = Group::all();
-		$currentGroups = [];
 
-		return view('admin.users_edit', compact('user', 'groups', 'currentGroups'));
+		$groups = Group::query()->orderBy('name')->get();
+		$equipments = Equipment::query()->orderBy('name')->get();
+
+		$currentGroups = [];
+		$currentEquipments = [];
+
+		return view('admin.users_edit', compact('user', 'groups', 'equipments', 'currentGroups', 'currentEquipments'));
 	}
 
 	public function show(User $user) {
-		$groups = Group::all();
-		$currentGroups = $user->groups()->pluck('id')->toArray();
+		$groups = Group::query()->orderBy('name')->get();
+		$equipments = Equipment::query()->orderBy('name')->get();
 
-		return view('admin.users_edit', compact('user', 'groups', 'currentGroups'));
+		$currentGroups = $user->groups()->pluck('id')->toArray();
+		$currentEquipments = $user->equipments()->pluck('id')->toArray();
+
+		return view('admin.users_edit', compact('user', 'groups', 'equipments', 'currentGroups', 'currentEquipments'));
 	}
 
 	public function save(?User $user = null) {
@@ -53,6 +61,10 @@ class UsersController extends Controller {
 
 		if(request()->has('groups')) {
 			$user->groups()->sync(request('groups'));
+		}
+
+		if(request()->has('equipments')) {
+			$user->equipments()->sync(request('equipments'));
 		}
 
 		return redirect()->route('admin.users.show', [$user->id]);

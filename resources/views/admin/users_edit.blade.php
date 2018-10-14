@@ -59,6 +59,24 @@
 		<br />
 
 		<div class="card">
+			<div class="card-header">Equipamentos</div>
+			<div class="card-body row">
+				@foreach($equipments->split(2) as $chunk)
+					<table class="table col-md-6">
+						@foreach($chunk as $equipment)
+							<tr>
+								<td width="10%"><input id="chk-equipment-{{$equipment->id}}" type="checkbox" name="equipments[]" value="{{$equipment->id}}" @if(in_array($equipment->id, $currentEquipments)) checked @endif /></td>
+								<td width="90%"><label for="chk-equipment-{{$equipment->id}}">{{$equipment->name}}</label></td>
+							</tr>
+						@endforeach
+					</table>
+				@endforeach
+			</div>
+		</div>
+
+		<br />
+
+		<div class="card">
 			<div class="card-footer">
 				<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
 			</div>

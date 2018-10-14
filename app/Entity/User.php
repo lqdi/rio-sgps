@@ -44,6 +44,7 @@ use Tymon\JWTAuth\JWTAuth;
  * @property Carbon $deleted_at
  *
  * @property Group[]|Collection $groups
+ * @property Equipment[]|Collection $equipments
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject {
 
@@ -73,6 +74,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 	public function groups() {
 		return $this->belongsToMany(Group::class, 'user_groups');
+	}
+
+	public function equipments() {
+		return $this->belongsToMany(Equipment::class, 'user_equipments');
 	}
 
 	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—

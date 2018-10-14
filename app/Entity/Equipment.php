@@ -35,6 +35,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Carbon|null $deleted_at
  *
  * @property Sector[]|Collection $sectors
+ * @property User[]|Collection $users
  */
 class Equipment extends Model {
 
@@ -57,6 +58,10 @@ class Equipment extends Model {
 
 	public function sectors() {
 		return $this->belongsToMany(Sector::class, 'sector_equipments');
+	}
+
+	public function users() {
+		return $this->belongsToMany(User::class, 'user_equipments');
 	}
 
 }
