@@ -123,7 +123,7 @@
 					this.entityID = this.family.residence_id;
 				}
 
-				return {type: this.entityType, id: this.entityID};
+				return {entity: API.getEntityReference(this.entityType, this.entityID)}
 			},
 
 			addFlagToEntity: async function() {

@@ -1,9 +1,12 @@
 import { create } from 'vue-modal-dialogs'
 import AddFlagModal from '../modals/AddFlagModal';
+import AssignUserModal from '../modals/AssignUserModal';
 import Dialogs from "../services/Dialogs";
 import Endpoints from "../config/Endpoints";
 import API from "../services/API";
+
 const addFlag = create(AddFlagModal, 'family');
+const assignUser = create(AssignUserModal, 'family');
 
 export default {
 	props: [
@@ -86,6 +89,31 @@ export default {
 
 			this.isLoading = true;
 			location.reload();
+		},
+
+		assignUser: async function() {
+			let hasAssignedUser = await assignUser(this.family);
+
+			if(!hasAssignedUser) return;
+
+			this.isLoading = true;
+			location.reload();
+		},
+
+		unassignUser: function(userID) {
+
+			axios.post(
+				API.url(Endpoints.Assignments.UnassignUserFromEntity, {entity: API.getEntityReference('family', this.family.id)}),
+				{user_id: userID},
+				API.headers()
+			).then((res) => {
+				this.isLoading = true;
+				location.reload();
+			}).catch((err) => {
+				console.error("FamilyView.unassignUser: ", err);
+				Dialogs.alert('Ocorreu um erro ao salvar as informações!');
+			});
+
 		},
 	}
 }

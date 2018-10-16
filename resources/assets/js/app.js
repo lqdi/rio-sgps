@@ -30,6 +30,7 @@ Vue.component('forms-panel', require('./panels/FormsPanel.vue'));
 Vue.component('modal', require('./modals/Modal.vue'));
 Vue.component('alert-update-modal', require('./modals/AlertUpdateModal.vue'));
 Vue.component('add-flag-modal', require('./modals/AddFlagModal.vue'));
+Vue.component('assign-user-modal', require('./modals/AssignUserModal.vue'));
 
 // Dialogs
 Vue.component('alert-modal', require('./dialogs/AlertModal.vue'));

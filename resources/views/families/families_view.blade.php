@@ -28,6 +28,7 @@
 
 				<a @click="openTab('overview')" href="#overview" :class="{active: isOpen('overview')}" class="sgps__sidebar-link"><i class="fa fa-info-circle"></i> Visão Geral</a>
 				<a @click="openTab('discussion')" href="#discussion" :class="{active: isOpen('discussion')}" class="sgps__sidebar-link"><i class="fa fa-comments"></i> Discussão</a>
+				<a @click="openTab('assignments')" href="#assignments" :class="{active: isOpen('assignments')}" class="sgps__sidebar-link"><i class="fa fa-users"></i> Operadores</a>
 				<a @click="openTab('flags')" href="#flags" :class="{active: isOpen('flags')}" class="sgps__sidebar-link"><i class="fa fa-tags"></i> Etiquetas</a>
 
 				<hr />
@@ -53,6 +54,10 @@
 
 				<div v-if="isOpen('discussion')">
 					@include('families.panel_discussion', ['family' => $family])
+				</div>
+
+				<div v-if="isOpen('assignments')">
+					@include('families.panel_assignments', ['family' => $family])
 				</div>
 
 				<div v-if="isOpen('flags')">

@@ -40,6 +40,15 @@ abstract class Entity extends Model {
 	 */
 	abstract public function getEntityType() : string;
 
+
+	/**
+	 * Builds an entity reference slug
+	 * @return string Format: "entityType:UUID"
+	 */
+	public function getEntityReference() : string {
+		return "{$this->getEntityType()}:{$this->getEntityID()}";
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
@@ -136,6 +145,20 @@ abstract class Entity extends Model {
 		return static::getQuery($type)
 			->where('id', $id)
 			->first();
+	}
+
+	/**
+	 * Fetches an entity by its reference slug
+	 * @param string $reference The entity reference (in "type:UUID" format)
+	 * @return Entity|null The found entity, or null if not found.
+	 */
+	public static function fetchByReference(string $reference) : ?Entity {
+		$separatorPos = strpos($reference, ':');
+
+		$type = substr($reference, 0, $separatorPos);
+		$id = substr($reference, $separatorPos + 1);
+
+		return self::fetchByID($type, $id);
 	}
 
 }

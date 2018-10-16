@@ -25,7 +25,7 @@ class FlagAssignmentService {
 			->where('flag_id', $flag->id)
 			->where('is_completed', false)
 			->where('is_cancelled', false)
-			->exists();
+			->count() > 0;
 	}
 
 	public function cancelFlagAssignment(Entity $entity, Flag $flag) {

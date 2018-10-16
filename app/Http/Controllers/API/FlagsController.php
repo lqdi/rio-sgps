@@ -32,9 +32,7 @@ class FlagsController extends Controller {
 
 	}
 
-	public function cancel(string $entity_type, string $entity_id, Flag $flag, FlagAssignmentService $service) {
-
-		$entity = Entity::fetchByID($entity_type, $entity_id);
+	public function cancel(Entity $entity, Flag $flag, FlagAssignmentService $service) {
 
 		if(!$service->doesFlagExistInEntity($entity, $flag)) {
 			return $this->api_failure('flag_not_assigned');
@@ -45,9 +43,7 @@ class FlagsController extends Controller {
 		return $this->api_success();
 	}
 
-	public function complete(string $entity_type, string $entity_id, Flag $flag, FlagAssignmentService $service) {
-
-		$entity = Entity::fetchByID($entity_type, $entity_id);
+	public function complete(Entity $entity, Flag $flag, FlagAssignmentService $service) {
 
 		if(!$service->doesFlagExistInEntity($entity, $flag)) {
 			return $this->api_failure('flag_not_assigned');
@@ -58,13 +54,11 @@ class FlagsController extends Controller {
 		return $this->api_success();
 	}
 
-	public function add_to_entity(string $entity_type, string $entity_id, FlagAssignmentService $service) {
+	public function add_to_entity(Entity $entity, FlagAssignmentService $service) {
 
 		$flag = Flag::findOrFail(request('flag_id')); /* @var $flag Flag */
 		$referenceDate = Carbon::createFromFormat('Y-m-d', request('reference_date'));
 		$deadline = intval(request('deadline'));
-
-		$entity = Entity::fetchByID($entity_type, $entity_id);
 
 		if($service->doesFlagExistInEntity($entity, $flag)) {
 			return $this->api_failure('flag_already_exists');

@@ -14,9 +14,15 @@ export default {
 
 	Flags: {
 		FetchAll: 'api/flags',
-		AddToEntity: 'api/flags/on_entity/@type@/@id@/',
-		Cancel: 'api/flags/on_entity/@type@/@id@/@flag_id@/cancel',
-		Complete: 'api/flags/on_entity/@type@/@id@/@flag_id@/complete',
+		AddToEntity: 'api/flags/on_entity/@entity@/',
+		Cancel: 'api/flags/on_entity/@entity@/@flag_id@/cancel',
+		Complete: 'api/flags/on_entity/@entity@/@flag_id@/complete',
+	},
+
+	Assignments: {
+		FetchAssignableUsers: 'api/assignments/@entity@/assignable_users',
+		AssignUserToEntity: 'api/assignments/@entity@/assign',
+		UnassignUserFromEntity: 'api/assignments/@entity@/unassign',
 	}
 
 }

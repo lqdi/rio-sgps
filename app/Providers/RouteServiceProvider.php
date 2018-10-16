@@ -4,6 +4,7 @@ namespace SGPS\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use SGPS\Entity\Entity;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,10 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+	    Route::bind('entity', function ($reference) {
+	    	return Entity::fetchByReference($reference);
+	    });
     }
 
     /**

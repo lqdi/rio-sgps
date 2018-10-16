@@ -20,7 +20,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('questions/{category}/{entity_type}/{entity_id}', 'API\QuestionsController@fetch_questions_for_entity')->name('api.questions.fetch_questions_for_entity');
 
 	Route::get('flags', 'API\FlagsController@index')->name('api.flags.index');
-	Route::post('flags/on_entity/{entity_type}/{entity_id}', 'API\FlagsController@add_to_entity')->name('api.flags.add_to_entity');
-	Route::post('flags/on_entity/{entity_type}/{entity_id}/{flag}/cancel', 'API\FlagsController@cancel')->name('api.flags.cancel');
-	Route::post('flags/on_entity/{entity_type}/{entity_id}/{flag}/complete', 'API\FlagsController@complete')->name('api.flags.complete');
+	Route::post('flags/on_entity/{entity}', 'API\FlagsController@add_to_entity')->name('api.flags.add_to_entity');
+	Route::post('flags/on_entity/{entity}/{flag}/cancel', 'API\FlagsController@cancel')->name('api.flags.cancel');
+	Route::post('flags/on_entity/{entity}/{flag}/complete', 'API\FlagsController@complete')->name('api.flags.complete');
+
+	Route::get('assignments/{entity}/assignable_users', 'API\AssignmentsController@fetch_assignable_users')->name('api.assignments.fetch_assignable_users');
+	Route::post('assignments/{entity}/assign', 'API\AssignmentsController@assign')->name('api.assignments.assign');
+	Route::post('assignments/{entity}/unassign', 'API\AssignmentsController@unassign')->name('api.assignments.unassign');
 });

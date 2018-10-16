@@ -16,6 +16,7 @@ namespace SGPS\Entity;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use SGPS\Services\UserAssignmentService;
 use SGPS\Traits\IndexedByUUID;
 
 /**
@@ -52,12 +53,41 @@ class UserAssignment extends Model {
 		'type',
 	];
 
+	// --------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: assignment with user (assigned user)
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
 	public function user() {
 		return $this->hasOne(User::class, 'id', 'user_id');
 	}
 
+	/**
+	 * Relationship: assignment with target entity
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 */
 	public function entity() {
 		return $this->morphTo('entity');
+	}
+
+	// --------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Creates a new user assignment entry.
+	 * Should not be called directly; @see UserAssignmentService
+	 * @param User $user The user being assigned
+	 * @param Entity $entity The target entity
+	 * @param string $assignmentType The assignment type; @see UserAssignment::TYPE_*
+	 * @return UserAssignment
+	 */
+	public static function assignUserToEntity(User $user, Entity $entity, string $assignmentType) : UserAssignment {
+		return parent::create([
+			'user_id' => $user->id,
+			'entity_id' => $entity->getEntityID(),
+			'entity_type' => $entity->getEntityType(),
+			'type' => $assignmentType,
+		]);
 	}
 
 }

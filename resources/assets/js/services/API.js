@@ -17,6 +17,10 @@ export default {
 		return {headers: {Authorization: 'Bearer ' + this.getToken()}}
 	},
 
+	getEntityReference(type, id) {
+		return type + ":" + id;
+	},
+
 	connectUser(userId, token) {
 		window.SGPS_USER_ID = userId;
 		window.SGPS_TOKEN = token;
