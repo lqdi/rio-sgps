@@ -25,7 +25,7 @@
 					@foreach($family->assignments as $assignment)
 						<tr>
 							<td><i class="fa fa-user"></i> {{$assignment->user->name}}</td>
-							<td>{{$assignment->type}}</td>
+							<td>{{trans('assignment.type.' . $assignment->type)}}</td>
 							<td>{{$assignment->created_at}}</td>
 							<td>
 								<button type="button" @click="unassignUser('{{$assignment->user_id}}')" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
