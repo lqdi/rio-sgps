@@ -29,6 +29,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $shortcode
  * @property string $residence_id
  * @property string $family_id
+ * @property string $sector_id
  * @property string $name
  * @property string $nis
  * @property string $cpf
@@ -55,6 +56,7 @@ class Person extends Entity {
 	protected $fillable = [
 		'residence_id',
 		'family_id',
+		'sector_id',
 		'name',
 		'nis',
 		'cpf',

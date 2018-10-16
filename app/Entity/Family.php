@@ -27,6 +27,7 @@ use SGPS\Traits\IndexedByUUID;
  *
  * @property string $id
  * @property string $shortcode
+ * @property string $sector_id
  * @property string $residence_id
  * @property string $person_in_charge_id
  * @property float $ipm_rate
@@ -54,6 +55,7 @@ class Family extends Entity {
 	protected $table = 'families';
 
 	protected $fillable = [
+		'sector_id',
 		'residence_id',
 		'person_in_charge_id',
 		'ipm_rate',

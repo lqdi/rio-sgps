@@ -9246,6 +9246,10 @@ var BVRL = '__BV_root_listeners__';
 		FetchQuestionsByEntity: 'api/questions/@category@/@type@/@id@'
 	},
 
+	Family: {
+		AddMember: 'api/families/@id@/add_member'
+	},
+
 	Flags: {
 		FetchAll: 'api/flags',
 		AddToEntity: 'api/flags/on_entity/@entity@/',
@@ -82197,7 +82201,54 @@ var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create
 				console.error("FamilyView.unassignUser: ", err);
 				__WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
 			});
-		}
+		},
+
+		addMemberToFamily: function () {
+			var _ref7 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
+				var _this4 = this;
+
+				var memberName;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
+					while (1) {
+						switch (_context7.prev = _context7.next) {
+							case 0:
+								_context7.next = 2;
+								return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].prompt('Digite o nome completo da pessoa', '', 'text', 'Nome completo...', 'Adicionando um novo membro');
+
+							case 2:
+								memberName = _context7.sent;
+
+								if (memberName) {
+									_context7.next = 5;
+									break;
+								}
+
+								return _context7.abrupt('return');
+
+							case 5:
+
+								axios.post(__WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_5__config_Endpoints__["a" /* default */].Family.AddMember, { id: this.family.id }), { member_name: memberName }, __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].headers()).then(function (res) {
+									_this4.isLoading = true;
+									location.reload();
+								}).catch(function (err) {
+									console.error("FamilyView.addMemberToFamily: ", err);
+									__WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
+								});
+
+							case 6:
+							case 'end':
+								return _context7.stop();
+						}
+					}
+				}, _callee7, this);
+			}));
+
+			function addMemberToFamily() {
+				return _ref7.apply(this, arguments);
+			}
+
+			return addMemberToFamily;
+		}()
 	}
 });
 

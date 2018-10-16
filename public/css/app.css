@@ -10614,6 +10614,12 @@ a.text-dark:focus {
   content: '';
 }
 
+.tree__container .tree__options {
+  position: relative;
+  padding: 25px;
+  text-align: center;
+}
+
 .detail__label {
   text-transform: uppercase;
   font-size: 14px;

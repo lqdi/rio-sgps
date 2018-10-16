@@ -42,6 +42,10 @@
 							<a @click="openTab('member', '{{$member->id}}')" href="#member/{{$member->id}}" :class="{active: isOpen('member', '{{$member->id}}')}" class="tree__leaf"><i class="fa fa-male"></i> {{$member->name}} @if($member->id === $family->person_in_charge_id)<i v-b-tooltip.hover title="Responsável" class="fa fa-star"></i>@endif</a>
 						@endforeach
 					</div>
+
+					<div class="tree__options">
+						<a @click="addMemberToFamily()" class="btn btn-success d-block"><i class="fa fa-plus"></i> Adicionar membro</a>
+					</div>
 				</div>
 
 			</div>

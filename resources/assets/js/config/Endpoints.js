@@ -12,6 +12,10 @@ export default {
 		FetchQuestionsByEntity: 'api/questions/@category@/@type@/@id@',
 	},
 
+	Family: {
+		AddMember: 'api/families/@id@/add_member',
+	},
+
 	Flags: {
 		FetchAll: 'api/flags',
 		AddToEntity: 'api/flags/on_entity/@entity@/',

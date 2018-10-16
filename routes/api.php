@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('comments/thread/{type}/{id}', 'API\CommentsController@fetch_thread')->name('api.comments.fetch_thread');
 	Route::post('comments/thread/{type}/{id}', 'API\CommentsController@post_comment')->name('api.comments.post_comment');
 
+	Route::post('families/{family}/add_member', 'API\FamiliesController@add_member')->name('api.families.add_member');
 
 	Route::get('questions/categories', 'API\QuestionsController@fetch_categories')->name('api.questions.fetch_categories');
 	Route::put('questions/answers/{entity_type}/{entity_id}', 'API\QuestionsController@save_answers')->name('api.questions.save_answers');

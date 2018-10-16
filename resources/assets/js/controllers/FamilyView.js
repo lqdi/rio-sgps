@@ -115,5 +115,25 @@ export default {
 			});
 
 		},
+
+		addMemberToFamily: async function() {
+
+			let memberName = await Dialogs.prompt('Digite o nome completo da pessoa', '', 'text', 'Nome completo...', 'Adicionando um novo membro');
+
+			if(!memberName) return;
+
+			axios.post(
+				API.url(Endpoints.Family.AddMember, {id: this.family.id}),
+				{member_name: memberName},
+				API.headers()
+			).then((res) => {
+				this.isLoading = true;
+				location.reload();
+			}).catch((err) => {
+				console.error("FamilyView.addMemberToFamily: ", err);
+				Dialogs.alert('Ocorreu um erro ao salvar as informações!');
+			})
+
+		}
 	}
 }
