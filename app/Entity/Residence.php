@@ -18,8 +18,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
+use SGPS\Utils\Sanitizers;
 
 /**
  * Class Residence
@@ -48,6 +50,7 @@ class Residence extends Entity {
 	use IndexedByUUID;
 	use SoftDeletes;
 	use HasShortCode;
+	use Searchable;
 
 	protected $table = 'residences';
 
@@ -108,6 +111,23 @@ class Residence extends Entity {
 	 */
 	public function getEntityType(): string {
 		return 'residence';
+	}
+
+	/**
+	 * Concrete: Search array with residence basic data
+	 * @return array
+	 */
+	public function toSearchableArray() {
+
+		return [
+			'id' => $this->id,
+			'shortcode' => Sanitizers::clearForSearch($this->shortcode),
+			'gis_global_id' => $this->gis_global_id,
+			'sector_id' => $this->sector_id,
+			'address' => $this->address,
+			'territory' => $this->territory,
+			'reference' => $this->reference,
+		];
 	}
 
 }

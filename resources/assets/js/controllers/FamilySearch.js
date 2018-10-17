@@ -9,7 +9,7 @@ export default {
 
 	data: () => { return {
 		isLoading: false,
-		filters: {}
+		filters: {q: ''}
 	}},
 
 	mounted: function() {

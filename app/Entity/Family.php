@@ -18,8 +18,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
+use SGPS\Utils\Sanitizers;
+use SGPS\Utils\Shortcode;
 
 /**
  * Class Family
@@ -51,6 +54,7 @@ class Family extends Entity {
 	use IndexedByUUID;
 	use SoftDeletes;
 	use HasShortCode;
+	use Searchable;
 
 	protected $table = 'families';
 
@@ -123,5 +127,23 @@ class Family extends Entity {
 	 */
 	public function getEntityType(): string {
 		return 'family';
+	}
+
+	/**
+	 * Concrete: Search array with family, residence and members infos for full-text search
+	 * @return array
+	 */
+	public function toSearchableArray() {
+
+		return array_dot([
+			'id' => $this->id,
+			'shortcode' => Sanitizers::clearForSearch($this->shortcode),
+			'gis_global_id' => $this->gis_global_id,
+			'sector_id' => $this->sector_id,
+			'residence' => $this->residence->toSearchableArray(),
+			'members' => $this->members->map(function ($member) { /* @var $member \SGPS\Entity\Person */
+				return $member->toSearchableArray();
+			}),
+		]);
 	}
 }

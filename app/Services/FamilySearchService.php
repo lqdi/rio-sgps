@@ -16,7 +16,9 @@ namespace SGPS\Services;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use SGPS\Entity\Family;
 use SGPS\Entity\Flag;
+use SGPS\Utils\Sanitizers;
 
 class FamilySearchService {
 
@@ -37,10 +39,12 @@ class FamilySearchService {
 				return $this->filterByAssignment($sq, $filters['assigned_to']);
 			});
 		}
+
 		if($filters->has('q') && strlen($filters['q']) > 0) {
-			$query = $query->where(function ($sq) use ($filters) {
-				return $this->filterByTextSearch($sq, $filters['q']);
-			});
+			$searchQuery = Sanitizers::clearForSearch($filters['q']);
+			$foundInIndex = $this->buildTextSearch($searchQuery)->get();
+
+			$query = $query->whereIn('id', $foundInIndex->pluck('id'));
 		}
 
 		return $query;
@@ -86,11 +90,8 @@ class FamilySearchService {
 		return $query;
 	}
 
-	public function filterByTextSearch(Builder $query, string $searchQuery) : Builder {
-		// TODO: match against? sphinx?
-		// TODO: might be worth using Laravel Scout
-		// TODO: create "query" body for the family with all searchable params (address, codes, names & CPFs of all members, etc)
-		return $query;
+	public function buildTextSearch(string $searchQuery) : \Laravel\Scout\Builder {
+		return Family::search($searchQuery);
 	}
 
 }

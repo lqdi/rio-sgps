@@ -13,7 +13,7 @@
 					<h1>Famílias</h1>
 				</div>
 				<div>
-					<form ref="filterForm" class="form-inline justify-content-between" method="GET" action="{{route('families.index')}}">
+					<form ref="filterForm" @submit.prevent="doSearch()" class="form-inline justify-content-between" method="GET" action="{{route('families.index')}}">
 						<div class="form-group">
 							<i class="fa fa-filter"></i> &nbsp; <strong>Filtrar por</strong> &nbsp;&nbsp;
 						</div>
@@ -23,7 +23,7 @@
 							<button type="button" @click="setFilter('status', 'archived')" class="btn btn-sm {{$filters['status'] === 'archived' ? 'btn-primary' : 'btn-outline-primary'}}">Arquivados</button>
 						</div>
 						<div class="form-group">
-							<input type="search" name="filters[q]" v-model="filters.q" class="form-control form-control-sm mx-2" style="width: 270px" placeholder="Buscar por nome, endereço, CPF...">
+							<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm mx-2" style="width: 270px" placeholder="Buscar por nome, endereço, CPF...">
 						</div>
 
 						<div class="btn-group-sm" role="group">
