@@ -110,6 +110,7 @@ export default {
 				this.isLoading = true;
 				location.reload();
 			}).catch((err) => {
+				this.isLoading = false;
 				console.error("FamilyView.unassignUser: ", err);
 				Dialogs.alert('Ocorreu um erro ao salvar as informações!');
 			});
@@ -130,6 +131,7 @@ export default {
 				this.isLoading = true;
 				location.reload();
 			}).catch((err) => {
+				this.isLoading = false;
 				console.error("FamilyView.addMemberToFamily: ", err);
 				Dialogs.alert('Ocorreu um erro ao salvar as informações!');
 			})

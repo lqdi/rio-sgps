@@ -17,19 +17,30 @@ namespace SGPS\Http\Controllers\Web;
 use SGPS\Entity\Family;
 use SGPS\Entity\Flag;
 use SGPS\Http\Controllers\Controller;
+use SGPS\Services\FamilySearchService;
 
 class FamiliesController extends Controller {
 
-	public function index() {
+	public function index(FamilySearchService $service) {
 
-		$families = Family::query()
+		$defaultFilters = [
+			'status' => 'ongoing',
+			'assigned_to' => 'all',
+			'flags' => [],
+			'q' => '',
+		];
+
+		$filters = request('filters', $defaultFilters);
+
+		$query = Family::query()
 			->with(['residence', 'personInCharge', 'flags'])
-			->orderBy('created_at', 'desc')
-			->paginate(24);
+			->orderBy('created_at', 'desc');
 
-		$flags = Flag::all();
+		$query = $service->applyFiltersToQuery($query, collect($filters));
 
-		return view('families.families_index', compact('families', 'flags'));
+		$families = $query->paginate(24);
+
+		return view('families.families_index', compact('families', 'filters'));
 
 	}
 
