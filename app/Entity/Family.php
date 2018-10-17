@@ -111,6 +111,14 @@ class Family extends Entity {
 		return $this->hasMany(Person::class, 'family_id', 'id');
 	}
 
+	/**
+	 * Relationship: family with user assignments
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function assignments() {
+		return $this->hasMany(UserAssignment::class, 'entity_id', 'id');
+	}
+
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**

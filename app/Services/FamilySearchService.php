@@ -86,8 +86,11 @@ class FamilySearchService {
 	}
 
 	public function filterByAssignment(Builder $query, string $assignmentMode) : Builder {
-		// TODO: if filtering by to_me, whereHas('assignment') where('assignment.user_id', auth()->user()->id()
-		return $query;
+		if($assignmentMode === 'all') return $query;
+
+		return $query->whereHas('assignments', function ($sq) {
+			$sq->where('user_id', auth()->id());
+		});
 	}
 
 	public function buildTextSearch(string $searchQuery) : \Laravel\Scout\Builder {

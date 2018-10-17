@@ -28,8 +28,8 @@
 
 						<div class="btn-group-sm" role="group">
 							<input type="hidden" name="filters[assigned_to]" v-model="filters.assigned_to" />
-							<button type="button" @click="setFilter('assigned_to', 'all')" class="btn btn-sm btn-primary">Todos</button>
-							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm btn-outline-primary">Casos em que estou envolvido</button>
+							<button type="button" @click="setFilter('assigned_to', 'all')" class="btn btn-sm {{$filters['assigned_to'] === 'all' ? 'btn-primary' : 'btn-outline-primary'}}">Todos</button>
+							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm {{$filters['assigned_to'] === 'to_me' ? 'btn-primary' : 'btn-outline-primary'}}">Casos em que estou envolvido</button>
 						</div>
 
 						<div class="form-group">
