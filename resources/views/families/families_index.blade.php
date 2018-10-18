@@ -59,7 +59,7 @@
 								<td>{{$family->residence->address}}</td>
 								<td><i class="fa fa-male"></i> {{$family->personInCharge->name}}</td>
 								<td>
-									<flag-display-tooltip :flags="{{json_encode($family->flags)}}"></flag-display-tooltip>
+									<flag-display-tooltip :flags="{{json_encode($family->allActiveFlags)}}"></flag-display-tooltip>
 								</td>
 							</tr>
 						@endforeach

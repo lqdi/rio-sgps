@@ -18,7 +18,7 @@ use Carbon\Carbon;
 use SGPS\Entity\Entity;
 use SGPS\Entity\Flag;
 use SGPS\Http\Controllers\Controller;
-use SGPS\Services\FlagAssignmentService;
+use SGPS\Services\FlagAttributionService;
 
 class FlagsController extends Controller {
 
@@ -32,39 +32,39 @@ class FlagsController extends Controller {
 
 	}
 
-	public function cancel(Entity $entity, Flag $flag, FlagAssignmentService $service) {
+	public function cancel(Entity $entity, Flag $flag, FlagAttributionService $service) {
 
-		if(!$service->doesFlagExistInEntity($entity, $flag)) {
+		if(!$service->isFlagAttributedToEntity($entity, $flag)) {
 			return $this->api_failure('flag_not_assigned');
 		}
 
-		$service->cancelFlagAssignment($entity, $flag);
+		$service->cancelFlagAttribution($entity, $flag);
 
 		return $this->api_success();
 	}
 
-	public function complete(Entity $entity, Flag $flag, FlagAssignmentService $service) {
+	public function complete(Entity $entity, Flag $flag, FlagAttributionService $service) {
 
-		if(!$service->doesFlagExistInEntity($entity, $flag)) {
+		if(!$service->isFlagAttributedToEntity($entity, $flag)) {
 			return $this->api_failure('flag_not_assigned');
 		}
 
-		$service->completeFlagAssignment($entity, $flag);
+		$service->completeFlagAttribution($entity, $flag);
 
 		return $this->api_success();
 	}
 
-	public function add_to_entity(Entity $entity, FlagAssignmentService $service) {
+	public function add_to_entity(Entity $entity, FlagAttributionService $service) {
 
 		$flag = Flag::findOrFail(request('flag_id')); /* @var $flag Flag */
 		$referenceDate = Carbon::createFromFormat('Y-m-d', request('reference_date'));
 		$deadline = intval(request('deadline'));
 
-		if($service->doesFlagExistInEntity($entity, $flag)) {
+		if($service->isFlagAttributedToEntity($entity, $flag)) {
 			return $this->api_failure('flag_already_exists');
 		}
 
-		$service->assignFlagToEntity($entity, $flag, $referenceDate, $deadline);
+		$service->attributeFlagToEntity($entity, $flag, $referenceDate, $deadline);
 
 		return $this->api_success();
 

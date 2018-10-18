@@ -33,7 +33,7 @@ class FamiliesController extends Controller {
 		$filters = request('filters', $defaultFilters);
 
 		$query = Family::query()
-			->with(['residence', 'personInCharge', 'flags'])
+			->with(['residence', 'personInCharge', 'allFlagAttributions', 'allActiveFlags'])
 			->orderBy('created_at', 'desc');
 
 		$query = $service->applyFiltersToQuery($query, collect($filters));
@@ -46,7 +46,7 @@ class FamiliesController extends Controller {
 
 	public function show(Family $family) {
 
-		$family->load(['members', 'residence', 'personInCharge', 'flags']);
+		$family->load(['members.flags', 'residence.flags', 'personInCharge', 'allFlagAttributions']);
 
 		return view('families.families_view', compact('family'));
 

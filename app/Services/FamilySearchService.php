@@ -53,36 +53,22 @@ class FamilySearchService {
 
 	public function filterByFlags(Builder $query, array $flags) : Builder {
 
-		// TODO: refactor this
-		// TODO: perhaps it is worth to refactor the AssignedFlag to always contain the family_id reference (flattens the query completely)
+		return $query->whereHas('allFlagAttributions', function($sq) use ($flags) {
+			return $sq->whereIn('flag_id', $flags);
+		});
 
-		$flagsByType = Flag::whereIn('id', $flags)->get()->groupBy('entity_type');
-
-		if(sizeof($flagsByType['family'] ?? []) > 0) {
-			$query->whereHas('flags', function($sq) use ($flagsByType) {
-				return $sq->whereIn('flags.id', $flagsByType['family']);
-			});
-		}
-
-		if(sizeof($flagsByType['residence'] ?? []) > 0) {
-			$query->orWhereHas('residence.flags', function($sq) use ($flagsByType) {
-				return $sq->whereIn('flags.id', $flagsByType['residence']);
-			});
-		}
-
-		if(sizeof($flagsByType['person'] ?? []) > 0) {
-			$query->orWhereHas('members.flags', function($sq) use ($flagsByType) {
-				return $sq->whereIn('flags.id', $flagsByType['person']);
-			});
-		}
-
-
-		return $query;
 	}
 
 	public function filterByStatus(Builder $query, string $statusMode) : Builder {
-		// TODO: status = archived when no flags are applied on the family or any of the members/residence
-		return $query;
+
+		$filterCompletedOrCancelled = function ($sq) {
+			return $sq->where('is_cancelled', false)->where('is_completed', false);
+		};
+
+		return ($statusMode === 'archived')
+			? $query->whereHas('allFlagAttributions', $filterCompletedOrCancelled, '=', 0)
+			: $query->whereHas('allFlagAttributions', $filterCompletedOrCancelled, '>', 0);
+
 	}
 
 	public function filterByAssignment(Builder $query, string $assignmentMode) : Builder {

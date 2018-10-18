@@ -18,8 +18,8 @@ use Carbon\Carbon;
 
 class Hydrators {
 
-	public static function getDeadlineDate(string $baseDate, int $deadlineInDays) : Carbon {
-		return Carbon::createFromFormat('Y-m-d', $baseDate)->addDays($deadlineInDays);
+	public static function getDeadlineDate(Carbon $baseDate, int $deadlineInDays) : Carbon {
+		return $baseDate->copy()->addDays($deadlineInDays);
 	}
 
 }

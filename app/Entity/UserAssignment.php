@@ -46,6 +46,7 @@ class UserAssignment extends Model {
 	const TYPES = [self::TYPE_WATCHING, self::TYPE_ACTING, self::TYPE_ACTING];
 
 	protected $table = "user_assignments";
+	protected $with = ['user'];
 	protected $fillable = [
 		'user_id',
 		'entity_type',

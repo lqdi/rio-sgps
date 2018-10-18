@@ -69,27 +69,35 @@ class Flag extends Model {
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Relationship: flag with families
+	 * Relationship: flags with their attributions to target entities
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function attributions() {
+		return $this->hasMany(FlagAttribution::class, 'flag_id', 'id');
+	}
+
+	/**
+	 * Relationship: flag with families (through Flag Assignments)
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function families() {
-		return $this->morphedByMany(Family::class, 'entity', 'flagged_entities');
+		return $this->morphedByMany(Family::class, 'entity', 'flag_assignments');
 	}
 
 	/**
-	 * Relationship: flag with residences
+	 * Relationship: flag with residences (through Flag Assignments)
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function residences() {
-		return $this->morphedByMany(Residence::class, 'entity', 'flagged_entities');
+		return $this->morphedByMany(Residence::class, 'entity', 'flag_assignments');
 	}
 
 	/**
-	 * Relationship: flag with persons
+	 * Relationship: flag with persons (through Flag Assignments)
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function persons() {
-		return $this->morphedByMany(Person::class, 'entity', 'flagged_entities');
+		return $this->morphedByMany(Person::class, 'entity', 'flag_assignments');
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------

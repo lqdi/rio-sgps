@@ -60,26 +60,19 @@ abstract class Entity extends Model {
 	}
 
 	/**
-	 * Relationship: entities with flags
+	 * Relationship: entities with flag attributions
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function attributedFlags() {
+		return $this->hasMany(FlagAttribution::class, 'entity_id', 'id');
+	}
+
+	/**
+	 * Relationship: entities with flags, through flag attributions
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function flags() {
-		// TODO: create actual entity to represent the pivot between Entity and Flag
-		return $this
-			->morphToMany(Flag::class, 'entity', 'flagged_entities')
-			->orderBy('is_completed')
-			->orderBy('is_cancelled')
-			->orderBy('created_at', 'desc')
-			->withPivot([
-				'reference_date',
-				'deadline',
-				'flagged_by_operator_id',
-				'created_at',
-				'is_default_deadline',
-				'is_late',
-				'is_completed',
-				'is_cancelled',
-			]);
+		return $this->morphToMany(Flag::class, 'entity', 'flag_attributions');
 	}
 
 	/**

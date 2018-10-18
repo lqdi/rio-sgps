@@ -119,6 +119,24 @@ class Family extends Entity {
 		return $this->hasMany(UserAssignment::class, 'entity_id', 'id');
 	}
 
+	/**
+	 * Relationship: family with all flags associated with the family, residence or members
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function allFlagAttributions() {
+		return $this->hasMany(FlagAttribution::class, 'residence_id', 'residence_id');
+	}
+
+	/**
+	 * Relationship: family with all flags associated, through flag attributions
+	 * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 */
+	public function allActiveFlags() {
+		return $this->hasManyThrough(Flag::class, FlagAttribution::class, 'residence_id', 'id', 'residence_id', 'flag_id')
+			->where('flag_attributions.is_completed', false)
+			->where('flag_attributions.is_cancelled', false);
+	}
+
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**

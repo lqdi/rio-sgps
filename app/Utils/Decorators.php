@@ -16,12 +16,13 @@ namespace SGPS\Utils;
 
 use Carbon\Carbon;
 use SGPS\Entity\Flag;
+use SGPS\Entity\FlagAttribution;
 
 class Decorators {
 
-	public static function getFlagBackgroundClass(Flag $flag) {
+	public static function getFlagAttributionBackgroundClass(FlagAttribution $attribution) {
 
-		switch($flag->pivot->entity_type) {
+		switch($attribution->entity_type) {
 			case 'family': return 'text-primary';
 			case 'residence': return 'text-success';
 			case 'person': return 'text-info';

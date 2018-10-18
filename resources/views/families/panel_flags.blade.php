@@ -12,28 +12,13 @@
 				<hr />
 			</div>
 
-			@foreach($family->flags as $flag)
+			@foreach($family->allFlagAttributions as $attribution)
 				<div class="col-md-3">
-					@include('components.flagged_entity_card', ['flag' => $flag])
+					@include('components.flag_attribution_card', ['attribution' => $attribution])
 					<br />
 				</div>
 			@endforeach
 
-			@foreach($family->residence->flags as $flag)
-				<div class="col-md-3">
-					@include('components.flagged_entity_card', ['flag' => $flag])
-					<br />
-				</div>
-			@endforeach
-
-			@foreach($family->members as $member)
-				@foreach($member->flags as $flag)
-					<div class="col-md-3">
-						@include('components.flagged_entity_card', ['flag' => $flag, 'person' => $member])
-						<br />
-					</div>
-				@endforeach
-			@endforeach
 		</div>
 	</div>
 </div>

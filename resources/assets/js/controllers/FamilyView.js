@@ -40,14 +40,14 @@ export default {
 			this.currentID = id;
 		},
 
-		cancelFlagAssignment: async function(entityType, entityID, flagID) {
+		cancelFlagAttribution: async function(entityType, entityID, flagID) {
 
 			let shouldCancel = await Dialogs.confirm("Tem certeza que deseja cancelar essa etiqueta?");
 
 			if(!shouldCancel) return;
 
 			axios.post(
-				API.url(Endpoints.Flags.Cancel, {type: entityType, id: entityID, flag_id: flagID}),
+				API.url(Endpoints.Flags.Cancel, {entity: API.getEntityReference(entityType, entityID), flag_id: flagID}),
 				{},
 				API.headers()
 			).then(async (res) => {
@@ -61,14 +61,14 @@ export default {
 
 		},
 
-		completeFlagAssignment: async function(entityType, entityID, flagID) {
+		completeFlagAttribution: async function(entityType, entityID, flagID) {
 
 			let shouldCancel = await Dialogs.confirm("Tem certeza que deseja concluír essa etiqueta?");
 
 			if(!shouldCancel) return;
 
 			axios.post(
-				API.url(Endpoints.Flags.Complete, {type: entityType, id: entityID, flag_id: flagID}),
+				API.url(Endpoints.Flags.Complete, {entity: API.getEntityReference(entityType, entityID), flag_id: flagID}),
 				{},
 				API.headers()
 			).then(async (res) => {
