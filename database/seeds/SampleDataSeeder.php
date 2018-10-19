@@ -67,14 +67,15 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 
 			});
 
-		factory(Group::class, 6)->create();
-		factory(Flag::class, 15)->create()
+		//factory(Group::class, 6)->create();
+		//factory(Flag::class, 15)->create()
+		Flag::all()
 			->each(function (Flag $flag) use ($faker, $residences) {
 
 				switch($flag->entity_type) {
 					case 'residence':
 						$residences->random(rand(1,3))->each(function (Residence $residence) use ($faker, $flag) {
-							$residence->flags()->attach($flag->id, ['reference_date' => $faker->date()]);
+							$residence->flags()->attach($flag->id, ['residence_id' => $residence->id, 'reference_date' => $faker->date()]);
 						});
 
 						break;
@@ -82,7 +83,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 					case 'family':
 						$residences->random(rand(2, 4))->each(function (Residence $residence) use ($faker, $flag) {
 							$residence->_families->random(rand(1, sizeof($residence->_families)))->each(function (Family $family) use ($faker, $flag) {
-								$family->flags()->attach($flag->id, ['reference_date' => $faker->date()]);
+								$family->flags()->attach($flag->id, ['residence_id' => $family->residence_id, 'reference_date' => $faker->date()]);
 							});
 						});
 
@@ -95,7 +96,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 
 									$family->_persons->random(rand(1, sizeof($family->_persons)))
 										->each(function (Person $person) use ($faker, $flag) {
-											$person->flags()->attach($flag->id, ['reference_date' => $faker->date()]);
+											$person->flags()->attach($flag->id, ['residence_id' => $person->residence_id, 'reference_date' => $faker->date()]);
 										});
 
 							});
