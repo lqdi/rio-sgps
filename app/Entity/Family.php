@@ -148,6 +148,14 @@ class Family extends Entity {
 	}
 
 	/**
+	 * Concrete: Family has parent residence UUID.
+	 * @return string
+	 */
+	public function getEntityResidenceID(): string {
+		return $this->residence_id;
+	}
+
+	/**
 	 * Concrete: Family has type string 'family'
 	 * @return string
 	 */

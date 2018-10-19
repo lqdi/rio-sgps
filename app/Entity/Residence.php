@@ -106,6 +106,14 @@ class Residence extends Entity {
 	}
 
 	/**
+	 * Concrete: Residence is self residence UUID.
+	 * @return string
+	 */
+	public function getEntityResidenceID(): string {
+		return $this->id;
+	}
+
+	/**
 	 * Concrete: Residences have type 'residence'
 	 * @return string
 	 */

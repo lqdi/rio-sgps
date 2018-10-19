@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SGPS\Behavior\FlagBehavior;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 
@@ -31,7 +32,9 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $name
  * @property string $entity_type
  * @property string $description
- * @property string $triggers
+ * @property string $behavior
+ * @property array|null $conditions
+ * @property array|null $triggers
  * @property string $is_visible
  * @property integer $default_deadline
  * @property string $default_assigned_group_id
@@ -43,6 +46,7 @@ use SGPS\Traits\IndexedByUUID;
  * @property Family[]|Collection $families
  * @property Residence[]|Collection $residences
  * @property Person[]|Collection $persons
+ * @property Group[]|Collection $groups
  */
 class Flag extends Model {
 
@@ -54,16 +58,19 @@ class Flag extends Model {
 	protected $fillable = [
 		'code',
 		'name',
+		'behavior',
+		'conditions',
 		'entity_type',
 		'description',
 		'triggers',
 		'is_visible',
 		'default_deadline',
-		'default_assigned_group_id',
 	];
 
 	protected $casts = [
 		'default_deadline' => 'integer',
+		'conditions' => 'array',
+		'triggers' => 'array',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -100,7 +107,23 @@ class Flag extends Model {
 		return $this->morphedByMany(Person::class, 'entity', 'flag_assignments');
 	}
 
+	/**
+	 * Relationship: flags with groups
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function groups() {
+		return $this->belongsToMany(Group::class, 'flag_groups', 'flag_code', 'group_code', 'code', 'code');
+	}
+
 	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Gets the behavior handler instance for this flag
+	 * @return FlagBehavior
+	 */
+	public function getBehaviorHandler() : FlagBehavior {
+		return FlagBehavior::getHandler($this);
+	}
 
 	/**
 	 * Deletes the flag.
@@ -113,6 +136,19 @@ class Flag extends Model {
 		$this->persons()->sync([]);
 
 		return parent::delete();
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Fetches all flags that target a specific entity type.
+	 * @param string $entityType
+	 * @return Flag[]|Collection
+	 */
+	public static function fetchAllForType(string $entityType) {
+		return self::query()
+			->where('entity_type', $entityType)
+			->get();
 	}
 
 }

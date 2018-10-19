@@ -29,6 +29,12 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Entity extends Model {
 
 	/**
+	 * Abstract: gets this entity's parent/self residence ID
+	 * @return string
+	 */
+	abstract public function getEntityResidenceID() : string;
+
+	/**
 	 * Abstract: gets this entity's unique ID
 	 * @return string
 	 */
@@ -152,6 +158,35 @@ abstract class Entity extends Model {
 		$id = substr($reference, $separatorPos + 1);
 
 		return self::fetchByID($type, $id);
+	}
+
+	/**
+	 * Attribute a flag to this entity
+	 * @param Flag $flag
+	 * @param null|string $referenceDate
+	 * @param int $deadline
+	 * @return FlagAttribution
+	 */
+	public function addFlagAttribution(Flag $flag, ?string $referenceDate = null, int $deadline = 30) : FlagAttribution {
+		return FlagAttribution::createFromAttribution($flag, $this, $referenceDate, $deadline);
+	}
+
+	/**
+	 * Checks if a specific flag has been already attributed to this entity
+	 * @param Flag $flag
+	 * @return bool
+	 */
+	public function hasFlagAttribution(Flag $flag) : bool {
+		return $this->attributedFlags()->where('id', $flag->id)->exists();
+	}
+
+	/**
+	 * Gets the attribution of a specific flag to this entity, or null if flag is not attributed
+	 * @param Flag $flag
+	 * @return null|FlagAttribution
+	 */
+	public function getFlagAttribution(Flag $flag) : ?FlagAttribution {
+		return $this->attributedFlags()->where('id', $flag->id)->first();
 	}
 
 }

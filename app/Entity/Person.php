@@ -114,6 +114,14 @@ class Person extends Entity {
 	}
 
 	/**
+	 * Concrete: Person has parent residence UUID.
+	 * @return string
+	 */
+	public function getEntityResidenceID(): string {
+		return $this->residence_id;
+	}
+
+	/**
 	 * Concrete: Persons have type string 'person'
 	 * @return string
 	 */

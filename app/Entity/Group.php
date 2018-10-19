@@ -39,7 +39,6 @@ class Group extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
-	use HasShortCode;
 
 	protected $table = "groups";
 	protected $fillable = ['name'];
@@ -52,6 +51,14 @@ class Group extends Model {
 	 */
 	public function users() {
 		return $this->belongsToMany(User::class, 'user_groups');
+	}
+
+	/**
+	 * Relationship: groups with flags
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function groups() {
+		return $this->belongsToMany(Group::class, 'flag_groups', 'group_code', 'flag_code', 'code', 'code');
 	}
 
 }
