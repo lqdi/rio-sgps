@@ -105,6 +105,7 @@ $factory->define(\SGPS\Entity\Person::class, function (Faker $faker) {
 		'id' => $faker->uuid,
 		'residence_id' => $faker->uuid,
 		'family_id' => $faker->uuid,
+		'dob' => $faker->dateTimeBetween('-80 years', 'now')->format('Y-m-d'),
 		'name' => $faker->name,
 		'nis' => $faker->numerify('########'),
 		'cpf' => $faker->numerify('###########'),

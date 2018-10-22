@@ -21,19 +21,27 @@ class Conditionals {
 	public const CHILDREN_MAX_AGE = 14;
 
 	public function is_true($fieldValue) : bool {
-		return !!$fieldValue;
+		return boolval($fieldValue);
 	}
 
 	public function is_false($fieldValue) : bool {
-		return ! $fieldValue;
+		return !boolval($fieldValue);
 	}
 
 	public function is_filled($fieldValue) : bool {
-		return ($fieldValue !== null && strval($fieldValue) !== "");
+		if($fieldValue === null) return false;
+
+		if(is_bool($fieldValue)) return true;
+		if(is_integer($fieldValue)) return true;
+		if(is_float($fieldValue)) return true;
+		if(is_object($fieldValue)) return true;
+		if(is_array($fieldValue)) return true;
+
+		return strlen($fieldValue) > 0;
 	}
 
 	public function is_not_filled($fieldValue) : bool {
-		return !($fieldValue !== null && strval($fieldValue) !== "");
+		return !$this->is_filled($fieldValue);
 	}
 
 	public function eq($fieldValue, $param) : bool {

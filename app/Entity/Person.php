@@ -15,8 +15,6 @@ namespace SGPS\Entity;
 
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
@@ -32,6 +30,7 @@ use SGPS\Utils\Sanitizers;
  * @property string $family_id
  * @property string $sector_id
  * @property string $name
+ * @property Carbon|null $dob
  * @property string $nis
  * @property string $cpf
  * @property string $rg
@@ -59,11 +58,16 @@ class Person extends Entity {
 		'family_id',
 		'sector_id',
 		'name',
+		'dob',
 		'nis',
 		'cpf',
 		'rg',
 		'phone_number',
 		'gis_global_id',
+	];
+
+	protected $casts = [
+		'dob' => 'date',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -99,8 +103,7 @@ class Person extends Entity {
 	 * @return int
 	 */
 	public function getAge() {
-		// TODO: render this from dob field
-		return 0;
+		return $this->dob->diffInYears();
 	}
 
 	/**
@@ -108,8 +111,7 @@ class Person extends Entity {
 	 * @return int
 	 */
 	public function getAgeInMonths() {
-		// TODO: render this from dob field
-		return 0;
+		return $this->dob->diffInMonths();
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------

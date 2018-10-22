@@ -19,6 +19,7 @@ use SGPS\Entity\Question;
 use SGPS\Entity\QuestionAnswer;
 use SGPS\Entity\QuestionCategory;
 use SGPS\Http\Controllers\Controller;
+use SGPS\Services\EntityFieldLinkService;
 use SGPS\Services\FlagBehaviorService;
 
 class QuestionsController extends Controller {
@@ -62,7 +63,7 @@ class QuestionsController extends Controller {
 
 	}
 
-	public function save_answers(string $entity_type, string $entity_id, FlagBehaviorService $flagBehaviorService) {
+	public function save_answers(string $entity_type, string $entity_id, FlagBehaviorService $flagBehaviorService, EntityFieldLinkService $entityFieldLinkService) {
 
 		$answers = request('answers');
 		$entity = Entity::fetchByID($entity_type, $entity_id);
@@ -77,6 +78,8 @@ class QuestionsController extends Controller {
 		}
 
 		$answers = $entity->getAnswerGrid();
+
+		$entityFieldLinkService->updateEntityFields($entity, $answers);
 		$flagBehaviorService->evaluateBehaviorsForAnswers($entity, $answers);
 
 		return $this->api_success();
