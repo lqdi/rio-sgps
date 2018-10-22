@@ -132,6 +132,21 @@ abstract class Entity extends Model {
 			->toArray();
 	}
 
+	public function getAnswerByCode(string $questionCode) {
+		return QuestionAnswer::fetchByCode($this, $questionCode);
+	}
+
+	/**
+	 * Sets a question's answer for this entity.
+	 * Will create the answer if it doesn't exist, or update it if it does.
+	 *
+	 * @param Question $question
+	 * @param mixed $answer
+	 */
+	public function setAnswer(Question $question, $answer) {
+		QuestionAnswer::setAnswerForEntity($this, $question, $answer);
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
@@ -182,9 +197,9 @@ abstract class Entity extends Model {
 	 * @param int $deadline
 	 * @return FlagAttribution
 	 */
-	public function addFlagAttribution(Flag $flag, ?string $referenceDate = null, int $deadline = 30) : FlagAttribution {
-		if($this->hasFlagAttribution($flag)) {
-			return $this->getFlagAttribution($flag);
+	public function addFlagAttribution(Flag $flag, ?string $referenceDate = null, int $deadline = 30) : ?FlagAttribution {
+		if($this->hasFlagAttribution($flag)) { // Attribution already exists
+			return null;
 		}
 
 		return FlagAttribution::createFromAttribution($flag, $this, $referenceDate, $deadline);

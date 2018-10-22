@@ -11,7 +11,7 @@
  * Created at: 05/09/2018, 18:55
  */
 
-namespace SGPS\Console\Commands;
+namespace SGPS\Console\Commands\Maintenance;
 
 
 use Illuminate\Console\Command;

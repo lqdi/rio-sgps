@@ -153,6 +153,18 @@ class QuestionAnswer extends Model {
 	}
 
 	/**
+	 * Gets the answer value as a Carbon date instance
+	 * @return Carbon
+	 */
+	public function getAnswerAsDate() : Carbon {
+		if($this->type !== Question::TYPE_DATE) {
+			throw new \InvalidArgumentException("Cannot get answer as date, question type is not date ({$this->question_code})");
+		}
+
+		return Carbon::parse($this->value_string);
+	}
+
+	/**
 	 * Sets and saves (persists) the value of the question.
 	 * @see QuestionAnswer::setValue()
 	 * @param mixed $value
@@ -160,6 +172,20 @@ class QuestionAnswer extends Model {
 	public function updateValue($value) : void {
 		$this->setValue($value);
 		$this->save();
+	}
+
+	/**
+	 * Fetches an entity question answer by the question code
+	 * @param Entity $entity The target entity
+	 * @param string $questionCode The question code (eg "CE123")
+	 * @return null|QuestionAnswer The answer, or null if none found.
+	 */
+	public static function fetchByCode(Entity $entity, string $questionCode) : ?QuestionAnswer {
+		return self::query()
+			->where('entity_type', $entity->getEntityType())
+			->where('entity_id', $entity->id)
+			->where('question_code', $questionCode)
+			->first();
 	}
 
 	/**

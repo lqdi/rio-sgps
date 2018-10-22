@@ -121,4 +121,17 @@ class Question extends Model {
 	public function scopeOrdered($query) {
 		return $query->orderBy('order', 'asc');
 	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Fetches a question by it's code.
+	 * @param string $questionCode The question code.
+	 * @return null|Question The question, or null if none found.
+	 */
+	public static function fetchByCode(string $questionCode) : ?Question {
+		return self::query()
+			->where('question_code', $questionCode)
+			->first();
+	}
 }

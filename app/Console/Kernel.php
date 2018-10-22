@@ -24,8 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+    	$schedule->command('batch:run_daily_flag_behavior_hooks')->dailyAt('02:00:00');
     }
 
     /**

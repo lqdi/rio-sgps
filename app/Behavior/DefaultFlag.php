@@ -31,14 +31,7 @@ class DefaultFlag extends FlagBehavior {
 	 */
 	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): void {
 
-		// Check if flag isn't already attributed
-		if($entity->hasFlagAttribution($flag)) return;
 
-		// Check if all conditions match
-		if(!$this->conditionalChecker->matchesAll($flag->conditions, $answers)) return;
-
-		// If conditions match and flag hasn't been attributed, adds the attrib
-		$entity->addFlagAttribution($flag);
 
 	}
 

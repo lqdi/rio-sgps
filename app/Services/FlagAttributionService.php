@@ -32,21 +32,17 @@ class FlagAttributionService {
 	public function cancelFlagAttribution(Entity $entity, Flag $flag) {
 		$attribution = $entity->attributedFlags()
 			->where('flag_id', $flag->id)
-			->first();
+			->first(); /* @var $attribution \SGPS\Entity\FlagAttribution */
 
-		$attribution->is_cancelled = true;
-		$attribution->is_completed = false;
-		$attribution->save();
+		$attribution->cancel();
 	}
 
 	public function completeFlagAttribution(Entity $entity, Flag $flag) {
-		$assignment = $entity->attributedFlags()
+		$attribution = $entity->attributedFlags()
 			->where('flag_id', $flag->id)
-			->first();
+			->first(); /* @var $attribution \SGPS\Entity\FlagAttribution */
 
-		$assignment->is_cancelled = false;
-		$assignment->is_completed = true;
-		$assignment->save();
+		$attribution->complete();
 	}
 
 	public function attributeFlagToEntity(Entity $entity, Flag $flag, Carbon $referenceDate, ?int $deadline = null) : FlagAttribution {

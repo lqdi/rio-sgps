@@ -95,11 +95,20 @@ class Person extends Entity {
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Gets the person's age, based on the given date of birth
+	 * Gets the person's age, based on the given date of birth.
 	 * @return int
 	 */
 	public function getAge() {
-		// TODO: cache this?
+		// TODO: render this from dob field
+		return 0;
+	}
+
+	/**
+	 * Gets the person's age in months, based on the given date of birth.
+	 * @return int
+	 */
+	public function getAgeInMonths() {
+		// TODO: render this from dob field
 		return 0;
 	}
 

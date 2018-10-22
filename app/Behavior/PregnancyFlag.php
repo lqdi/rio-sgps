@@ -19,7 +19,14 @@ use SGPS\Entity\Entity;
 use SGPS\Entity\Flag;
 use SGPS\Entity\FlagAttribution;
 
-class PregnancyFlag extends FlagBehavior {
+class PregnancyFlag extends DefaultFlag {
+
+	/**
+	 * Rules for PREGNANCY FLAG:
+	 *
+	 * Aplicar imediatamente
+	 * Reaplicar após 2 anos da data indicada
+	 */
 
 	/**
 	 * Hook: this is called for every active entity of the same type as the flags', when answers are saved to it.
@@ -30,7 +37,7 @@ class PregnancyFlag extends FlagBehavior {
 	 * @param array $answers An associative array of answers given, indexed by their code.
 	 */
 	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): void {
-		// TODO: Implement hookAnswersUpdated() method.
+		parent::hookAnswersUpdated($flag, $entity, $answers);
 	}
 
 	/**
@@ -42,6 +49,22 @@ class PregnancyFlag extends FlagBehavior {
 	 * @param Carbon $today Today's date.
 	 */
 	public function hookDailyCron(Flag $flag, FlagAttribution $attribution, Carbon $today): void {
-		// TODO: Implement hookDailyCron() method.
+		parent::hookDailyCron($flag, $attribution, $today);
+
+		// No need to check if flag already completed
+		if($attribution->is_completed) return;
+
+		$pregnancyDateAnswer = $attribution->entity->getAnswerByCode('CE88');
+
+		// Can't autocomplete if date was not given
+		if(!$pregnancyDateAnswer) return;
+
+		$pregnancyDate = $pregnancyDateAnswer->getAnswerAsDate();
+
+		// Completes assignment automatically after 10mo since preganncy date
+		if($pregnancyDate->diffInMonths($today) <= 10) return;
+
+		$attribution->complete();
+
 	}
 }

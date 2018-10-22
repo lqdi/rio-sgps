@@ -11,7 +11,7 @@
  * Created at: 18/10/2018, 17:53
  */
 
-namespace SGPS\Console\Commands;
+namespace SGPS\Console\Commands\Maintenance;
 
 
 use DB;

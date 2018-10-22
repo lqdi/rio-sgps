@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Flag $flag
  * @property Residence $residence
  * @property Entity $entity
+ * @property Person|null $person Only works if the target entity is a person.
  */
 class FlagAttribution extends Model {
 
@@ -84,7 +85,42 @@ class FlagAttribution extends Model {
 		return $this->morphTo();
 	}
 
+	public function person() {
+		return $this->hasOne(Person::class, 'id', 'entity_id');
+	}
+
 	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Completes the attribution.
+	 */
+	public function complete() : void {
+		$this->is_completed = true;
+		$this->is_cancelled = false;
+		$this->save();
+	}
+
+	/**
+	 * Cancels the attribution.
+	 */
+	public function cancel() : void {
+		$this->is_completed = false;
+		$this->is_cancelled = true;
+		$this->save();
+	}
+
+	/**
+	 * Reopens a previously completed flag assignment
+	 * @param Carbon $referenceDate
+	 * @param int $deadline
+	 */
+	public function reopen(Carbon $referenceDate, int $deadline) : void {
+		$this->is_completed = false;
+		$this->is_cancelled = false;
+		$this->reference_date = $referenceDate->format('Y-m-d');
+		$this->deadline = $deadline;
+		$this->save();
+	}
 
 	/**
 	 * Sets this attribution as late.
@@ -109,6 +145,8 @@ class FlagAttribution extends Model {
 	 * Persists changes to the database.
 	 */
 	public function checkIfLate() {
+		if($this->is_completed) return;
+
 		$deadline = $this->reference_date->copy()->addDays($this->deadline);
 		$isLate = $deadline->isPast();
 
@@ -121,6 +159,26 @@ class FlagAttribution extends Model {
 		if(!$isLate && $this->is_late) {
 			$this->markAsOnTime();
 		}
+	}
+
+	/**
+	 * Gets how many days has this attribution has since its reference date.
+	 * @param Carbon|null $today
+	 * @return int
+	 */
+	public function getAttributionAgeInDays(?Carbon $today = null) : int {
+		if(!$this->reference_date) return 0;
+		return $this->reference_date->diffInDays($today);
+	}
+
+	/**
+	 * Gets how many months has this attribution has since its reference date.
+	 * @param Carbon|null $today
+	 * @return int
+	 */
+	public function getAttributionAgeInMonths(?Carbon $today = null) : int {
+		if(!$this->reference_date) return 0;
+		return $this->reference_date->diffInMonths($today);
 	}
 
 	/**
