@@ -20,54 +20,68 @@ class Conditionals {
 
 	public const CHILDREN_MAX_AGE = 14;
 
-	public function is_true($fieldValue) {
+	public function is_true($fieldValue) : bool {
 		return !!$fieldValue;
 	}
 
-	public function is_false($fieldValue) {
+	public function is_false($fieldValue) : bool {
 		return ! $fieldValue;
 	}
 
-	public function is_filled($fieldValue) {
+	public function is_filled($fieldValue) : bool {
 		return ($fieldValue !== null && strval($fieldValue) !== "");
 	}
 
-	public function is_not_filled($fieldValue) {
+	public function is_not_filled($fieldValue) : bool {
 		return !($fieldValue !== null && strval($fieldValue) !== "");
 	}
 
-	public function eq($fieldValue, $param) {
+	public function eq($fieldValue, $param) : bool {
 		return strval($fieldValue) === strval($param);
 	}
 
-	public function ieq($fieldValue, $param) {
+	public function ieq($fieldValue, $param) : bool {
 		return strval($fieldValue) !== strval($param);
 	}
 
-	public function is_one_of($fieldValue, $params) {
-		return collect($params)->contains(function ($p) {
-			return strval($p);
+	public function neq($fieldValue, $param) : bool {
+		return $this->ieq($fieldValue, $param);
+	}
+
+	public function is_one_of($fieldValue, $params) : bool {
+		return collect($params)->contains(function ($p) use ($fieldValue) {
+			return strval($p) === strval($fieldValue);
 		});
 	}
 
-	public function before_today($fieldValue) {
+	public function is_valid_date($fieldValue) : bool {
+		return is_string($fieldValue) && strtotime($fieldValue) !== false;
+	}
+
+	public function before_today($fieldValue) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
 		return Carbon::parse($fieldValue)->isPast();
 	}
 
-	public function age_between($fieldValue, $paramA, $paramB) {
+	public function age_between($fieldValue, $paramA, $paramB) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
+
 		$age = DateUtils::calculateAgeInYears($fieldValue);
 		return $age >= $paramA && $age <= $paramB;
 	}
 
-	public function age_gt($fieldValue, $param) {
+	public function age_gt($fieldValue, $param) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
 		return DateUtils::calculateAgeInYears($fieldValue) >= $param;
 	}
 
-	public function age_lt($fieldValue, $param) {
+	public function age_lt($fieldValue, $param) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
 		return DateUtils::calculateAgeInYears($fieldValue) <= $param;
 	}
 
-	public function is_children($fieldValue) {
+	public function is_children($fieldValue) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
 		return DateUtils::calculateAgeInYears($fieldValue) <= self::CHILDREN_MAX_AGE;
 	}
 

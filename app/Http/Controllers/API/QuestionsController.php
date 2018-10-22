@@ -19,6 +19,7 @@ use SGPS\Entity\Question;
 use SGPS\Entity\QuestionAnswer;
 use SGPS\Entity\QuestionCategory;
 use SGPS\Http\Controllers\Controller;
+use SGPS\Services\FlagBehaviorService;
 
 class QuestionsController extends Controller {
 
@@ -52,12 +53,7 @@ class QuestionsController extends Controller {
 		$entity = Entity::fetchByID($entity_type, $entity_id);
 
 		//$questionIDs = $questions->pluck('id')->toArray();
-		$answers = $entity->getAnswers()
-			->keyBy('question_code')
-			->map(function ($answer) { /* @var $answer \SGPS\Entity\QuestionAnswer */
-				return $answer->getValue();
-			})
-			->toArray();
+		$answers = $entity->getAnswerGrid();
 
 		return $this->api_success([
 			'questions' => $questions,
@@ -66,7 +62,7 @@ class QuestionsController extends Controller {
 
 	}
 
-	public function save_answers(string $entity_type, string $entity_id) {
+	public function save_answers(string $entity_type, string $entity_id, FlagBehaviorService $flagBehaviorService) {
 
 		$answers = request('answers');
 		$entity = Entity::fetchByID($entity_type, $entity_id);
@@ -79,6 +75,9 @@ class QuestionsController extends Controller {
 		foreach($answers as $questionCode => $answerValue) {
 			QuestionAnswer::setAnswerForEntity($entity, $questions[$questionCode] ?? null, $answerValue);
 		}
+
+		$answers = $entity->getAnswerGrid();
+		$flagBehaviorService->evaluateBehaviorsForAnswers($entity, $answers);
 
 		return $this->api_success();
 

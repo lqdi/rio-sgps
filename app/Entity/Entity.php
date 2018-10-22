@@ -117,6 +117,21 @@ abstract class Entity extends Model {
 		return $q->get();
 	}
 
+	/**
+	 * Gets an associative grid of answers by question code.
+	 * The result is an associative array with question code (eg "CE123") as key, and the unserialized answer as value.
+	 * @param array|null $questionIDs [optional] A list of question IDs to filter out the answers.
+	 * @return array
+	 */
+	public function getAnswerGrid(?array $questionIDs = null) : array {
+		return $this->getAnswers($questionIDs)
+			->keyBy('question_code')
+			->map(function ($answer) { /* @var $answer \SGPS\Entity\QuestionAnswer */
+				return $answer->getValue();
+			})
+			->toArray();
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**
@@ -168,6 +183,10 @@ abstract class Entity extends Model {
 	 * @return FlagAttribution
 	 */
 	public function addFlagAttribution(Flag $flag, ?string $referenceDate = null, int $deadline = 30) : FlagAttribution {
+		if($this->hasFlagAttribution($flag)) {
+			return $this->getFlagAttribution($flag);
+		}
+
 		return FlagAttribution::createFromAttribution($flag, $this, $referenceDate, $deadline);
 	}
 

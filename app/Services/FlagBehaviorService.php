@@ -24,6 +24,7 @@ class FlagBehaviorService {
 	 * Evaluates the behavior handler hooks for all flags with compatible types.
 	 * @param Entity $entity The entity being updated.
 	 * @param array $answers The answer grid.
+	 * @throws \Exception
 	 */
 	public function evaluateBehaviorsForAnswers(Entity $entity, array $answers) {
 

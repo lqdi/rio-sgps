@@ -63,13 +63,18 @@ abstract class FlagBehavior {
 	 * Gets the singleton instance of the flag behavior handler for the given flag.
 	 * @param Flag $flag
 	 * @return FlagBehavior
+	 * @throws \Exception
 	 */
 	public static function getHandler(Flag $flag) : FlagBehavior {
+
+		if(!class_exists($flag->behavior)) {
+			throw new \Exception("Flag behavior class not implemented: {$flag->code} - {$flag->name} ({$flag->behavior})");
+		}
 
 		// Uses default flag behavior if given behavior class does not exist
 		$behaviorClass = class_exists($flag->behavior)
 			? $flag->behavior
-			: '\SGPS\Behavior\DefaultFlag';
+			: DefaultFlag::class;
 
 		// Looks for cached singleton instance
 		if(!isset(self::$_handlers[$behaviorClass])) {
