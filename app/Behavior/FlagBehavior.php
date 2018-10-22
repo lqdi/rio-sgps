@@ -49,6 +49,8 @@ abstract class FlagBehavior {
 	 */
 	protected static $_handlers = [];
 
+	// ---------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * Hook: this is called for every active entity of the same type as the flags', when answers are saved to it.
 	 * This is called even when the flag is not yet attributed.
@@ -58,6 +60,18 @@ abstract class FlagBehavior {
 	 * @param array $answers An associative array of answers given, indexed by their code.
 	 */
 	abstract public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers) : void;
+
+	/**
+	 * Hook: this is called daily on a cron job, on all flag attributions for this particular flag.
+	 * This is called on all active and inactive flags, except for cancelled ones.
+	 *
+	 * @param Flag $flag The flag whose behavior is being evaluated.
+	 * @param FlagAttribution $attribution The flag attribution being checked.
+	 * @param Carbon $today Today's date.
+	 */
+	abstract public function hookDailyCron(Flag $flag, FlagAttribution $attribution, Carbon $today) : void;
+
+	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * Gets the singleton instance of the flag behavior handler for the given flag.
@@ -85,12 +99,19 @@ abstract class FlagBehavior {
 	}
 
 	/**
-	 * Hook: this is called daily on a cron job, on all flag attributions for this particular flag.
-	 * This is called on all active and inactive flags, except for cancelled ones.
+	 * Gets the list of available flag behavior classes.
+	 * Will traverse the class directory and return classe names (inferred from dir).
+	 * Does not use reflection.
 	 *
-	 * @param Flag $flag The flag whose behavior is being evaluated.
-	 * @param FlagAttribution $attribution The flag attribution being checked.
-	 * @param Carbon $today Today's date.
+	 * @return array
 	 */
-	abstract public function hookDailyCron(Flag $flag, FlagAttribution $attribution, Carbon $today) : void;
+	public static function getAvailableClasses() : array {
+		$classFiles = glob(app_path('Behavior/*Flag.php'));
+
+		return collect($classFiles)
+			->map(function ($path) {
+				return '\\SGPS\\Behavior\\' . substr(basename($path), 0, -4);
+			})
+			->toArray();
+	}
 }

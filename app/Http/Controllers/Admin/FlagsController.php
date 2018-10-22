@@ -37,6 +37,8 @@ class FlagsController extends Controller {
 		if(!$flag) $flag = new Flag();
 
 		$flag->fill(request()->all());
+		$flag->conditions = json_decode(request('conditions'));
+		$flag->triggers = json_decode(request('triggers'));
 		$flag->save();
 
 		return redirect()->route('admin.flags.show', [$flag->id]);
