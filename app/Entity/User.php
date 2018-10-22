@@ -102,6 +102,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—
 
 	/**
+	 * Gets the user's first name
+	 * @return string
+	 */
+	public function getFirstName() {
+		if(!$this->name) return '';
+		if(strpos($this->name, ' ') === false) return $this->name;
+		return substr($this->name, 0, strpos($this->name, ' '));
+	}
+
+	/**
 	 * Updates the hashed password for the user.
 	 * Does not persist the change.
 	 * @param string $password

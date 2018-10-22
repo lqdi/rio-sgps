@@ -91,4 +91,11 @@ class UserAssignment extends Model {
 		]);
 	}
 
+	public static function fetchByUser(User $user, array $with = []) {
+		return self::query()
+			->with($with)
+			->where('user_id', $user->id)
+			->get();
+	}
+
 }

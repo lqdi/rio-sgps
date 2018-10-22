@@ -35,6 +35,12 @@ abstract class Entity extends Model {
 	abstract public function getEntityResidenceID() : string;
 
 	/**
+	 * Abstract: gets this entity's sector ID
+	 * @return string
+	 */
+	abstract public function getEntitySectorID() : string;
+
+	/**
 	 * Abstract: gets this entity's unique ID
 	 * @return string
 	 */

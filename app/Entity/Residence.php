@@ -114,6 +114,14 @@ class Residence extends Entity {
 	}
 
 	/**
+	 * Concrete: gets this entity's sector ID
+	 * @return string
+	 */
+	public function getEntitySectorID(): string {
+		return $this->sector_id;
+	}
+
+	/**
 	 * Concrete: Residences have type 'residence'
 	 * @return string
 	 */

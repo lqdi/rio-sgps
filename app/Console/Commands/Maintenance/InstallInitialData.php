@@ -48,6 +48,8 @@ class InstallInitialData extends Command {
 	public function delete_existing_data() {
 		$this->info("Truncating tables...");
 
+		DB::statement('TRUNCATE TABLE groups');
+		DB::statement('TRUNCATE TABLE user_groups');
 		DB::statement('TRUNCATE TABLE questions');
 		DB::statement('TRUNCATE TABLE question_categories');
 		DB::statement('TRUNCATE TABLE question_categories_pivot');

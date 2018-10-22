@@ -16,6 +16,7 @@ namespace SGPS\Http\Controllers\Web;
 
 use SGPS\Entity\Family;
 use SGPS\Entity\Flag;
+use SGPS\Entity\Residence;
 use SGPS\Http\Controllers\Controller;
 use SGPS\Services\FamilySearchService;
 
@@ -42,6 +43,11 @@ class FamiliesController extends Controller {
 
 		return view('families.families_index', compact('families', 'filters'));
 
+	}
+
+	public function go_to_residence(Residence $residence) {
+		$family = $residence->families->first();
+		return redirect()->route('families.show', [$family->id, '#residence']);
 	}
 
 	public function show(Family $family) {

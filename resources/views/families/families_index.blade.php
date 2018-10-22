@@ -4,11 +4,10 @@
 		is="family-search"
 		inline-template
 		:active-filters="{{json_encode($filters)}}"
-		class="container"
 	>
 		<div>
 			<loading-feedback :is-loading="isLoading"></loading-feedback>
-			<div class="py-2">
+			<div class="container py-2">
 				<div>
 					<h1>Famílias</h1>
 				</div>
@@ -29,7 +28,7 @@
 						<div class="btn-group-sm" role="group">
 							<input type="hidden" name="filters[assigned_to]" v-model="filters.assigned_to" />
 							<button type="button" @click="setFilter('assigned_to', 'all')" class="btn btn-sm {{$filters['assigned_to'] === 'all' ? 'btn-primary' : 'btn-outline-primary'}}">Todos</button>
-							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm {{$filters['assigned_to'] === 'to_me' ? 'btn-primary' : 'btn-outline-primary'}}">Casos em que estou envolvido</button>
+							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm {{$filters['assigned_to'] === 'to_me' ? 'btn-primary' : 'btn-outline-primary'}}">Casos em que estou atribuído</button>
 						</div>
 
 						<div class="form-group">

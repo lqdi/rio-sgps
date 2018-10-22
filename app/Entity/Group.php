@@ -41,7 +41,7 @@ class Group extends Model {
 	use SoftDeletes;
 
 	protected $table = "groups";
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'code'];
 
 	// ---------------------------------------------------------------------------------------------------------------
 

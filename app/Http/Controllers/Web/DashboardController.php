@@ -14,12 +14,28 @@
 namespace SGPS\Http\Controllers\Web;
 
 
+use SGPS\Entity\FlagAttribution;
+use SGPS\Entity\UserAssignment;
 use SGPS\Http\Controllers\Controller;
 
 class DashboardController extends Controller {
 
 	public function index() {
-		return view('dashboard.operator_dashboard');
+		$user = auth()->user(); /* @var $user \SGPS\Entity\User */
+		$user->load(['groups', 'equipments.sectors']);
+
+		$groupCodes = $user->groups->pluck('code');
+		$sectorIDs = $user->equipments
+			->map(function ($equipment) {
+				return $equipment->sectors->pluck('id');
+			})
+			->flatten();
+
+		$myGroupAttributions = FlagAttribution::fetchAllUnderGroups($groupCodes, ['entity', 'flag', 'residence']);
+		$myEquipmentAttributions = FlagAttribution::fetchAllUnderSectors($sectorIDs, ['entity', 'flag', 'residence']);
+		$myAssignments = UserAssignment::fetchByUser($user, ['entity.personInCharge', 'entity.residence']);
+
+		return view('dashboard.operator_dashboard', compact('user',  'myGroupAttributions', 'myEquipmentAttributions', 'myAssignments'));
 	}
 
 }

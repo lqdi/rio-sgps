@@ -11,6 +11,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import FamilyView from "./controllers/FamilyView";
 import FamilySearch from "./controllers/FamilySearch";
+import OperatorDashboard from "./controllers/OperatorDashboard";
 
 window.Vue = Vue;
 
@@ -41,6 +42,7 @@ Vue.component('confirm-modal', require('./dialogs/ConfirmModal.vue'));
 // Controllers
 Vue.component('family-view', FamilyView);
 Vue.component('family-search', FamilySearch);
+Vue.component('operator-dashboard', OperatorDashboard);
 
 
 // Core app

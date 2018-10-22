@@ -10,6 +10,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/', 'Web\DashboardController@index')->name('dashboard.index');
 
 	Route::get('/families', 'Web\FamiliesController@index')->name('families.index');
+	Route::get('/families/residence/{residence}', 'Web\FamiliesController@go_to_residence')->name('families.go_to_residence');
 	Route::get('/families/{family}', 'Web\FamiliesController@show')->name('families.show');
 	Route::post('/families/{family}', 'Web\FamiliesController@update')->name('families.update');
 

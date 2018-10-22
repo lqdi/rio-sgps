@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $id
  * @property string $residence_id
+ * @property string $sector_id
  * @property string $flag_id
  * @property string $entity_type
  * @property string $entity_id
@@ -50,6 +51,7 @@ class FlagAttribution extends Model {
 
 	protected $fillable = [
 		'residence_id',
+		'sector_id',
 		'flag_id',
 		'entity_type',
 		'entity_id',
@@ -246,6 +248,7 @@ class FlagAttribution extends Model {
 		return self::create([
 			 'flag_id' => $flag->id,
 			 'residence_id' => $entity->getEntityResidenceID(),
+			 'sector_id' => $entity->getEntitySectorID(),
 			 'entity_type' => $entity->getEntityType(),
 			 'entity_id' => $entity->getEntityID(),
 			 'reference_date' => $referenceDate ?? date('Y-m-d'),
@@ -268,6 +271,45 @@ class FlagAttribution extends Model {
 			->with(['flag', 'entity'])
 			->where('is_cancelled', false)
 			->get();
+	}
+
+	/**
+	 * @param $groupCodes
+	 * @param array $with
+	 * @return FlagAttribution[]|\Illuminate\Database\Eloquent\Collection
+	 */
+	public static function fetchAllUnderGroups($groupCodes, array $with = []) {
+
+		$flagsIDs = Flag::query()
+			->whereHas('groups', function ($sq) use ($groupCodes) {
+				return $sq->whereIn('code', $groupCodes);
+			})
+			->get(['id'])
+			->pluck('id');
+
+		return self::query()
+			->with($with)
+			->whereIn('flag_id', $flagsIDs)
+			->where('is_completed', false)
+			->where('is_cancelled', false)
+			->get();
+
+	}
+
+	/**
+	 * @param $sectorIDs
+	 * @param array $with
+	 * @return FlagAttribution[]|\Illuminate\Database\Eloquent\Collection
+	 */
+	public static function fetchAllUnderSectors($sectorIDs, array $with = []) {
+
+		return self::query()
+			->with($with)
+			->whereIn('sector_id', $sectorIDs)
+			->where('is_completed', false)
+			->where('is_cancelled', false)
+			->get();
+
 	}
 
 }

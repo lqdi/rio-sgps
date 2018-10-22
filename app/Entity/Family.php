@@ -156,6 +156,14 @@ class Family extends Entity {
 	}
 
 	/**
+	 * Concrete: gets this entity's sector ID
+	 * @return string
+	 */
+	public function getEntitySectorID(): string {
+		return $this->sector_id;
+	}
+
+	/**
 	 * Concrete: Family has type string 'family'
 	 * @return string
 	 */

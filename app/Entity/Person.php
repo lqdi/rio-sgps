@@ -131,6 +131,14 @@ class Person extends Entity {
 	}
 
 	/**
+	 * Concrete: gets this entity's sector ID
+	 * @return string
+	 */
+	public function getEntitySectorID(): string {
+		return $this->sector_id;
+	}
+
+	/**
 	 * Concrete: Persons have type string 'person'
 	 * @return string
 	 */
@@ -156,5 +164,4 @@ class Person extends Entity {
 			'phone_number' => $this->phone_number,
 		];
 	}
-
 }
