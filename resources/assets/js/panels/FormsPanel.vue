@@ -15,7 +15,7 @@
 			<div class="col-md-9" v-if="view.openCategory">
 				<label class="detail__label">Dados: <strong>{{view.openCategory.name}}</strong></label>
 
-				<form class="card mt-3">
+				<form class="card mt-3" @submit.prevent="saveAnswers()">
 					<div class="card-body">
 						<div class="form-group forms__question" v-for="question in questions" v-if="isQuestionVisible(question)">
 							<label :for="'q_' + question.id">
@@ -86,8 +86,10 @@
 						</div>
 					</div>
 					<div class="card-footer">
-						<a @click="saveAnswers()" class="btn btn-primary pull-right"><i class="fa fa-upload"></i> Salvar dados</a>
+						<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-upload"></i> Salvar dados</button>
 					</div>
+
+					<loading-feedback :is-loading="isLoading"></loading-feedback>
 				</form>
 			</div>
 		</div>
@@ -98,12 +100,14 @@
 	import Endpoints from "../config/Endpoints";
 	import API from "../services/API";
 	import {checkConditions} from "../services/ConditionalChecker";
+	import Dialogs from "../services/Dialogs";
 
 	export default {
 
 		props: ['entityType', 'entityId'],
 
 		data: () => { return {
+			isLoading: false,
 			view: {
 				openCategory: null
 			},
@@ -126,31 +130,50 @@
 			},
 
 			fetchCategories: function() {
+				this.isLoading = true;
+
 				return axios
 					.get(
 						API.url(Endpoints.Questions.FetchCategories),
 						API.headers()
 					)
 					.then((res) => {
+						this.isLoading = false;
 						this.categories = res.data.categories;
 						return this.categories;
+					})
+					.catch((err) => {
+						this.isLoading = false;
+						console.error(err);
+						Dialogs.alert('Ocorreu um erro ao baixar as categorias de pergunta! Tente novamente mais tarde');
 					})
 			},
 
 			fetchQuestionsByCategory: function(category) {
+				this.isLoading = true;
 				return axios
 					.get(
 						API.url(Endpoints.Questions.FetchQuestionsByEntity, {category: category.id, type: this.entityType, id: this.entityId}),
 						API.headers()
 					)
 					.then((res) => {
+						this.isLoading = false;
+
 						this.questions = res.data.questions;
 						this.answers = res.data.answers;
+
 						return this.questions
+					}).catch((err) => {
+						this.isLoading = false;
+						console.error(err);
+						Dialogs.alert('Ocorreu um erro ao baixar os dados do formulário! Tente novamente mais tarde');
 					})
 			},
 
 			saveAnswers: function() {
+				let hasChangedProfile = false;
+				this.isLoading = true;
+
 				return axios
 					.put(
 						API.url(Endpoints.Questions.SaveAnswers, {type: this.entityType, id: this.entityId}),
@@ -158,7 +181,25 @@
 						API.headers()
 					)
 					.then((res) => {
+						console.log(res.data);
+						hasChangedProfile = res.data.has_changed_profile || false;
+
+						this.isLoading = false;
+
 						return this.fetchQuestionsByCategory(this.view.openCategory)
+					})
+					.then((res) => {
+						this.$toasted.show('As respostas foram salvas com sucesso!', {icon: 'fa-check'});
+
+						if(!hasChangedProfile) return;
+
+						this.isLoading = true;
+						location.reload();
+					})
+					.catch((err) => {
+						this.isLoading = false;
+						console.error(err);
+						Dialogs.alert('Ocorreu um erro ao submeter as respostas! Tente novamente mais tarde.')
 					})
 
 			},

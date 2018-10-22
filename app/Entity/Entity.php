@@ -217,7 +217,7 @@ abstract class Entity extends Model {
 	 * @return bool
 	 */
 	public function hasFlagAttribution(Flag $flag) : bool {
-		return $this->attributedFlags()->where('id', $flag->id)->exists();
+		return $this->attributedFlags()->where('flag_id', $flag->id)->exists();
 	}
 
 	/**

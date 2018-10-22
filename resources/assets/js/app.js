@@ -6,6 +6,7 @@ require('moment/locale/pt-br');
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import * as ModalDialogs from 'vue-modal-dialogs';
+import Toasted from 'vue-toasted';
 
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -18,6 +19,11 @@ window.Vue = Vue;
 Vue.use(BootstrapVue);
 Vue.use(require('vue-moment'), {moment});
 Vue.use(ModalDialogs);
+Vue.use(Toasted, {
+	position: 'bottom-right',
+	duration: 5000,
+	iconPack: 'fontawesome',
+});
 
 // Components
 Vue.component('flag-display-tooltip', require('./components/FlagDisplayTooltip.vue'));

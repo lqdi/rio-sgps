@@ -18,9 +18,15 @@ use SGPS\Entity\Entity;
 
 class EntityFieldLinkService {
 
-	public function updateEntityFields(Entity $entity, array $answers) {
+	/**
+	 * @param Entity $entity
+	 * @param array $answers
+	 * @return bool
+	 */
+	public function updateEntityFields(Entity $entity, array $previousAnswers, array $answers) : bool {
 
 		$linkedFields = config('question_links.' . $entity->getEntityType());
+		$hasChanges = false;
 
 		foreach($linkedFields as $questionCode => $linkParams) {
 
@@ -34,14 +40,18 @@ class EntityFieldLinkService {
 			if(!$entity->isFillable($fieldName)) continue;
 
 			// Values are the same
-			if($answers[$questionCode] === $entity->$fieldName) continue;
+			if(strval($answers[$questionCode]) === strval($previousAnswers[$questionCode])) continue;
 
 			// Sets the entity field
 			$entity->$fieldName = $answers[$questionCode];
 
+			$hasChanges = true;
+
 		}
 
 		$entity->save();
+
+		return $hasChanges;
 	}
 
 }

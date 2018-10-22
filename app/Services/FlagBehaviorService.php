@@ -24,15 +24,23 @@ class FlagBehaviorService {
 	 * Evaluates the behavior handler hooks for all flags with compatible types.
 	 * @param Entity $entity The entity being updated.
 	 * @param array $answers The answer grid.
+	 * @return bool
 	 */
-	public function evaluateBehaviorsForAnswers(Entity $entity, array $answers) {
+	public function evaluateBehaviorsForAnswers(Entity $entity, array $answers) : bool {
 
 		$flags = Flag::fetchAllForType($entity->getEntityType());
+		$hasAddedFlags = false;
 
 		foreach($flags as $flag) {
 			$handler = $flag->getBehaviorHandler();
-			$handler->hookAnswersUpdated($flag, $entity, $answers);
+			$didAddFlag = $handler->hookAnswersUpdated($flag, $entity, $answers);
+
+			if(!$didAddFlag) continue;
+
+			$hasAddedFlags = true;
 		}
+
+		return $hasAddedFlags;
 
 	}
 

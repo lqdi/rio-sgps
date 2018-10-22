@@ -35,9 +35,10 @@ class PregnancyFlag extends DefaultFlag {
 	 * @param Flag $flag The flag whose behavior is being evaluated.
 	 * @param Entity $entity The target entity.
 	 * @param array $answers An associative array of answers given, indexed by their code.
+	 * @return bool
 	 */
-	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): void {
-		parent::hookAnswersUpdated($flag, $entity, $answers);
+	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): bool {
+		return parent::hookAnswersUpdated($flag, $entity, $answers);
 	}
 
 	/**

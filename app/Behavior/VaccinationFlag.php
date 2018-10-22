@@ -41,8 +41,9 @@ class VaccinationFlag extends DefaultFlag {
 	 * @param Flag $flag The flag whose behavior is being evaluated.
 	 * @param Entity $entity The target entity.
 	 * @param array $answers An associative array of answers given, indexed by their code.
+	 * @return bool
 	 */
-	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): void {
+	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): bool {
 
 
 		$conditions = [
@@ -57,9 +58,11 @@ class VaccinationFlag extends DefaultFlag {
 
 		$shouldApplyImmediately = $this->conditionalChecker->matchesAll($conditions, $answers);
 
-		if(!$shouldApplyImmediately) return;
+		if(!$shouldApplyImmediately) return false;
 
-		$entity->addFlagAttribution($flag, date('Y-m-d'), 30);
+		$addedFlag = $entity->addFlagAttribution($flag, date('Y-m-d'), 30);
+
+		return ($addedFlag !== null);
 	}
 
 	/**

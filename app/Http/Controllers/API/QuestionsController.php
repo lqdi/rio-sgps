@@ -73,16 +73,20 @@ class QuestionsController extends Controller {
 			->get()
 			->keyBy('code');
 
+		$previousAnswers = $entity->getAnswerGrid();
+
 		foreach($answers as $questionCode => $answerValue) {
 			QuestionAnswer::setAnswerForEntity($entity, $questions[$questionCode] ?? null, $answerValue);
 		}
 
 		$answers = $entity->getAnswerGrid();
 
-		$entityFieldLinkService->updateEntityFields($entity, $answers);
-		$flagBehaviorService->evaluateBehaviorsForAnswers($entity, $answers);
+		$hasChangedFields = $entityFieldLinkService->updateEntityFields($entity, $previousAnswers, $answers);
+		$hasAddedFlags = $flagBehaviorService->evaluateBehaviorsForAnswers($entity, $answers);
 
-		return $this->api_success();
+		return $this->api_success([
+			'has_changed_profile' => ($hasChangedFields || $hasAddedFlags),
+		]);
 
 	}
 

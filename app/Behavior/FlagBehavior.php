@@ -58,8 +58,9 @@ abstract class FlagBehavior {
 	 * @param Flag $flag The flag whose behavior is being evaluated.
 	 * @param Entity $entity The target entity.
 	 * @param array $answers An associative array of answers given, indexed by their code.
+	 * @return bool
 	 */
-	abstract public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers) : void;
+	abstract public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers) : bool;
 
 	/**
 	 * Hook: this is called daily on a cron job, on all flag attributions for this particular flag.

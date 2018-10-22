@@ -28,17 +28,20 @@ class DefaultFlag extends FlagBehavior {
 	 * @param Flag $flag The flag whose behavior is being evaluated.
 	 * @param Entity $entity The target entity.
 	 * @param array $answers An associative array of answers given, indexed by their code.
+	 * @return bool
 	 */
-	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): void {
+	public function hookAnswersUpdated(Flag $flag, Entity $entity, array $answers): bool {
 
 		// Check if flag isn't already attributed
-		if($entity->hasFlagAttribution($flag)) return;
+		if($entity->hasFlagAttribution($flag)) return false;
 
 		// Check if all conditions match
-		if(!$this->conditionalChecker->matchesAll($flag->conditions, $answers)) return;
+		if(!$this->conditionalChecker->matchesAll($flag->conditions, $answers)) return false;
 
 		// If conditions match and flag hasn't been attributed, adds the attrib
-		$entity->addFlagAttribution($flag);
+		$addedFlag = $entity->addFlagAttribution($flag);
+
+		return ($addedFlag !== null);
 
 	}
 
