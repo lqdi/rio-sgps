@@ -1,0 +1,40 @@
+.table.print-table {
+
+	margin: 0;
+	padding: 0;
+	border: 0;
+
+	tbody {
+		margin: 0;
+		padding: 0;
+		border: 0;
+
+		tr {
+			margin: 0;
+			border: 0;
+			padding: 0;
+			background: none;
+		}
+
+		td {
+			border: 1pt solid black;
+			padding: 5pt;
+			margin: 0;
+			background: none;
+		}
+
+	}
+
+	.print-table-label {
+		display: block;
+		font-size: 24pt;
+		margin-top: -4pt;
+	}
+
+	.print-table-content {
+		display: block;
+		font-size: 48pt;
+		min-height: 50pt;
+	}
+
+}

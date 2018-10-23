@@ -19,6 +19,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('/reports', 'Web\AlertsController@index')->name('reports.index');
 
+	Route::get('/print/sample', 'Web\PrintController@sample_print')->name('print.sample_print');
+
 	Route::group(['prefix' => 'admin'], function() { // TODO: middleware to filter out admins
 		Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard.index');
 

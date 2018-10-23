@@ -10682,3 +10682,41 @@ a.text-dark:focus {
   cursor: not-allowed;
 }
 
+.table.print-table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.table.print-table tbody {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.table.print-table tbody tr {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+}
+
+.table.print-table tbody td {
+  border: 1pt solid black;
+  padding: 5pt;
+  margin: 0;
+  background: none;
+}
+
+.table.print-table .print-table-label {
+  display: block;
+  font-size: 24pt;
+  margin-top: -4pt;
+}
+
+.table.print-table .print-table-content {
+  display: block;
+  font-size: 48pt;
+  min-height: 50pt;
+}
+
