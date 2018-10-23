@@ -69,6 +69,7 @@
 										<thead>
 										<tr>
 											<th>Cód.</th>
+											<th>Tipo</th>
 											<th>Endereço</th>
 											<th>Responsável</th>
 										</tr>
