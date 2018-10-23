@@ -103,6 +103,7 @@ class Person extends Entity {
 	 * @return int
 	 */
 	public function getAge() {
+		if(!$this->dob) return null;
 		return $this->dob->diffInYears();
 	}
 
@@ -111,6 +112,7 @@ class Person extends Entity {
 	 * @return int
 	 */
 	public function getAgeInMonths() {
+		if(!$this->dob) return null;
 		return $this->dob->diffInMonths();
 	}
 
