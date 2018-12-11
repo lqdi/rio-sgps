@@ -21,7 +21,8 @@ trait HasShortCode {
 	protected static function bootHasShortCode() {
 		static::creating(function ($model) {
 			if(isset($model->shortcode)) return;
-			$prefix = 'RJ-' . substr(get_called_class(), 0, 1) . '-';
+			$className = get_called_class();
+			$prefix = substr($className, strrpos($className, "\\") + 1, 1) . '-';
 			$model->shortcode = Shortcode::generate($prefix);
 		});
 	}
