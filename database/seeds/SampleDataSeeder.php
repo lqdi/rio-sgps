@@ -47,7 +47,9 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 			->create(['sector_id' => $faker->randomElement($sectors)])
 			->each(function (Residence $residence) use ($faker) {
 
-				$residence->_families = factory(Family::class, 1)->create([
+				$numFamilies = rand(0, 100) > 75 ? 2 : 1;
+
+				$residence->_families = factory(Family::class, $numFamilies)->create([
 					'sector_id' => $residence->sector_id,
 					'residence_id' => $residence->id,
 				])->each(function (Family $family) use ($residence) {

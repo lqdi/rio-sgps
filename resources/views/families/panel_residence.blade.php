@@ -16,6 +16,18 @@
 				@endforeach
 			</div>
 		</div>
+		<div class="col-md-12">
+			<label class="detail__label">FAMÍLIAS NESSE DOMICÍLIO</label>
+			<div>
+				@foreach($residence->families as $f)
+					@if($f->id === $family->id)
+						<div class="btn btn-primary"><i class="fa fa-arrow-right"></i> <i class="fa fa-users"></i> {{$f->shortcode}}</div>
+					@else
+						<a class="btn btn-outline-primary" href="{{route('families.show', [$f->id])}}"><i class="fa fa-users"></i> {{$f->shortcode}}</a>
+					@endif
+				@endforeach
+			</div>
+		</div>
 	</div>
 
 	<hr />
