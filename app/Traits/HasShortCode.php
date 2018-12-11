@@ -22,7 +22,7 @@ trait HasShortCode {
 		static::creating(function ($model) {
 			if(isset($model->shortcode)) return;
 			$className = get_called_class();
-			$prefix = substr($className, strrpos($className, "\\") + 1, 1) . '-';
+			$prefix = substr($className, strrpos($className, "\\") + 1, 2) . '-';
 			$model->shortcode = Shortcode::generate($prefix);
 		});
 	}
