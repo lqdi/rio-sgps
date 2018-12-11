@@ -98,7 +98,7 @@ return [
 				'or',
 				[
 					['CE55', 'is_filled'],
-					['CE55', 'is_false'],
+					['CE55', 'is_one_of', [2,3,99]],
 				],
 				[
 					['CE56', 'is_filled'],
@@ -305,35 +305,108 @@ return [
 	'F036' => [
 		'code' => 'F036',
 		'entity_type' => 'family',
-		'name' => 'Violação de direitos',
+		'name' => 'Violação de direitos do idoso',
 		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
 		'conditions' =>  [
-			[
-				'or',
-				[
-					[
 						['CE124', 'is_filled'],
 						['CE124', 'is_true'],
-					],
-					[
-						['CE125', 'is_filled'],
-						['CE125', 'is_true'],
-					],
-					[
-						['CE126', 'is_filled'],
-						['CE126', 'is_true'],
-					],
-					[
-						['CE127', 'is_filled'],
-						['CE127', 'is_true'],
-					],
-					[
-						['CE128', 'is_filled'],
-						['CE128', 'is_true'],
-					],
-				],
-			]
 		],
 		'groups' => [],
-	]
+	],
+
+	'F037' => [
+		'code' => 'F037',
+		'entity_type' => 'family',
+		'name' => 'Violação de direitos da criança',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE125', 'is_filled'],
+			['CE125', 'is_true'],
+		],
+		'groups' => [],
+	],
+
+	'F038' => [
+		'code' => 'F038',
+		'entity_type' => 'family',
+		'name' => 'Violência física ou psicológica',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE126', 'is_filled'],
+			['CE126', 'is_true'],
+		],
+		'groups' => [],
+	],
+
+	'F039' => [
+		'code' => 'F039',
+		'entity_type' => 'family',
+		'name' => 'Violência contra mulher',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE127', 'is_filled'],
+			['CE127', 'is_true'],
+		],
+		'groups' => [],
+	],
+
+	'F040' => [
+		'code' => 'F040',
+		'entity_type' => 'family',
+		'name' => 'Membro em situação de rua',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE128', 'is_filled'],
+			['CE128', 'is_true'],
+		],
+		'groups' => [],
+	],
+
+	'F041' => [
+		'code' => 'F041',
+		'entity_type' => 'person',
+		'name' => 'Deficiente visual',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE66', 'is_filled'],
+			['CE66', 'is_one_of', [1,2,3]],
+		],
+		'groups' => ['SMS'],
+	],
+
+	'F042' => [
+		'code' => 'F042',
+		'entity_type' => 'person',
+		'name' => 'Deficiente auditivo',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE67', 'is_filled'],
+			['CE67', 'is_one_of', [1,2,3]],
+		],
+		'groups' => ['SMS'],
+	],
+
+	'F043' => [
+		'code' => 'F043',
+		'entity_type' => 'person',
+		'name' => 'Deficiente físico',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE68', 'is_filled'],
+			['CE68', 'is_one_of', [1,2,3]],
+		],
+		'groups' => ['SMS'],
+	],
+
+	'F044' => [
+		'code' => 'F044',
+		'entity_type' => 'person',
+		'name' => 'Deficiente mental',
+		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
+		'conditions' =>  [
+			['CE69', 'is_filled'],
+			['CE69', 'is_one_of', [1,2,3]],
+		],
+		'groups' => ['SMS'],
+	],
 ];
