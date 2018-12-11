@@ -63,7 +63,7 @@
 							</div>
 
 							<div v-if="question.field_type === 'numeric'">
-								<input class="form-control" type="tel" v-model="answers[question.code]" />
+								<input class="form-control" type="tel" v-mask="(question.field_options && question.field_options.mask) ? question.field_options.mask : null" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'number'">

@@ -312,7 +312,9 @@ return [
 			'field_type' => 'numeric',
 			'title' => 'Numero do NIS do responsavel',
 			'conditions' => null,
-			'field_options' => null,
+			'field_options' => [
+				'mask' => '###########',
+			],
 		],
 		'CE42' => [
 			'code' => 'CE42',
@@ -481,7 +483,9 @@ return [
 				['CE50', 'eq', 1],
 				['CE58', 'is_true']
 			],
-			'field_options' => null,
+			'field_options' => [
+				'mask' => '###.###.###.##',
+			],
 		],
 		'CE60' => [
 			'code' => 'CE60',
@@ -1205,7 +1209,9 @@ return [
 			'field_type' => 'numeric',
 			'title' => 'CNS',
 			'conditions' => null,
-			'field_options' => null,
+			'field_options' => [
+				'mask' => '###############',
+			],
 		],
 		'CE134' => [
 			'code' => 'CE134',

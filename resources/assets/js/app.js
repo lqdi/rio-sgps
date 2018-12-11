@@ -6,6 +6,7 @@ require('moment/locale/pt-br');
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import * as ModalDialogs from 'vue-modal-dialogs';
+import VueTheMask from 'vue-the-mask';
 import Toasted from 'vue-toasted';
 
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -19,6 +20,7 @@ window.Vue = Vue;
 Vue.use(BootstrapVue);
 Vue.use(require('vue-moment'), {moment});
 Vue.use(ModalDialogs);
+Vue.use(VueTheMask);
 Vue.use(Toasted, {
 	position: 'bottom-right',
 	duration: 5000,
@@ -31,7 +33,7 @@ Vue.component('loading-feedback', require('./components/LoadingFeedback.vue'));
 
 // Panels
 Vue.component('comments-panel', require('./panels/CommentsPanel.vue'));
-Vue.component('forms-panel', require('./panels/FormsPanel.vue'));
+Vue.component('entity-questions-panel', require('./panels/EntityQuestionsPanel.vue'));
 
 // Modals
 Vue.component('modal', require('./modals/Modal.vue'));

@@ -19,5 +19,5 @@
 
 	<hr />
 
-	<forms-panel key="forms_family_{{$family->id}}" entity-type="family" entity-id="{{$family->id}}"></forms-panel>
+	<entity-questions-panel key="forms_family_{{$family->id}}" entity-type="family" entity-id="{{$family->id}}"></entity-questions-panel>
 </div>

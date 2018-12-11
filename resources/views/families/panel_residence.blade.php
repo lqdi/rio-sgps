@@ -32,5 +32,5 @@
 
 	<hr />
 
-	<forms-panel key="forms_residence_{{$residence->id}}" entity-type="residence" entity-id="{{$residence->id}}"></forms-panel>
+	<entity-questions-panel key="forms_residence_{{$residence->id}}" entity-type="residence" entity-id="{{$residence->id}}"></entity-questions-panel>
 </div>
