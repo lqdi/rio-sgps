@@ -10682,3 +10682,9 @@ a.text-dark:focus {
   cursor: not-allowed;
 }
 
+.nav-logout button.nav-link {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+

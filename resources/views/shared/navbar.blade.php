@@ -15,6 +15,12 @@
 					<li class="nav-item @if(Route::is('families.*')) active @endif"><a class="nav-link" href="{{route('families.index')}}"><i class="fa fa-male"></i> Famílias</a></li>
 					<li class="nav-item @if(Route::is('alerts.*')) active @endif"><a class="nav-link" href="{{route('alerts.index')}}"><i class="fa fa-exclamation-triangle"></i> Alertas</a></li>
 					<li class="nav-item @if(Route::is('admin.*')) active @endif"><a class="nav-link" href="{{route('admin.dashboard.index')}}"><i class="fa fa-cog"></i> Administração</a></li>
+					<li class="nav-item nav-logout">
+						<form method="POST" action="{{route('auth.logout')}}">
+							@csrf
+							<button type="submit" class="nav-link"><i class="fa fa-sign-out-alt"></i> Sair</button>
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
