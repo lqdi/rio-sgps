@@ -41,7 +41,8 @@ class FlagsController extends Controller {
 		$flag->triggers = json_decode(request('triggers'));
 		$flag->save();
 
-		return redirect()->route('admin.flags.show', [$flag->id]);
+		return redirect()->route('admin.flags.show', [$flag->id])
+			->with('success', 'record_updated');
 	}
 
 	public function destroy(Flag $flag) {

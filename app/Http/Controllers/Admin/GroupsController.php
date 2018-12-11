@@ -39,7 +39,8 @@ class GroupsController extends Controller {
 		$group->fill(request()->all());
 		$group->save();
 
-		return redirect()->route('admin.groups.show', [$group->id]);
+		return redirect()->route('admin.groups.show', [$group->id])
+			->with('success', 'record_updated');
 	}
 
 	public function destroy(Group $group) {

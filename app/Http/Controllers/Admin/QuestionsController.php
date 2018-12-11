@@ -43,7 +43,8 @@ class QuestionsController extends Controller {
 		$question->triggers = json_decode(request('triggers'));
 		$question->save();
 
-		return redirect()->route('admin.questions.show', [$question->id]);
+		return redirect()->route('admin.questions.show', [$question->id])
+			->with('success', 'record_updated');
 	}
 
 	public function destroy(Question $question) {

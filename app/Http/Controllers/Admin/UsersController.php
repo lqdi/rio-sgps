@@ -67,7 +67,8 @@ class UsersController extends Controller {
 			$user->equipments()->sync(request('equipments'));
 		}
 
-		return redirect()->route('admin.users.show', [$user->id]);
+		return redirect()->route('admin.users.show', [$user->id])
+			->with('success', 'record_updated');
 	}
 
 	public function destroy(User $user) {

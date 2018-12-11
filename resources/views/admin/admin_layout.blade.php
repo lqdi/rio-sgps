@@ -28,6 +28,9 @@
 			</div>
 
 			<div class="sgps__panel has-compact-topbar">
+
+				@include('components.messages')
+
 				@yield('admin_content')
 			</div>
 		</div>

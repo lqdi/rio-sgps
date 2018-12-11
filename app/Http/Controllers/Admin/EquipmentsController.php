@@ -39,7 +39,8 @@ class EquipmentsController extends Controller {
 		$equipment->fill(request()->all());
 		$equipment->save();
 
-		return redirect()->route('admin.equipments.show', [$equipment->id]);
+		return redirect()->route('admin.equipments.show', [$equipment->id])
+			->with('success', 'record_updated');
 	}
 
 	public function destroy(Equipment $equipment) {
