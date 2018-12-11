@@ -1,64 +1,85 @@
 <?php
 return [
 	'questions' => [
-//		'CE1' => [
-//			'code' => 'CE1',
+//		'CE01' => [
+//			'code' => 'CE01',
 //			'field_type' => 'coords',
 //			'title' => 'Coordenadas Georeferenciadas',
 //			'conditions' => null,
 //			'field_options' => null,
 //		],
-//		'CE2' => [
-//			'code' => 'CE2',
+//		'CE02' => [
+//			'code' => 'CE02',
 //			'field_type' => 'image',
 //			'title' => 'Fotografia da entrada',
 //			'conditions' => null,
 //			'field_options' => null,
 //		],
-//		    'CE3' => [
-//		    	'code' => 'CE3',
+//		    'CE03' => [
+//		    	'code' => 'CE03',
 //			    'field_type' => 'numeric',
 //			    'title' => 'Código do Domicílio',
 //			    'conditions' => null,
 //			    'field_options' => null,
 //		    ],
-//			'CE4' => [
-//				'code' => 'CE4',
+//			'CE04' => [
+//				'code' => 'CE04',
 //				'field_type' => 'numeric',
 //				'title' => 'Geocod',
 //				'conditions' => null,
 //				'field_options' => null,
 //			],
-//		'CE5' => [
-//			'code' => 'CE5',
+//		'CE05' => [
+//			'code' => 'CE05',
 //			'field_type' => 'numeric',
 //			'title' => 'Setor Censitario',
 //			'conditions' => null,
 //			'field_options' => null,
 //		],
-		'CE6' => [
-			'code' => 'CE6',
+		'CE06A' => [
+			'code' => 'CE06A',
 			'field_type' => 'text',
-			'title' => 'Endereço',
+			'title' => 'Endereço - Logradouro',
 			'conditions' => null,
 			'field_options' => null,
 		],
-		'CE7' => [
-			'code' => 'CE7',
+		'CE06B' => [
+			'code' => 'CE06B',
+			'field_type' => 'text',
+			'title' => 'Endereço - Número',
+			'conditions' => null,
+			'field_options' => null,
+		],
+		'CE06C' => [
+			'code' => 'CE06C',
+			'field_type' => 'text',
+			'title' => 'Endereço - CEP',
+			'conditions' => null,
+			'field_options' => null,
+		],
+		'CE06D' => [
+			'code' => 'CE06D',
+			'field_type' => 'text',
+			'title' => 'Endereço - Complemento',
+			'conditions' => null,
+			'field_options' => null,
+		],
+		'CE07' => [
+			'code' => 'CE07',
 			'field_type' => 'text',
 			'title' => 'Bairro',
 			'conditions' => null,
 			'field_options' => null,
 		],
-		'CE8' => [
-			'code' => 'CE8',
+		'CE08' => [
+			'code' => 'CE08',
 			'field_type' => 'text',
 			'title' => 'Nome da Comunidade - se houver',
 			'conditions' => null,
 			'field_options' => null,
 		],
-		'CE9' => [
-			'code' => 'CE9',
+		'CE09' => [
+			'code' => 'CE09',
 			'field_type' => 'text',
 			'title' => 'Comentário',
 			'conditions' => null,
@@ -1212,7 +1233,7 @@ return [
 
 	'category_map' => [
 		'residence' => [
-			'ipm' => ['CE6', 'CE7', 'CE8', 'CE9', 'CE10', 'CE11', 'CE20', 'CE21', 'CE22', 'CE23', 'CE24', 'CE25', 'CE26', 'CE27', 'CE28', 'CE29', 'CE30'],
+			'ipm' => ['CE06A', 'CE06B', 'CE06C', 'CE06D', 'CE07', 'CE08', 'CE09', 'CE10', 'CE11', 'CE20', 'CE21', 'CE22', 'CE23', 'CE24', 'CE25', 'CE26', 'CE27', 'CE28', 'CE29', 'CE30'],
 			'saude' => ['CE85'],
 			'educacao' => [],
 			'emprego' => [],
