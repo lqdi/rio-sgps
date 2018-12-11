@@ -37,7 +37,7 @@
 
 				<div class="col-md-12 form-group">
 					<label for="fld-entity_type">Classe de comportamento</label>
-					<select required id="fld-entity_type" name="entity_type" class="form-control" value="{{$flag->entity_type}}">
+					<select required id="fld-behavior" name="behavior" class="form-control">
 						@foreach(\SGPS\Behavior\FlagBehavior::getAvailableClasses() as $behaviorClass)
 							<option @if($behaviorClass === $flag->behavior) selected @endif value="{{$behaviorClass}}">{{$behaviorClass}}</option>
 						@endforeach
