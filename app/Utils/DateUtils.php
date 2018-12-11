@@ -22,4 +22,7 @@ class DateUtils {
 		return Carbon::parse($date)->diffInYears();
 	}
 
+	const BR_DATE_TIME = 'd/m/Y H:i:s';
+	const BR_DATE = 'd/m/Y';
+
 }

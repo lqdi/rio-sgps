@@ -13,7 +13,7 @@
 			</thead>
 			<tbody>
 				<tr v-for="comment in comments">
-					<td width="15">{{comment.created_at}}</td>
+					<td width="15">{{comment.created_at | moment('DD/MM/YYYY HH:mm:ss')}}</td>
 					<td width="15"><i class="fa fa-user"></i> {{comment.user.name}}</td>
 					<td width="70">{{comment.message}}</td>
 				</tr>

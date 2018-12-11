@@ -90241,7 +90241,14 @@ var render = function() {
             _vm._l(_vm.comments, function(comment) {
               return _c("tr", [
                 _c("td", { attrs: { width: "15" } }, [
-                  _vm._v(_vm._s(comment.created_at))
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("moment")(
+                        comment.created_at,
+                        "DD/MM/YYYY HH:mm:ss"
+                      )
+                    )
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", { attrs: { width: "15" } }, [
