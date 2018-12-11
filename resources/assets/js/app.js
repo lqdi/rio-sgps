@@ -8,6 +8,7 @@ import BootstrapVue from 'bootstrap-vue'
 import * as ModalDialogs from 'vue-modal-dialogs';
 import VueTheMask from 'vue-the-mask';
 import Toasted from 'vue-toasted';
+import Multiselect from 'vue-multiselect'
 
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -17,10 +18,16 @@ import OperatorDashboard from "./controllers/OperatorDashboard";
 
 window.Vue = Vue;
 
+
 Vue.use(BootstrapVue);
 Vue.use(require('vue-moment'), {moment});
 Vue.use(ModalDialogs);
-Vue.use(VueTheMask);
+Vue.use(VueTheMask, {
+	selectLabel: "ENTER para selecionar",
+	deselectLabel: "ENTER para deselecionar",
+	selectedLabel: "Selecionado",
+});
+
 Vue.use(Toasted, {
 	position: 'bottom-right',
 	duration: 5000,
@@ -30,6 +37,7 @@ Vue.use(Toasted, {
 // Components
 Vue.component('flag-display-tooltip', require('./components/FlagDisplayTooltip.vue'));
 Vue.component('loading-feedback', require('./components/LoadingFeedback.vue'));
+Vue.component('multiselect', require('./components/Multiselect.vue'));
 
 // Panels
 Vue.component('comments-panel', require('./panels/CommentsPanel.vue'));

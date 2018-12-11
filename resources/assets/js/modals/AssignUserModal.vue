@@ -14,9 +14,15 @@
 
 			<div class="form-group">
 				<label for="fld-user_id"><i class="fa fa-user"></i> Operador:</label>
-				<select id="fld-user_id" class="form-control" v-model="input.user_id">
-					<option v-for="user in users" :value="user.id">{{user.name}} ({{user.registration_number}})</option>
-				</select>
+				<multiselect
+						v-model="selectedUser"
+						track-by="id"
+						placeholder="Selecione um usuário"
+						label="searchable_name"
+						@input="input.user_id = selectedUser.id"
+						:options="availableUsers"
+						id="fld-user_id"
+				></multiselect>
 			</div>
 
 			<div class="form-group">
@@ -39,6 +45,7 @@
 		data: () => { return {
 			isLoading: false,
 			users: [],
+			selectedUser: null,
 
 			input: {
 				assignment_type: null,
@@ -47,6 +54,15 @@
 		}},
 
 		computed: {
+
+			availableUsers: function() {
+				if(!this.users) return [];
+
+				return Object.values(this.users).map((user) => {
+					user.searchable_name = `${user.name} (${user.registration_number})`;
+					return user;
+				});
+			},
 
 			shouldBlockSubmit: function() {
 				return (!this.input.user_id || !this.input.assignment_type);
