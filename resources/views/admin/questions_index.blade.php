@@ -28,7 +28,7 @@
 				</td>
 				<td>
 					<a href="{{route('admin.questions.show', [$question->id])}}" class="btn btn-sm btn-outline-dark"><i class="fa fa-edit"></i> Editar</a>
-					<form class="d-inline-block" method="POST" action="{{route('admin.questions.destroy', [$question->id])}}">
+					<form onsubmit="return confirm('Tem certeza que deseja excluir?')" class="d-inline-block" method="POST" action="{{route('admin.questions.destroy', [$question->id])}}">
 						@csrf
 						@method('DELETE')
 						<button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i> Excluir</button>

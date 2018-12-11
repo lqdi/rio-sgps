@@ -22,7 +22,7 @@
 				<a class="sgps__sidebar-link @if(Route::is('admin.groups.*')) active @endif" href="{{route('admin.groups.index')}}"><i class="fa fa-users"></i> Secretarias</a>
 				<a class="sgps__sidebar-link @if(Route::is('admin.flags.*')) active @endif" href="{{route('admin.flags.index')}}"><i class="fa fa-tags"></i> Etiquetas</a>
 				<a class="sgps__sidebar-link @if(Route::is('admin.questions.*')) active @endif" href="{{route('admin.questions.index')}}"><i class="fa fa-question-circle"></i> Perguntas</a>
-				<a class="sgps__sidebar-link @if(Route::is('admin.settings.*')) active @endif" href="{{route('admin.settings.index')}}"><i class="fa fa-sliders-h"></i> Configurações</a>
+				<!--a class="sgps__sidebar-link @if(Route::is('admin.settings.*')) active @endif" href="{{route('admin.settings.index')}}"><i class="fa fa-sliders-h"></i> Configurações</a-->
 				<a class="sgps__sidebar-link @if(Route::is('admin.equipments.*')) active @endif" href="{{route('admin.equipments.index')}}"><i class="fa fa-map-marker"></i> Equipamentos</a>
 
 			</div>
