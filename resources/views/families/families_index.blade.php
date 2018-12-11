@@ -33,7 +33,7 @@
 
 						<div class="form-group">
 							<input v-if="filters.flags" v-for="(flag_id, i) in filters.flags" type="hidden" :name="'filters[flags][' + i + ']'" :value="flag_id" />
-							<button type="button" @click="selectFlagsToFilter()" class="btn btn-sm btn-dark mx-2">Buscar por Etiquetas</button>
+							<button type="button" @click="selectFlagsToFilter()" class="btn btn-sm btn-dark mx-2">Filtrar por Etiquetas</button>
 						</div>
 					</form>
 				</div>
@@ -46,7 +46,7 @@
 						<tr>
 							<th>#</th>
 							<th>Domicílio</th>
-							<th>Responsável</th>
+							<th>Responsável do domicílio</th>
 							<th>Etiquetas</th>
 						</tr>
 						</thead>
