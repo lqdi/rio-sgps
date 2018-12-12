@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Comment
@@ -42,6 +43,7 @@ class Comment extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
+	use LogsActivity;
 
 	protected $table = 'comments';
 	protected $fillable = [
@@ -53,6 +55,10 @@ class Comment extends Model {
 
 	protected $casts = [
 		'metadata' => 'object',
+	];
+
+	protected static $logAttributes = [
+		'message'
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------

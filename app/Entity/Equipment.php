@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Equipment
@@ -41,6 +42,7 @@ class Equipment extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
+	use LogsActivity;
 
 	const TYPE_CRE = "CRE";
 	const TYPE_CRAS = "CRAS";
@@ -54,6 +56,13 @@ class Equipment extends Model {
 
 	protected $table = 'equipments';
 	protected $fillable = [
+		'type',
+		'code',
+		'name',
+		'address',
+	];
+
+	protected static $logAttributes = [
 		'type',
 		'code',
 		'name',

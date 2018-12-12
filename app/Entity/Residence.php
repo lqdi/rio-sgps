@@ -22,6 +22,7 @@ use Laravel\Scout\Searchable;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use SGPS\Utils\Sanitizers;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Residence
@@ -51,6 +52,7 @@ class Residence extends Entity {
 	use SoftDeletes;
 	use HasShortCode;
 	use Searchable;
+	use LogsActivity;
 
 	protected $table = 'residences';
 
@@ -67,6 +69,15 @@ class Residence extends Entity {
 	protected $casts = [
 		'lat' => 'float',
 		'lng' => 'float',
+	];
+
+	protected static $logAttributes = [
+		'sector_code',
+		'lat',
+		'lng',
+		'address',
+		'territory',
+		'reference',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -127,6 +138,19 @@ class Residence extends Entity {
 	 */
 	public function getEntityType(): string {
 		return 'residence';
+	}
+
+	/**
+	 * Concrete: Builds a basic JSON for entity identification
+	 * @return array
+	 */
+	public function toBasicJson(): array {
+		return [
+			'type' => $this->getEntityType(),
+			'id' => $this->getEntityID(),
+			'address' => $this->address,
+			'shortcode' => $this->shortcode,
+		];
 	}
 
 	/**

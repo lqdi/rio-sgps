@@ -54,6 +54,8 @@ class AssignmentsController extends Controller {
 
 			$assignment = $service->assignUserToEntity($user, $entity, $assignmentType);
 
+			$this->activityLog->writeToFamilyLog($entity, "assigned_user", ['assigned_user' => $user->toBasicJson(), 'assignment_type' => $assignmentType]);
+
 		} catch (\Exception $ex) {
 			return $this->api_exception($ex);
 		}
@@ -69,6 +71,9 @@ class AssignmentsController extends Controller {
 
 		try {
 			$service->unassignUserFromEntity($user, $entity);
+
+			$this->activityLog->writeToFamilyLog($entity, "unassigned_user", ['assigned_user' => $user->toBasicJson()]);
+
 		} catch (\Exception $ex) {
 			return $this->api_exception($ex);
 		}

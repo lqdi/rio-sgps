@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use SGPS\Utils\Sanitizers;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Person
@@ -50,6 +51,7 @@ class Person extends Entity {
 	use IndexedByUUID;
 	use SoftDeletes;
 	use HasShortCode;
+	use LogsActivity;
 
 	protected $table = "persons";
 
@@ -68,6 +70,15 @@ class Person extends Entity {
 
 	protected $casts = [
 		'dob' => 'date',
+	];
+
+	protected static $logAttributes = [
+		'name',
+		'dob',
+		'nis',
+		'cpf',
+		'rg',
+		'phone_number',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -148,6 +159,19 @@ class Person extends Entity {
 	 */
 	public function getEntityType(): string {
 		return 'person';
+	}
+
+	/**
+	 * Abstract: Builds a basic JSON for entity identification
+	 * @return array
+	 */
+	public function toBasicJson(): array {
+		return [
+			'type' => $this->getEntityType(),
+			'id' => $this->getEntityID(),
+			'name' => $this->name,
+			'shortcode' => $this->shortcode,
+		];
 	}
 
 	/**

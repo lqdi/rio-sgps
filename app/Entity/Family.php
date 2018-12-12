@@ -23,6 +23,7 @@ use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use SGPS\Utils\Sanitizers;
 use SGPS\Utils\Shortcode;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Family
@@ -55,6 +56,7 @@ class Family extends Entity {
 	use SoftDeletes;
 	use HasShortCode;
 	use Searchable;
+	use LogsActivity;
 
 	protected $table = 'families';
 
@@ -75,6 +77,15 @@ class Family extends Entity {
 		'ipm_risk_factor' => 'integer',
 		'visit_attempt' => 'integer',
 		'visit_last' => 'date',
+	];
+
+	protected static $logAttributes = [
+		'person_in_charge_id',
+		'ipm_rate',
+		'ipm_risk_factor',
+		'visit_status',
+		'visit_attempt',
+		'visit_last',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -169,6 +180,19 @@ class Family extends Entity {
 	 */
 	public function getEntityType(): string {
 		return 'family';
+	}
+
+	/**
+	 * Concrete: Builds a basic JSON for entity identification
+	 * @return array
+	 */
+	public function toBasicJson(): array {
+		return [
+			'type' => $this->getEntityType(),
+			'id' => $this->getEntityID(),
+			'name' => $this->personInCharge->name,
+			'shortcode' => $this->shortcode,
+		];
 	}
 
 	/**

@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class QuestionAnswer
@@ -46,6 +47,7 @@ class QuestionAnswer extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
+	use LogsActivity;
 
 	protected $table = 'question_answers';
 
@@ -65,6 +67,13 @@ class QuestionAnswer extends Model {
 		'is_filled' => 'boolean',
 		'value_json' => 'array',
 		'value_integer' => 'integer',
+	];
+
+	protected static $logAttributes = [
+		'value_string',
+		'value_integer',
+		'value_json',
+		'is_filled',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------

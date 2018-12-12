@@ -61,6 +61,17 @@ abstract class Entity extends Model {
 		return "{$this->getEntityType()}:{$this->getEntityID()}";
 	}
 
+	/**
+	 * Abstract: Builds a basic JSON for entity identification
+	 * @return array
+	 */
+	public function toBasicJson() : array {
+		return [
+			'type' => $this->getEntityType(),
+			'id' => $this->getEntityID(),
+		];
+	}
+
 	// ----------------------------------------------------------------------------------------------------------------
 
 	/**

@@ -16,6 +16,7 @@ namespace SGPS\Entity;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class FlagAttribution
@@ -46,6 +47,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FlagAttribution extends Model {
 
+	use LogsActivity;
+
 	protected $table = 'flag_attributions';
 	protected $with = ['flag'];
 
@@ -73,6 +76,17 @@ class FlagAttribution extends Model {
 		'is_completed' => 'boolean',
 		'is_cancelled' => 'boolean',
 		'behavior_metadata' => 'array',
+	];
+
+	protected static $logAttributes = [
+		'reference_date',
+		'deadline',
+		'flagged_by_operator_id',
+		'is_default_deadline',
+		'is_late',
+		'is_completed',
+		'is_cancelled',
+		'behavior_metadata',
 	];
 
 	public function flag() {

@@ -6,11 +6,18 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use SGPS\Services\ActivityLogService;
 
 class Controller extends BaseController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function api_success(array $data = [], int $statusCode = 200, array $headers = []) {
+    public $activityLog;
+
+    public function __construct(ActivityLogService $activityLogService) {
+    	$this->activityLog = $activityLogService;
+    }
+
+	public function api_success(array $data = [], int $statusCode = 200, array $headers = []) {
     	$data['status'] = 'ok';
     	return response()->json($data, $statusCode, $headers);
     }

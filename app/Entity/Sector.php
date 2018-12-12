@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Sector
@@ -41,6 +42,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Sector extends Model {
 
 	use SoftDeletes;
+	use LogsActivity;
 
 	protected $table = 'sectors';
 	protected $fillable = [

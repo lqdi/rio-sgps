@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use SGPS\Services\UserAssignmentService;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class UserAssignment
@@ -38,6 +39,7 @@ use SGPS\Traits\IndexedByUUID;
 class UserAssignment extends Model {
 
 	use IndexedByUUID;
+	use LogsActivity;
 
 	const TYPE_WATCHING = 'watching';
 	const TYPE_ACTING = 'acting';

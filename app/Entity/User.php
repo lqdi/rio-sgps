@@ -20,6 +20,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -57,6 +58,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	use Notifiable;
 	use HasRoles;
 	use HasShortCode;
+	use LogsActivity;
 
 	protected $table = "users";
 
@@ -71,6 +73,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	protected $hidden = [
 		'password',
 		'remember_token',
+	];
+
+	protected static $logAttributes = [
+		'name',
+		'email',
+		'group_id',
+		'registration_number',
+		'cpf',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -127,6 +137,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	 */
 	public function validatePassword(string $password) : bool {
 		return password_verify($password, $this->password);
+	}
+
+	/**
+	 * Returns a basic JSON object with user info
+	 * @return array
+	 */
+	public function toBasicJson() : array {
+		return [
+			'id' => $this->id,
+			'name' => $this->name,
+			'registration_number' => $this->registration_number,
+			'email' => $this->email,
+		];
 	}
 
 	/**

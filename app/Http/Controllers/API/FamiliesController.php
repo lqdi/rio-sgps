@@ -25,6 +25,8 @@ class FamiliesController extends Controller {
 
 		$member = $service->addMemberToFamily($family, $memberName);
 
+		$this->activityLog->writeToFamilyLog($family, "member_added", ['member' => $member]);
+
 		return $this->api_success([
 			'member_id' => $member->id,
 		]);

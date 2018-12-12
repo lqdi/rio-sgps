@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Behavior\FlagBehavior;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Flag
@@ -53,6 +54,7 @@ class Flag extends Model {
 	use IndexedByUUID;
 	use SoftDeletes;
 	use HasShortCode;
+	use LogsActivity;
 
 	protected $table = 'flags';
 	protected $fillable = [
@@ -71,6 +73,18 @@ class Flag extends Model {
 		'default_deadline' => 'integer',
 		'conditions' => 'array',
 		'triggers' => 'array',
+	];
+
+	protected static $logAttributes = [
+		'code',
+		'name',
+		'behavior',
+		'conditions',
+		'entity_type',
+		'description',
+		'triggers',
+		'is_visible',
+		'default_deadline',
 	];
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -120,6 +134,7 @@ class Flag extends Model {
 	/**
 	 * Gets the behavior handler instance for this flag
 	 * @return FlagBehavior
+	 * @throws \Exception
 	 */
 	public function getBehaviorHandler() : FlagBehavior {
 		return FlagBehavior::getHandler($this);
@@ -136,6 +151,18 @@ class Flag extends Model {
 		$this->persons()->sync([]);
 
 		return parent::delete();
+	}
+
+	/**
+	 * Returns a basic JSON object with flag info
+	 * @return array
+	 */
+	public function toBasicJson() : array {
+		return [
+			'id' => $this->id,
+			'shortcode' => $this->shortcode,
+			'name' => $this->name,
+		];
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------

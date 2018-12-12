@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -10,6 +11,9 @@ class CreateActivityLogTable extends Migration
      */
     public function up()
     {
+
+	    Schema::dropIfExists(config('activitylog.table_name'));
+
         Schema::create(config('activitylog.table_name'), function (Blueprint $table) {
             $table->increments('id');
             $table->string('log_name')->nullable();
@@ -30,6 +34,6 @@ class CreateActivityLogTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('activitylog.table_name'));
+        Schema::dropIfExists(config('activitylog.table_name'));
     }
 }

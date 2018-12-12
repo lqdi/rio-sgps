@@ -81,6 +81,8 @@ class QuestionsController extends Controller {
 
 		$answers = $entity->getAnswerGrid();
 
+		$this->activityLog->writeToFamilyLog($entity, "saved_answers", ['given_answers' => $answers]);
+
 		$hasChangedFields = $entityFieldLinkService->updateEntityFields($entity, $previousAnswers, $answers);
 		$hasAddedFlags = $flagBehaviorService->evaluateBehaviorsForAnswers($entity, $answers);
 

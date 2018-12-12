@@ -39,6 +39,8 @@ class FlagsController extends Controller {
 		}
 
 		$service->cancelFlagAttribution($entity, $flag);
+		$this->activityLog->writeToFamilyLog($entity, "flag_cancelled", ['entity' => $entity->toBasicJson(), 'flag' => $flag->toBasicJson()]);
+
 
 		return $this->api_success();
 	}
@@ -50,6 +52,8 @@ class FlagsController extends Controller {
 		}
 
 		$service->completeFlagAttribution($entity, $flag);
+		$this->activityLog->writeToFamilyLog($entity, "flag_completed", ['entity' => $entity->toBasicJson(), 'flag' => $flag->toBasicJson()]);
+
 
 		return $this->api_success();
 	}
@@ -65,6 +69,8 @@ class FlagsController extends Controller {
 		}
 
 		$service->attributeFlagToEntity($entity, $flag, $referenceDate, $deadline);
+		$this->activityLog->writeToFamilyLog($entity, "flag_added", ['entity' => $entity->toBasicJson(), 'flag' => $flag->toBasicJson()]);
+
 
 		return $this->api_success();
 

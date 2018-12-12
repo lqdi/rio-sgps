@@ -40,6 +40,7 @@ Vue.component('loading-feedback', require('./components/LoadingFeedback.vue'));
 Vue.component('multiselect', require('./components/Multiselect.vue'));
 
 // Panels
+Vue.component('activity-log-panel', require('./panels/ActivityLogPanel.vue'));
 Vue.component('comments-panel', require('./panels/CommentsPanel.vue'));
 Vue.component('entity-questions-panel', require('./panels/EntityQuestionsPanel.vue'));
 

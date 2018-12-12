@@ -16,6 +16,10 @@ export default {
 		AddMember: 'api/families/@id@/add_member',
 	},
 
+	ActivityLog: {
+		FetchThread: 'api/activity_log/@entity@/entries'
+	},
+
 	Flags: {
 		FetchAll: 'api/flags',
 		AddToEntity: 'api/flags/on_entity/@entity@/',

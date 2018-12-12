@@ -18,8 +18,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Group
@@ -39,9 +39,12 @@ class Group extends Model {
 
 	use IndexedByUUID;
 	use SoftDeletes;
+	use LogsActivity;
 
 	protected $table = "groups";
 	protected $fillable = ['name', 'code'];
+
+	protected static $logAttributes = ['name', 'code'];
 
 	// ---------------------------------------------------------------------------------------------------------------
 
