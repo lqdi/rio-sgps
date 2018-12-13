@@ -16,6 +16,7 @@ export default {
 	residence: 'Domicílio',
 	flag: 'Etiqueta',
 	user: 'Operador',
+	message: 'Mensagem',
 
 	assignment_type: 'Tipo de atribuição',
 

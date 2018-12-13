@@ -3,6 +3,8 @@ export default {
 	Comments: {
 		FetchThread: 'api/comments/thread/@type@/@id@',
 		PostComment: 'api/comments/thread/@type@/@id@',
+		DeleteComment: 'api/comments/comment/@id@',
+		UpdateComment: 'api/comments/comment/@id@',
 	},
 
 	Questions: {

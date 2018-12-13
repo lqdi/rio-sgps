@@ -22,7 +22,14 @@ use SGPS\Http\Controllers\Controller;
 class CommentsController extends Controller {
 
 	public function fetch_thread(string $type, string $id) {
+
 		$thread = Comment::fetchThreadFromEntity($type, $id);
+		$currentUser = auth()->user();
+
+	 	$thread = $thread->map(function ($comment) use ($currentUser) { /* @var $comment Comment */
+			$comment->is_owned_by_me = $comment->isOwnedBy($currentUser);
+			return $comment;
+		});
 
 		return $this->api_success([
 			'comments' => $thread
@@ -35,13 +42,44 @@ class CommentsController extends Controller {
 		$message = request('message');
 		$entity = Entity::fetchByID($type, $id);
 
-		// TODO: validate request (can user post comments? is message present? does entity exist?)
+		if(!$entity) {
+			return $this->api_failure('invalid_entity_reference');
+		}
+
+		if(strlen(trim($message)) <= 0) {
+			return $this->api_success();
+		}
 
 		Comment::post($type, $id, $user, $message);
 
 		$this->activityLog->writeToFamilyLog($entity, "added_comment", ['message' => $message]);
 
 		return $this->api_success();
+	}
+
+	public function delete_comment(Comment $comment) {
+
+		if(!$comment->isOwnedBy(auth()->user())) {
+			return $this->api_failure('not_allowed', [], 403);
+		}
+
+		$comment->delete();
+
+		return $this->api_success();
+
+	}
+
+	public function update_comment(Comment $comment) {
+
+		if(!$comment->isOwnedBy(auth()->user())) {
+			return $this->api_failure('not_allowed', [], 403);
+		}
+
+		$comment->message = request('message');
+		$comment->save();
+
+		return $this->api_success();
+
 	}
 
 }

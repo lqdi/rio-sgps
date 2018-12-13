@@ -15,6 +15,7 @@ namespace SGPS\Entity;
 
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -77,6 +78,22 @@ class Comment extends Model {
 	 */
 	public function user() {
 		return $this->hasOne(User::class, 'id', 'user_id');
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Checks if the comment is owned by a given user
+	 * @param null|User|Authenticatable $user
+	 * @return bool
+	 */
+	public function isOwnedBy(?User $user) : bool {
+
+		if(!$this->user_id) return false;
+		if(!$user) return false;
+
+		return $this->user_id === $user->id;
+
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------

@@ -12,6 +12,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 	Route::get('comments/thread/{type}/{id}', 'API\CommentsController@fetch_thread')->name('api.comments.fetch_thread');
 	Route::post('comments/thread/{type}/{id}', 'API\CommentsController@post_comment')->name('api.comments.post_comment');
+	Route::post('comments/comment/{comment}', 'API\CommentsController@update_comment')->name('api.comments.update_comment');
+	Route::delete('comments/comment/{comment}', 'API\CommentsController@delete_comment')->name('api.comments.delete_comment');
 
 	Route::get('activity_log/{entity}/entries', 'API\ActivityLogController@fetch_thread')->name('api.activity_log.fetch_thread');
 
