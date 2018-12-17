@@ -23,6 +23,8 @@ export default {
 
 		exportResults: function() {
 
+			this.isLoading = true;
+
 			axios.post(
 				API.url(Endpoints.Family.Export),
 				{},
@@ -33,6 +35,8 @@ export default {
 				if(!res.data.download_url);
 
 				window.open(res.data.download_url);
+
+				this.isLoading = false;
 			})
 
 		},

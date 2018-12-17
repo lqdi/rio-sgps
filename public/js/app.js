@@ -84580,6 +84580,9 @@ var selectFilterFlags = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["
 	methods: {
 
 		exportResults: function exportResults() {
+			var _this = this;
+
+			this.isLoading = true;
 
 			axios.post(__WEBPACK_IMPORTED_MODULE_4__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Family.Export), {}, __WEBPACK_IMPORTED_MODULE_4__services_API__["a" /* default */].headers()).then(function (res) {
 				console.log('Exported: ', res);
@@ -84587,6 +84590,8 @@ var selectFilterFlags = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["
 				if (!res.data.download_url) ;
 
 				window.open(res.data.download_url);
+
+				_this.isLoading = false;
 			});
 		},
 
@@ -84637,11 +84642,11 @@ var selectFilterFlags = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["
 		}(),
 
 		doSearch: function doSearch() {
-			var _this = this;
+			var _this2 = this;
 
 			this.isLoading = true;
 			this.$nextTick(function () {
-				return _this.$refs.filterForm.submit();
+				return _this2.$refs.filterForm.submit();
 			});
 		}
 	}
