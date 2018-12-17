@@ -84583,6 +84583,10 @@ var selectFilterFlags = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["
 
 			axios.post(__WEBPACK_IMPORTED_MODULE_4__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Family.Export), {}, __WEBPACK_IMPORTED_MODULE_4__services_API__["a" /* default */].headers()).then(function (res) {
 				console.log('Exported: ', res);
+
+				if (!res.data.download_url) ;
+
+				window.open(res.data.download_url);
 			});
 		},
 

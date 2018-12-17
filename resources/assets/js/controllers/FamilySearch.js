@@ -29,6 +29,10 @@ export default {
 				API.headers()
 			).then((res) => {
 				console.log('Exported: ', res);
+
+				if(!res.data.download_url);
+
+				window.open(res.data.download_url);
 			})
 
 		},
