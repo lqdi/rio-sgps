@@ -6140,7 +6140,8 @@ function toComment(sourceMap) {
 	},
 
 	Family: {
-		AddMember: 'api/families/@id@/add_member'
+		AddMember: 'api/families/@id@/add_member',
+		ArchiveMember: 'api/families/@family_id@/members/@member_id@/archive'
 	},
 
 	ActivityLog: {
@@ -82072,9 +82073,11 @@ exports.push([module.i, ".fade-enter-active, .fade-leave-active {\n    transitio
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_AddFlagModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_AddFlagModal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_AssignUserModal__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_AssignUserModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_AssignUserModal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__config_Endpoints__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_API__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals_ArchiveMemberModal__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals_ArchiveMemberModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__modals_ArchiveMemberModal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_Dialogs__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__config_Endpoints__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_API__ = __webpack_require__(17);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -82086,8 +82089,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 var _addFlag = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create"])(__WEBPACK_IMPORTED_MODULE_2__modals_AddFlagModal___default.a, 'family');
 var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create"])(__WEBPACK_IMPORTED_MODULE_3__modals_AssignUserModal___default.a, 'family');
+var archiveMember = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create"])(__WEBPACK_IMPORTED_MODULE_4__modals_ArchiveMemberModal___default.a, 'familyId', 'memberId');
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	props: ['family'],
@@ -82121,161 +82126,25 @@ var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create
 			this.currentID = id;
 		},
 
-		cancelFlagAttribution: function () {
-			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(entityType, entityID, flagID) {
-				var _this = this;
-
-				var shouldCancel;
-				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+		archiveFamilyMember: function () {
+			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(memberID) {
+				var hasArchivedMember;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 					while (1) {
-						switch (_context2.prev = _context2.next) {
+						switch (_context.prev = _context.next) {
 							case 0:
-								_context2.next = 2;
-								return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].confirm("Tem certeza que deseja cancelar essa etiqueta?");
+								_context.next = 2;
+								return archiveMember(this.family.id, memberID);
 
 							case 2:
-								shouldCancel = _context2.sent;
+								hasArchivedMember = _context.sent;
 
-								if (shouldCancel) {
-									_context2.next = 5;
+								if (hasArchivedMember) {
+									_context.next = 5;
 									break;
 								}
 
-								return _context2.abrupt('return');
-
-							case 5:
-
-								axios.post(__WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_5__config_Endpoints__["a" /* default */].Flags.Cancel, { entity: __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].getEntityReference(entityType, entityID), flag_id: flagID }), {}, __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].headers()).then(function () {
-									var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(res) {
-										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-											while (1) {
-												switch (_context.prev = _context.next) {
-													case 0:
-														_this.isLoading = false;
-														_context.next = 3;
-														return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('A etiqueta foi cancelada com sucesso!');
-
-													case 3:
-														location.reload();
-
-													case 4:
-													case 'end':
-														return _context.stop();
-												}
-											}
-										}, _callee, _this);
-									}));
-
-									return function (_x4) {
-										return _ref2.apply(this, arguments);
-									};
-								}()).catch(function (err) {
-									_this.isLoading = false;
-									__WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao cancelar a etiqueta!');
-								});
-
-							case 6:
-							case 'end':
-								return _context2.stop();
-						}
-					}
-				}, _callee2, this);
-			}));
-
-			function cancelFlagAttribution(_x, _x2, _x3) {
-				return _ref.apply(this, arguments);
-			}
-
-			return cancelFlagAttribution;
-		}(),
-
-		completeFlagAttribution: function () {
-			var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(entityType, entityID, flagID) {
-				var _this2 = this;
-
-				var shouldCancel;
-				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
-					while (1) {
-						switch (_context4.prev = _context4.next) {
-							case 0:
-								_context4.next = 2;
-								return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].confirm("Tem certeza que deseja concluír essa etiqueta?");
-
-							case 2:
-								shouldCancel = _context4.sent;
-
-								if (shouldCancel) {
-									_context4.next = 5;
-									break;
-								}
-
-								return _context4.abrupt('return');
-
-							case 5:
-
-								axios.post(__WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_5__config_Endpoints__["a" /* default */].Flags.Complete, { entity: __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].getEntityReference(entityType, entityID), flag_id: flagID }), {}, __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].headers()).then(function () {
-									var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(res) {
-										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
-											while (1) {
-												switch (_context3.prev = _context3.next) {
-													case 0:
-														_this2.isLoading = false;
-														_context3.next = 3;
-														return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('A etiqueta foi concluída com sucesso!');
-
-													case 3:
-														location.reload();
-
-													case 4:
-													case 'end':
-														return _context3.stop();
-												}
-											}
-										}, _callee3, _this2);
-									}));
-
-									return function (_x8) {
-										return _ref4.apply(this, arguments);
-									};
-								}()).catch(function (err) {
-									_this2.isLoading = false;
-									__WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao concluir a etiqueta!');
-								});
-
-							case 6:
-							case 'end':
-								return _context4.stop();
-						}
-					}
-				}, _callee4, this);
-			}));
-
-			function completeFlagAttribution(_x5, _x6, _x7) {
-				return _ref3.apply(this, arguments);
-			}
-
-			return completeFlagAttribution;
-		}(),
-
-		addFlag: function () {
-			var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
-				var hasAddedFlag;
-				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
-					while (1) {
-						switch (_context5.prev = _context5.next) {
-							case 0:
-								_context5.next = 2;
-								return _addFlag(this.family);
-
-							case 2:
-								hasAddedFlag = _context5.sent;
-
-								if (hasAddedFlag) {
-									_context5.next = 5;
-									break;
-								}
-
-								return _context5.abrupt('return');
+								return _context.abrupt('return');
 
 							case 5:
 
@@ -82284,33 +82153,169 @@ var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create
 
 							case 7:
 							case 'end':
+								return _context.stop();
+						}
+					}
+				}, _callee, this);
+			}));
+
+			function archiveFamilyMember(_x) {
+				return _ref.apply(this, arguments);
+			}
+
+			return archiveFamilyMember;
+		}(),
+
+		cancelFlagAttribution: function () {
+			var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(entityType, entityID, flagID) {
+				var _this = this;
+
+				var shouldCancel;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+					while (1) {
+						switch (_context3.prev = _context3.next) {
+							case 0:
+								_context3.next = 2;
+								return __WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].confirm("Tem certeza que deseja cancelar essa etiqueta?");
+
+							case 2:
+								shouldCancel = _context3.sent;
+
+								if (shouldCancel) {
+									_context3.next = 5;
+									break;
+								}
+
+								return _context3.abrupt('return');
+
+							case 5:
+
+								axios.post(__WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_6__config_Endpoints__["a" /* default */].Flags.Cancel, { entity: __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].getEntityReference(entityType, entityID), flag_id: flagID }), {}, __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].headers()).then(function () {
+									var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(res) {
+										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+											while (1) {
+												switch (_context2.prev = _context2.next) {
+													case 0:
+														_this.isLoading = false;
+														_context2.next = 3;
+														return __WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].alert('A etiqueta foi cancelada com sucesso!');
+
+													case 3:
+														location.reload();
+
+													case 4:
+													case 'end':
+														return _context2.stop();
+												}
+											}
+										}, _callee2, _this);
+									}));
+
+									return function (_x5) {
+										return _ref3.apply(this, arguments);
+									};
+								}()).catch(function (err) {
+									_this.isLoading = false;
+									__WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao cancelar a etiqueta!');
+								});
+
+							case 6:
+							case 'end':
+								return _context3.stop();
+						}
+					}
+				}, _callee3, this);
+			}));
+
+			function cancelFlagAttribution(_x2, _x3, _x4) {
+				return _ref2.apply(this, arguments);
+			}
+
+			return cancelFlagAttribution;
+		}(),
+
+		completeFlagAttribution: function () {
+			var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(entityType, entityID, flagID) {
+				var _this2 = this;
+
+				var shouldCancel;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+					while (1) {
+						switch (_context5.prev = _context5.next) {
+							case 0:
+								_context5.next = 2;
+								return __WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].confirm("Tem certeza que deseja concluír essa etiqueta?");
+
+							case 2:
+								shouldCancel = _context5.sent;
+
+								if (shouldCancel) {
+									_context5.next = 5;
+									break;
+								}
+
+								return _context5.abrupt('return');
+
+							case 5:
+
+								axios.post(__WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_6__config_Endpoints__["a" /* default */].Flags.Complete, { entity: __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].getEntityReference(entityType, entityID), flag_id: flagID }), {}, __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].headers()).then(function () {
+									var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4(res) {
+										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+											while (1) {
+												switch (_context4.prev = _context4.next) {
+													case 0:
+														_this2.isLoading = false;
+														_context4.next = 3;
+														return __WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].alert('A etiqueta foi concluída com sucesso!');
+
+													case 3:
+														location.reload();
+
+													case 4:
+													case 'end':
+														return _context4.stop();
+												}
+											}
+										}, _callee4, _this2);
+									}));
+
+									return function (_x9) {
+										return _ref5.apply(this, arguments);
+									};
+								}()).catch(function (err) {
+									_this2.isLoading = false;
+									__WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao concluir a etiqueta!');
+								});
+
+							case 6:
+							case 'end':
 								return _context5.stop();
 						}
 					}
 				}, _callee5, this);
 			}));
 
-			function addFlag() {
-				return _ref5.apply(this, arguments);
+			function completeFlagAttribution(_x6, _x7, _x8) {
+				return _ref4.apply(this, arguments);
 			}
 
-			return addFlag;
+			return completeFlagAttribution;
 		}(),
 
-		assignUser: function () {
+		addFlag: function () {
 			var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6() {
-				var hasAssignedUser;
+				var hasAddedFlag;
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
 					while (1) {
 						switch (_context6.prev = _context6.next) {
 							case 0:
 								_context6.next = 2;
-								return _assignUser(this.family);
+								return _addFlag(this.family);
 
 							case 2:
-								hasAssignedUser = _context6.sent;
+								hasAddedFlag = _context6.sent;
 
-								if (hasAssignedUser) {
+								if (hasAddedFlag) {
 									_context6.next = 5;
 									break;
 								}
@@ -82330,42 +82335,27 @@ var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create
 				}, _callee6, this);
 			}));
 
-			function assignUser() {
+			function addFlag() {
 				return _ref6.apply(this, arguments);
 			}
 
-			return assignUser;
+			return addFlag;
 		}(),
 
-		unassignUser: function unassignUser(userID) {
-			var _this3 = this;
-
-			axios.post(__WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_5__config_Endpoints__["a" /* default */].Assignments.UnassignUserFromEntity, { entity: __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].getEntityReference('family', this.family.id) }), { user_id: userID }, __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].headers()).then(function (res) {
-				_this3.isLoading = true;
-				location.reload();
-			}).catch(function (err) {
-				_this3.isLoading = false;
-				console.error("FamilyView.unassignUser: ", err);
-				__WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
-			});
-		},
-
-		addMemberToFamily: function () {
+		assignUser: function () {
 			var _ref7 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7() {
-				var _this4 = this;
-
-				var memberName;
+				var hasAssignedUser;
 				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
 					while (1) {
 						switch (_context7.prev = _context7.next) {
 							case 0:
 								_context7.next = 2;
-								return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].prompt('Digite o nome completo da pessoa', '', 'text', 'Nome completo...', 'Adicionando um novo membro');
+								return _assignUser(this.family);
 
 							case 2:
-								memberName = _context7.sent;
+								hasAssignedUser = _context7.sent;
 
-								if (memberName) {
+								if (hasAssignedUser) {
 									_context7.next = 5;
 									break;
 								}
@@ -82374,16 +82364,10 @@ var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create
 
 							case 5:
 
-								axios.post(__WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_5__config_Endpoints__["a" /* default */].Family.AddMember, { id: this.family.id }), { member_name: memberName }, __WEBPACK_IMPORTED_MODULE_6__services_API__["a" /* default */].headers()).then(function (res) {
-									_this4.isLoading = true;
-									location.reload();
-								}).catch(function (err) {
-									_this4.isLoading = false;
-									console.error("FamilyView.addMemberToFamily: ", err);
-									__WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
-								});
+								this.isLoading = true;
+								location.reload();
 
-							case 6:
+							case 7:
 							case 'end':
 								return _context7.stop();
 						}
@@ -82391,8 +82375,69 @@ var _assignUser = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["create
 				}, _callee7, this);
 			}));
 
-			function addMemberToFamily() {
+			function assignUser() {
 				return _ref7.apply(this, arguments);
+			}
+
+			return assignUser;
+		}(),
+
+		unassignUser: function unassignUser(userID) {
+			var _this3 = this;
+
+			axios.post(__WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_6__config_Endpoints__["a" /* default */].Assignments.UnassignUserFromEntity, { entity: __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].getEntityReference('family', this.family.id) }), { user_id: userID }, __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].headers()).then(function (res) {
+				_this3.isLoading = true;
+				location.reload();
+			}).catch(function (err) {
+				_this3.isLoading = false;
+				console.error("FamilyView.unassignUser: ", err);
+				__WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
+			});
+		},
+
+		addMemberToFamily: function () {
+			var _ref8 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8() {
+				var _this4 = this;
+
+				var memberName;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
+					while (1) {
+						switch (_context8.prev = _context8.next) {
+							case 0:
+								_context8.next = 2;
+								return __WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].prompt('Digite o nome completo da pessoa', '', 'text', 'Nome completo...', 'Adicionando um novo membro');
+
+							case 2:
+								memberName = _context8.sent;
+
+								if (memberName) {
+									_context8.next = 5;
+									break;
+								}
+
+								return _context8.abrupt('return');
+
+							case 5:
+
+								axios.post(__WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_6__config_Endpoints__["a" /* default */].Family.AddMember, { id: this.family.id }), { member_name: memberName }, __WEBPACK_IMPORTED_MODULE_7__services_API__["a" /* default */].headers()).then(function (res) {
+									_this4.isLoading = true;
+									location.reload();
+								}).catch(function (err) {
+									_this4.isLoading = false;
+									console.error("FamilyView.addMemberToFamily: ", err);
+									__WEBPACK_IMPORTED_MODULE_5__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
+								});
+
+							case 6:
+							case 'end':
+								return _context8.stop();
+						}
+					}
+				}, _callee8, this);
+			}));
+
+			function addMemberToFamily() {
+				return _ref8.apply(this, arguments);
 			}
 
 			return addMemberToFamily;
@@ -90423,7 +90468,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 	renderPerson: function renderPerson(person) {
-		return person.name + ' (' + person.shortcode;
+		return person.name + ' (' + person.shortcode + ')';
 	},
 
 	renderUser: function renderUser(user) {
@@ -90463,6 +90508,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["a"] = ({
 
 	member_added: 'Membro adicionado à família',
+	member_archived: 'Membro arquivado',
 	assigned_user: 'Operador atribuído',
 	unassigned_user: 'Operador desatribuido',
 	saved_answers: 'Questionário atualizado',
@@ -90479,13 +90525,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	flag: 'Etiqueta',
 	user: 'Operador',
 	message: 'Mensagem',
+	reason: 'Motivo',
 
 	assignment_type: 'Tipo de atribuição',
 
 	given_answers: 'Respostas informadas',
 
 	acting: 'Atuando',
-	observing: 'Observando'
+	observing: 'Observando',
+
+	moved: "Mudou-se",
+	death: "Faleceu",
+	duplicate: "Cadastro em duplicidade",
+	invalid: "Cadastro incorreto"
 
 });
 
@@ -92577,6 +92629,304 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 413 */,
+/* 414 */,
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(416)
+/* template */
+var __vue_template__ = __webpack_require__(417)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/modals/ArchiveMemberModal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-45aa6e90", Component.options)
+  } else {
+    hotAPI.reload("data-v-45aa6e90", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 416 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_API__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_Endpoints__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__ = __webpack_require__(26);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['familyId', 'memberId'],
+
+	data: function data() {
+		return {
+			isLoading: false,
+			input: {
+				reason: null
+			}
+		};
+	},
+
+	computed: {
+
+		shouldBlockSubmit: function shouldBlockSubmit() {
+			return !this.input.reason;
+		}
+
+	},
+
+	methods: {
+
+		getEntityReference: function getEntityReference() {
+			return { family_id: this.familyId, member_id: this.memberId };
+		},
+
+		archiveMember: function () {
+			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+				var _this = this;
+
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+					while (1) {
+						switch (_context2.prev = _context2.next) {
+							case 0:
+								if (!this.shouldBlockSubmit) {
+									_context2.next = 2;
+									break;
+								}
+
+								return _context2.abrupt("return");
+
+							case 2:
+
+								this.isLoading = true;
+
+								return _context2.abrupt("return", __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(__WEBPACK_IMPORTED_MODULE_2__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Family.ArchiveMember, this.getEntityReference()), this.input, __WEBPACK_IMPORTED_MODULE_2__services_API__["a" /* default */].headers()).then(function (res) {
+									_this.isLoading = false;
+									_this.$close(true);
+								}).catch(function () {
+									var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(err) {
+										return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+											while (1) {
+												switch (_context.prev = _context.next) {
+													case 0:
+														_this.isLoading = false;
+
+														console.error("ArchiveMemberModal.archiveMember: ", err);
+
+														_context.next = 4;
+														return __WEBPACK_IMPORTED_MODULE_4__services_Dialogs__["a" /* default */].alert('Ocorreu um erro ao salvar as informações!');
+
+													case 4:
+														return _context.abrupt("return", _context.sent);
+
+													case 5:
+													case "end":
+														return _context.stop();
+												}
+											}
+										}, _callee, _this);
+									}));
+
+									return function (_x) {
+										return _ref2.apply(this, arguments);
+									};
+								}()));
+
+							case 4:
+							case "end":
+								return _context2.stop();
+						}
+					}
+				}, _callee2, this);
+			}));
+
+			function archiveMember() {
+				return _ref.apply(this, arguments);
+			}
+
+			return archiveMember;
+		}()
+
+	}
+});
+
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("modal", { ref: "modal", attrs: { id: "wndArchiveMember" } }, [
+    _c("strong", { attrs: { slot: "header" }, slot: "header" }, [
+      _vm._v("Arquivar ficha de membro da família")
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: { slot: "body", method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.archiveMember()
+          }
+        },
+        slot: "body"
+      },
+      [
+        _c("loading-feedback", { attrs: { "is-loading": _vm.isLoading } }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "fld-reason" } }, [
+            _c("i", { staticClass: "fa fa-sitemap" }),
+            _vm._v(" Motivo do arquivamento:")
+          ]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.input.reason,
+                  expression: "input.reason"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "fld-reason" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.input,
+                    "reason",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "moved" } }, [_vm._v("Mudou-se")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "death" } }, [_vm._v("Faleceu")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "duplicate" } }, [
+                _vm._v("Cadastro em duplicidade")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "invalid" } }, [
+                _vm._v("Cadastro incorreto")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary pull-right",
+              class: { disabled: _vm.shouldBlockSubmit },
+              attrs: { disabled: _vm.shouldBlockSubmit, type: "submit" }
+            },
+            [_vm._v("Arquivar")]
+          )
+        ])
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-45aa6e90", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

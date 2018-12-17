@@ -19,6 +19,12 @@ use SGPS\Entity\Person;
 
 class FamilyManagementService {
 
+	/**
+	 * Adds a member to the family.
+	 * @param Family $family
+	 * @param string $memberName
+	 * @return Person
+	 */
 	public function addMemberToFamily(Family $family, string $memberName) : Person {
 
 		return Person::create([
@@ -28,6 +34,17 @@ class FamilyManagementService {
 			'name' => $memberName,
 		]);
 
+	}
+
+	/**
+	 * Archives a member from the family.
+	 * @param Family $family
+	 * @param Person $member
+	 * @param string $reason
+	 * @throws \Exception
+	 */
+	public function archiveFamilyMember(Family $family, Person $member, string $reason) : void {
+		$member->archive($reason);
 	}
 
 }

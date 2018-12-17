@@ -42,9 +42,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
  *
+ * @property string $archived_reason
+ * @property string $archived_by
+ *
  * @property Sector $sector
  * @property Residence $residence
  * @property Family $family
+ * @property User $archivedBy
  */
 class Person extends Entity {
 
@@ -107,7 +111,23 @@ class Person extends Entity {
 		return $this->hasOne(Family::class, 'id', 'family_id');
 	}
 
+	/**
+	 * Relationship: user that archived this family member
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function archivedBy() {
+		return $this->hasOne(User::class, 'id', 'archived_by')->withTrashed();
+	}
+
 	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Checks if the person has the age information available
+	 * @return bool
+	 */
+	public function hasAgeAvailable() : bool {
+		return $this->dob !== null && $this->dob->isPast();
+	}
 
 	/**
 	 * Gets the person's age, based on the given date of birth.
@@ -125,6 +145,32 @@ class Person extends Entity {
 	public function getAgeInMonths() {
 		if(!$this->dob) return null;
 		return $this->dob->diffInMonths();
+	}
+
+	/**
+	 * Checks if this person has been archived.
+	 * @return bool
+	 */
+	public function isArchived() : bool {
+		return $this->deleted_at !== null && $this->archived_reason !== null;
+	}
+
+	/**
+	 * Archives the person profile.
+	 * @param string $reason
+	 * @throws \Exception
+	 */
+	public function archive(string $reason) : void {
+
+		$this->archived_reason = $reason;
+		$this->archived_by = auth()->user()->id;
+		$this->save();
+
+		$this->delete(); // soft-deletes
+
+		$this->assignments()->delete();
+		$this->attributedFlags()->delete();
+
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------

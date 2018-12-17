@@ -16,6 +16,7 @@ export default {
 
 	Family: {
 		AddMember: 'api/families/@id@/add_member',
+		ArchiveMember: 'api/families/@family_id@/members/@member_id@/archive',
 	},
 
 	ActivityLog: {

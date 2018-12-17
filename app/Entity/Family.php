@@ -119,7 +119,7 @@ class Family extends Entity {
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
 	public function members() {
-		return $this->hasMany(Person::class, 'family_id', 'id');
+		return $this->hasMany(Person::class, 'family_id', 'id')->withTrashed();
 	}
 
 	/**

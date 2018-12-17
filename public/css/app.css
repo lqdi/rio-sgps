@@ -10570,6 +10570,11 @@ a.text-dark:focus {
   background-color: #ececec;
 }
 
+.tree__container .tree__leaf.tree__deleted {
+  color: #dc3545;
+  text-decoration: line-through;
+}
+
 .tree__container .tree__leaf i {
   vertical-align: middle;
 }

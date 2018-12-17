@@ -1,12 +1,14 @@
 import { create } from 'vue-modal-dialogs'
 import AddFlagModal from '../modals/AddFlagModal';
 import AssignUserModal from '../modals/AssignUserModal';
+import ArchiveMemberModal from '../modals/ArchiveMemberModal';
 import Dialogs from "../services/Dialogs";
 import Endpoints from "../config/Endpoints";
 import API from "../services/API";
 
 const addFlag = create(AddFlagModal, 'family');
 const assignUser = create(AssignUserModal, 'family');
+const archiveMember = create(ArchiveMemberModal, 'familyId', 'memberId');
 
 export default {
 	props: [
@@ -38,6 +40,15 @@ export default {
 		openTab: function(tab, id) {
 			this.currentTab = tab;
 			this.currentID = id;
+		},
+
+		archiveFamilyMember: async function(memberID) {
+			let hasArchivedMember = await archiveMember(this.family.id, memberID);
+
+			if(!hasArchivedMember) return;
+
+			this.isLoading = true;
+			location.reload();
 		},
 
 		cancelFlagAttribution: async function(entityType, entityID, flagID) {

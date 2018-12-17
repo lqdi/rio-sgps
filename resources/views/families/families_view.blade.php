@@ -40,7 +40,7 @@
 					<a @click="openTab('family')" href="#family" :class="{active: isOpen('family')}" class="tree__leaf"><i class="fa fa-sitemap"></i> Família</a>
 					<div class="tree__children open">
 						@foreach($family->members as $member)
-							<a @click="openTab('member', '{{$member->id}}')" href="#member/{{$member->id}}" :class="{active: isOpen('member', '{{$member->id}}')}" class="tree__leaf"><i class="fa fa-male"></i> {{$member->name}} @if($member->id === $family->person_in_charge_id)<i v-b-tooltip.hover title="Responsável" class="fa fa-star"></i>@endif</a>
+							<a @click="openTab('member', '{{$member->id}}')" href="#member/{{$member->id}}" :class="{active: isOpen('member', '{{$member->id}}')}" class="tree__leaf @if($member->isArchived()) tree__deleted @endif"><i class="fa fa-male"></i> {{$member->name}} @if($member->id === $family->person_in_charge_id)<i v-b-tooltip.hover title="Responsável" class="fa fa-star"></i>@endif</a>
 						@endforeach
 					</div>
 

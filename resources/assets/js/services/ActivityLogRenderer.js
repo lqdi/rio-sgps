@@ -25,7 +25,7 @@ export default {
 	},
 
 	renderPerson: function (person) {
-		return `${person.name} (${person.shortcode}`;
+		return `${person.name} (${person.shortcode})`;
 	},
 
 	renderUser: function (user) {

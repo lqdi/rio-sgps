@@ -1,6 +1,7 @@
 export default {
 
 	member_added: 'Membro adicionado à família',
+	member_archived: 'Membro arquivado',
 	assigned_user: 'Operador atribuído',
 	unassigned_user: 'Operador desatribuido',
 	saved_answers: 'Questionário atualizado',
@@ -17,6 +18,7 @@ export default {
 	flag: 'Etiqueta',
 	user: 'Operador',
 	message: 'Mensagem',
+	reason: 'Motivo',
 
 	assignment_type: 'Tipo de atribuição',
 
@@ -24,6 +26,11 @@ export default {
 
 	acting: 'Atuando',
 	observing: 'Observando',
+
+	moved: "Mudou-se",
+	death: "Faleceu",
+	duplicate: "Cadastro em duplicidade",
+	invalid: "Cadastro incorreto",
 
 
 }

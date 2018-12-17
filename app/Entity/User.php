@@ -140,6 +140,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	/**
+	 * String representation of the user
+	 * @return string
+	 */
+	public function __toString() {
+		return "{$this->name} (" . ($this->registration_number ?? $this->email) . ")";
+	}
+
+	/**
 	 * Returns a basic JSON object with user info
 	 * @return array
 	 */

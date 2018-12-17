@@ -15,6 +15,7 @@ namespace SGPS\Http\Controllers\API;
 
 
 use SGPS\Entity\Family;
+use SGPS\Entity\Person;
 use SGPS\Http\Controllers\Controller;
 use SGPS\Services\FamilyManagementService;
 
@@ -30,6 +31,26 @@ class FamiliesController extends Controller {
 		return $this->api_success([
 			'member_id' => $member->id,
 		]);
+	}
+
+	public function archive_member(Family $family, Person $member, FamilyManagementService $service) {
+
+		$reason = request('reason');
+
+		if($member->family_id !== $family->id) {
+			return $this->api_failure('member_not_from_family');
+		}
+
+		try {
+			$service->archiveFamilyMember($family, $member, $reason);
+		} catch (\Exception $e) {
+			return $this->api_exception($e);
+		}
+
+		$this->activityLog->writeToFamilyLog($family, "member_archived", ['member' => $member, 'reason' => $reason]);
+
+		return $this->api_success();
+
 	}
 
 }
