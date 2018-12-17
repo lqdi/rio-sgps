@@ -15,6 +15,7 @@ namespace SGPS\Entity;
 
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use SGPS\Traits\IndexedByUUID;
@@ -229,6 +230,20 @@ class QuestionAnswer extends Model {
 	public static function setAnswerForEntity(Entity $entity, Question $question, $answerValue) : void {
 		$answer = self::fetchOrCreateForEntityQuestion($entity, $question);
 		$answer->updateValue($answerValue);
+	}
+
+	/**
+	 * Builds an associative array keyed by question code
+	 * @param Collection $answers
+	 * @return array
+	 */
+	public static function buildAnswerGrid(Collection $answers) : array {
+		return $answers
+			->keyBy('question_code')
+			->map(function ($answer) { /* @var $answer \SGPS\Entity\QuestionAnswer */
+				return $answer->getValue();
+			})
+			->toArray();
 	}
 
 }

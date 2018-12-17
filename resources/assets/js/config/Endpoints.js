@@ -15,6 +15,7 @@ export default {
 	},
 
 	Family: {
+		Export: 'api/families/export.xls',
 		AddMember: 'api/families/@id@/add_member',
 		ArchiveMember: 'api/families/@family_id@/members/@member_id@/archive',
 	},

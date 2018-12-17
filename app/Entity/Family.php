@@ -212,4 +212,32 @@ class Family extends Entity {
 			}),
 		]);
 	}
+
+	/**
+	 * @param bool $includeQuestionAnswers
+	 * @return array
+	 */
+	public function toExportArray(bool $includeQuestionAnswers = false) : array {
+
+		$data = [
+			'ID' => $this->id,
+			'Código' => $this->shortcode,
+			'Responsável' => $this->personInCharge->name,
+			'Setor' => $this->sector->id,
+			'Bairro' => $this->sector->cod_bairro,
+			'AP' => $this->sector->cod_ap,
+			'RA' => $this->sector->cod_ra,
+			'RP' => $this->sector->cod_rp,
+			'Endereço' => $this->residence->address,
+			'Referência' => $this->residence->reference,
+			'Latitude' => $this->residence->lat,
+			'Longitude' => $this->residence->lng,
+		];
+
+		if(!$includeQuestionAnswers) return $data;
+
+		$answers = QuestionAnswer::buildAnswerGrid($this->answers);
+
+		return array_merge($data, $answers);
+	}
 }

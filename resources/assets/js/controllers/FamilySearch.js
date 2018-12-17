@@ -1,5 +1,7 @@
 import { create } from 'vue-modal-dialogs'
 import FilterFlagsModal from '../modals/FlagsFilterModal';
+import Endpoints from "../config/Endpoints";
+import API from "../services/API";
 
 const selectFilterFlags = create(FilterFlagsModal, 'selectedFlags');
 
@@ -18,6 +20,19 @@ export default {
 	},
 
 	methods: {
+
+		exportResults: function() {
+
+			axios.post(
+				API.url(Endpoints.Family.Export),
+				{},
+				API.headers()
+			).then((res) => {
+				console.log('Exported: ', res);
+			})
+
+		},
+
 		setFilter: function (filterName, value) {
 			this.filters[filterName] = value;
 			this.filters = Object.assign({}, this.filters);

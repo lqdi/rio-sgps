@@ -35,6 +35,10 @@
 							<input v-if="filters.flags" v-for="(flag_id, i) in filters.flags" type="hidden" :name="'filters[flags][' + i + ']'" :value="flag_id" />
 							<button type="button" @click="selectFlagsToFilter()" class="btn btn-sm btn-dark mx-2">Filtrar por Etiquetas</button>
 						</div>
+
+						<div class="form-group">
+							<button type="button" @click="exportResults()" class="btn btn-sm btn-dark mx-2">Exportar <i class="fa fa-download"></i></button>
+						</div>
 					</form>
 				</div>
 			</div>

@@ -6140,6 +6140,7 @@ function toComment(sourceMap) {
 	},
 
 	Family: {
+		Export: 'api/families/export.xls',
 		AddMember: 'api/families/@id@/add_member',
 		ArchiveMember: 'api/families/@family_id@/members/@member_id@/archive'
 	},
@@ -84547,9 +84548,13 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_FlagsFilterModal__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_FlagsFilterModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__modals_FlagsFilterModal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_Endpoints__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_API__ = __webpack_require__(17);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+
 
 
 
@@ -84573,6 +84578,14 @@ var selectFilterFlags = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["
 	},
 
 	methods: {
+
+		exportResults: function exportResults() {
+
+			axios.post(__WEBPACK_IMPORTED_MODULE_4__services_API__["a" /* default */].url(__WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Family.Export), {}, __WEBPACK_IMPORTED_MODULE_4__services_API__["a" /* default */].headers()).then(function (res) {
+				console.log('Exported: ', res);
+			});
+		},
+
 		setFilter: function setFilter(filterName, value) {
 			this.filters[filterName] = value;
 			this.filters = Object.assign({}, this.filters);
