@@ -5978,8 +5978,13 @@ function clickHandlerFactory(_ref3) {
 		FetchQuestionsByEntity: 'api/questions/@category@/@type@/@id@'
 	},
 
+	Export: {
+		Residences: 'api/export/residences.xls',
+		Persons: 'api/export/persons.xls',
+		Families: 'api/export/families.xls'
+	},
+
 	Family: {
-		Export: 'api/families/export.xls',
 		AddMember: 'api/families/@id@/add_member',
 		ArchiveMember: 'api/families/@family_id@/members/@member_id@/archive'
 	},
@@ -93054,9 +93059,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 var EXPORT_ENDPOINTS = {
-	family: __WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Family.Export
-	//residence: Endpoints.Family.Export,
-	//person: Endpoints.Family.Export,
+	family: __WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Export.Families,
+	residence: __WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Export.Residences,
+	person: __WEBPACK_IMPORTED_MODULE_3__config_Endpoints__["a" /* default */].Export.Persons
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -93223,8 +93228,8 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary disabled",
-                    attrs: { disabled: "", type: "button" },
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
                     on: {
                       click: function($event) {
                         _vm.generateExport("residence")
@@ -93240,8 +93245,8 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary disabled",
-                    attrs: { disabled: "", type: "button" },
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
                     on: {
                       click: function($event) {
                         _vm.generateExport("person")

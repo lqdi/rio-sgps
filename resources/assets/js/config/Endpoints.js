@@ -14,8 +14,13 @@ export default {
 		FetchQuestionsByEntity: 'api/questions/@category@/@type@/@id@',
 	},
 
+	Export: {
+		Residences: 'api/export/residences.xls',
+		Persons: 'api/export/persons.xls',
+		Families: 'api/export/families.xls',
+	},
+
 	Family: {
-		Export: 'api/families/export.xls',
 		AddMember: 'api/families/@id@/add_member',
 		ArchiveMember: 'api/families/@family_id@/members/@member_id@/archive',
 	},

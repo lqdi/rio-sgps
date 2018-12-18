@@ -17,7 +17,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 	Route::get('activity_log/{entity}/entries', 'API\ActivityLogController@fetch_thread')->name('api.activity_log.fetch_thread');
 
-	Route::post('families/export.xls', 'API\ExportController@export_families')->name('api.families.export');
+	Route::post('export/families.xls', 'API\ExportController@export_families')->name('api.export.families');
+	Route::post('export/residences.xls', 'API\ExportController@export_residences')->name('api.export.residences');
+	Route::post('export/persons.xls', 'API\ExportController@export_persons')->name('api.export.persons');
 
 	Route::post('families/{family}/add_member', 'API\FamiliesController@add_member')->name('api.families.add_member');
 	Route::post('families/{family}/members/{member}/archive', 'API\FamiliesController@archive_member')->name('api.families.archive_member');

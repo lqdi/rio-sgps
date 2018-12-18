@@ -8,9 +8,9 @@
 				<div class="form-group">
 					<button @click="generateExport('family')" class="btn btn-primary" type="button"><i class="fa fa-users"></i> Famílias</button>
 
-					<button disabled @click="generateExport('residence')" class="btn btn-primary disabled" type="button"><i class="fa fa-home"></i> Residências</button>
+					<button @click="generateExport('residence')" class="btn btn-primary" type="button"><i class="fa fa-home"></i> Residências</button>
 
-					<button disabled @click="generateExport('person')" class="btn btn-primary disabled" type="button"><i class="fa fa-user"></i> Indivíduos</button>
+					<button @click="generateExport('person')" class="btn btn-primary" type="button"><i class="fa fa-user"></i> Indivíduos</button>
 				</div>
 			</div>
 
@@ -29,9 +29,9 @@
 	import Dialogs from "../services/Dialogs";
 
 	const EXPORT_ENDPOINTS = {
-		family: Endpoints.Family.Export,
-		//residence: Endpoints.Family.Export,
-		//person: Endpoints.Family.Export,
+		family: Endpoints.Export.Families,
+		residence: Endpoints.Export.Residences,
+		person: Endpoints.Export.Persons,
 	};
 
 	export default {
