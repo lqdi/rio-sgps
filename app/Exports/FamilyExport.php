@@ -16,12 +16,31 @@ namespace SGPS\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use SGPS\Entity\Family;
 use SGPS\Entity\Question;
 
-class FamilyExport implements FromCollection {
+class FamilyExport implements FromCollection, WithHeadings, WithMapping {
 
 	private $results = null;
+
+	private $baseHeadings = [
+		'ID',
+		'Código',
+		'Responsável',
+		'Setor',
+		'Bairro',
+		'AP',
+		'RA',
+		'RP',
+		'Endereço',
+		'Referência',
+		'Latitude',
+		'Longitude',
+	];
+
+	private $questionCodes = [];
+
 	private $headings = [];
 
 	public function __construct() {
@@ -32,38 +51,31 @@ class FamilyExport implements FromCollection {
 		$this->results = $families->map(function ($family) { /* @var $family \SGPS\Entity\Family */
 			return collect($family->toExportArray(true));
 		});
+
+		$this->questionCodes = Question::query()
+			->where('entity_type', 'family')
+			->get(['code'])
+			->pluck('code')
+			->toArray();
+
+		$this->headings = array_merge($this->baseHeadings, $this->questionCodes);
 	}
 
 	public function collection() {
 		return $this->results;
 	}
 
-	public function headings(): array {
+	public function map($family) : array {
 
-		// TODO: fix this by correctly building the responses array with ordered headers
-
-		$baseHeadings = [
-			'ID',
-			'Código',
-			'Responsável',
-			'Setor',
-			'Bairro',
-			'AP',
-			'RA',
-			'RP',
-			'Endereço',
-			'Referência',
-			'Latitude',
-			'Longitude',
-		];
-
-		$questionHeadings = Question::query()
-			->where('entity_type', 'family')
-			->get(['code'])
-			->pluck('code')
+		return collect($this->headings)
+			->map(function ($key) use ($family) {
+				return $family[$key] ?? '';
+			})
 			->toArray();
+	}
 
-		return array_merge($baseHeadings, $questionHeadings);
+	public function headings(): array {
+		return $this->headings;
 	}
 
 }

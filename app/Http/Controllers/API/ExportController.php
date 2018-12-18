@@ -40,12 +40,6 @@ class ExportController extends Controller {
 			'download_url' => $downloadURL,
 		]);
 
-		// TODO: handle filters
-		// TODO: fetch families w/ questions answers
-		// TODO: fetch questions of type family
-		// TODO: foreach w/ map where columns for answers are in the answer key
-		// TODO: hand over to XLS generator
-
 	}
 
 }
