@@ -50,6 +50,7 @@ Vue.component('alert-update-modal', require('./modals/AlertUpdateModal.vue'));
 Vue.component('add-flag-modal', require('./modals/AddFlagModal.vue'));
 Vue.component('assign-user-modal', require('./modals/AssignUserModal.vue'));
 Vue.component('flags-filter-modal', require('./modals/FlagsFilterModal.vue'));
+Vue.component('export-modal', require('./modals/ExportModal.vue'));
 
 // Dialogs
 Vue.component('alert-modal', require('./dialogs/AlertModal.vue'));

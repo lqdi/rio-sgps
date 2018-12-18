@@ -1,9 +1,9 @@
 import { create } from 'vue-modal-dialogs'
 import FilterFlagsModal from '../modals/FlagsFilterModal';
-import Endpoints from "../config/Endpoints";
-import API from "../services/API";
+import ExportModal from '../modals/ExportModal';
 
 const selectFilterFlags = create(FilterFlagsModal, 'selectedFlags');
+const exportResults = create(ExportModal, 'filters');
 
 export default {
 
@@ -21,24 +21,8 @@ export default {
 
 	methods: {
 
-		exportResults: function() {
-
-			this.isLoading = true;
-
-			axios.post(
-				API.url(Endpoints.Family.Export),
-				{},
-				API.headers()
-			).then((res) => {
-				console.log('Exported: ', res);
-
-				if(!res.data.download_url);
-
-				window.open(res.data.download_url);
-
-				this.isLoading = false;
-			})
-
+		exportResults: async function() {
+			await exportResults({});
 		},
 
 		setFilter: function (filterName, value) {
