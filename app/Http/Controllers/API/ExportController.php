@@ -16,20 +16,22 @@ namespace SGPS\Http\Controllers\API;
 
 use Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
-use SGPS\Entity\Family;
 use SGPS\Exports\FamilyExport;
 use SGPS\Http\Controllers\Controller;
+use SGPS\Services\FamilySearchService;
 
 class ExportController extends Controller {
 
-	public function export_families() {
+	public function export_families(FamilySearchService $service) {
+
+		$filters = request('filters', []);
 
 		$fileName = uniqid(time(), true) . '.xls';
 		$downloadURL = url('storage/export/' . $fileName);
 		$exportPath = 'public/export/' . $fileName;
 
 		try {
-			Excel::store(new FamilyExport(), $exportPath);
+			Excel::store(new FamilyExport($filters, $service), $exportPath);
 		} catch (Exception $e) {
 			return $this->api_exception($e);
 		} catch (\PhpOffice\PhpSpreadsheet\Exception $e) {

@@ -24,14 +24,7 @@ class FamiliesController extends Controller {
 
 	public function index(FamilySearchService $service) {
 
-		$defaultFilters = [
-			'status' => 'ongoing',
-			'assigned_to' => 'all',
-			'flags' => [],
-			'q' => '',
-		];
-
-		$filters = request('filters', $defaultFilters);
+		$filters = request('filters', $service->defaultFilters);
 
 		$query = Family::query()
 			->with(['residence', 'personInCharge', 'allFlagAttributions', 'allActiveFlags'])

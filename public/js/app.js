@@ -84883,7 +84883,7 @@ var _exportResults = Object(__WEBPACK_IMPORTED_MODULE_1_vue_modal_dialogs__["cre
 						switch (_context.prev = _context.next) {
 							case 0:
 								_context.next = 2;
-								return _exportResults({});
+								return _exportResults(this.filters);
 
 							case 2:
 							case 'end':

@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use SGPS\Entity\Family;
 use SGPS\Entity\Question;
+use SGPS\Services\FamilySearchService;
 
 class FamilyExport implements FromCollection, WithHeadings, WithMapping {
 
@@ -43,10 +44,14 @@ class FamilyExport implements FromCollection, WithHeadings, WithMapping {
 
 	private $headings = [];
 
-	public function __construct() {
-		$families = Family::query()
+	public function __construct(array $filters = [], FamilySearchService $service) {
+		$query = Family::query()
 			->with(['sector', 'residence', 'personInCharge', 'answers'])
-			->get();
+			->orderBy('created_at', 'desc');
+
+		$service->applyFiltersToQuery($query, collect($filters));
+
+		$families = $query->get();
 
 		$this->results = $families->map(function ($family) { /* @var $family \SGPS\Entity\Family */
 			return collect($family->toExportArray(true));

@@ -22,7 +22,7 @@ export default {
 	methods: {
 
 		exportResults: async function() {
-			await exportResults({});
+			await exportResults(this.filters);
 		},
 
 		setFilter: function (filterName, value) {

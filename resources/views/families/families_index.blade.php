@@ -28,7 +28,7 @@
 						<div class="btn-group-sm" role="group">
 							<input type="hidden" name="filters[assigned_to]" v-model="filters.assigned_to" />
 							<button type="button" @click="setFilter('assigned_to', 'all')" class="btn btn-sm {{$filters['assigned_to'] === 'all' ? 'btn-primary' : 'btn-outline-primary'}}">Todos</button>
-							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm {{$filters['assigned_to'] === 'to_me' ? 'btn-primary' : 'btn-outline-primary'}}">Casos em que estou atribuído</button>
+							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm {{$filters['assigned_to'] === 'to_me' ? 'btn-primary' : 'btn-outline-primary'}}">Meus casos</button>
 						</div>
 
 						<div class="form-group">
@@ -37,7 +37,7 @@
 						</div>
 
 						<div class="form-group">
-							<button type="button" @click="exportResults()" class="btn btn-sm btn-dark mx-2">Exportar <i class="fa fa-download"></i></button>
+							<button type="button" @click="exportResults(filters)" class="btn btn-sm btn-dark mx-2">Exportar <span class="badge badge-primary">{{$families->total()}}</span> <i class="fa fa-download"></i></button>
 						</div>
 					</form>
 				</div>

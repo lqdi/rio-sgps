@@ -22,6 +22,13 @@ use SGPS\Utils\Sanitizers;
 
 class FamilySearchService {
 
+	public $defaultFilters = [
+		'status' => 'ongoing',
+		'assigned_to' => 'all',
+		'flags' => [],
+		'q' => '',
+	];
+
 	public function applyFiltersToQuery(Builder $query, Collection $filters) : Builder {
 
 		if($filters->has('flags') && is_array($filters['flags']) && sizeof($filters['flags']) > 0) {
