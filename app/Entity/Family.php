@@ -240,4 +240,15 @@ class Family extends Entity {
 
 		return array_merge($data, $answers);
 	}
+
+	/**
+	 * Fetches a family by its shortcode
+	 * @param string $shortcode
+	 * @return null|Family
+	 */
+	public static function fetchByShortcode(string $shortcode) : ?Family {
+		return self::query()
+			->where('shortcode', $shortcode)
+			->first();
+	}
 }

@@ -53,7 +53,7 @@ $factory->define(\SGPS\Entity\Residence::class, function (Faker $faker) {
 		'address' => $faker->streetAddress,
 		'territory' => $faker->city,
 		'reference' => null,
-		'gis_global_id' => $faker->uuid,
+		//'gis_global_id' => $faker->uuid,
 	];
 });
 
@@ -96,7 +96,7 @@ $factory->define(\SGPS\Entity\Family::class, function (Faker $faker) {
 		 'visit_status' => $faker->randomElement(['pending', 'completed']),
 		 'visit_attempt' => rand(1,2),
 		 'visit_last' => $faker->date(),
-		 'gis_global_id' => $faker->uuid,
+		 //'gis_global_id' => $faker->uuid,
 	];
 });
 
@@ -111,6 +111,6 @@ $factory->define(\SGPS\Entity\Person::class, function (Faker $faker) {
 		'cpf' => $faker->numerify('###########'),
 		'rg' => $faker->numerify('#########'),
 		'phone_number' => $faker->numerify('###########'),
-		'gis_global_id' => $faker->uuid,
+		//'gis_global_id' => $faker->uuid,
 	];
 });

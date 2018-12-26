@@ -38,6 +38,11 @@ return [
             'channels' => ['single', 'bugsnag'],
         ],
 
+	    'development' => [
+	    	'driver' => 'stack',
+		    'channels' => ['daily', 'stdout'],
+	    ],
+
 	    'bugsnag' => [
 		    'driver' => 'bugsnag',
 	    ],
@@ -70,6 +75,14 @@ return [
                 'stream' => 'php://stderr',
             ],
         ],
+
+	    'stdout' => [
+		    'driver'  => 'monolog',
+		    'handler' => StreamHandler::class,
+		    'with'    => [
+			    'stream' => 'php://stdout',
+		    ],
+	    ],
 
         'syslog' => [
             'driver' => 'syslog',

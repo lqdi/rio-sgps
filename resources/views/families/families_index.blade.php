@@ -60,7 +60,7 @@
 							<tr>
 								<td><a href="{{route('families.show', [$family->id])}}" class="btn btn-sm btn-block btn-outline-danger"><code>{{$family->shortcode}}</code></a></td>
 								<td>{{$family->residence->address}}</td>
-								<td><i class="fa fa-male"></i> {{$family->personInCharge->name}}</td>
+								<td><i class="fa fa-male"></i> {{$family->personInCharge->name ?? '---'}}</td>
 								<td>
 									<flag-display-tooltip :flags="{{json_encode($family->allActiveFlags)}}"></flag-display-tooltip>
 								</td>

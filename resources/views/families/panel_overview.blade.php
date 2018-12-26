@@ -11,7 +11,7 @@
 	<div class="col-md-4">
 		<label class="detail__label">LOCALIZAÇÃO</label>
 		<div>
-			<i v-b-tooltip title="Região censitária" class="fa fa-map"></i> RJ / {{$family->sector->id}}<br />
+			<i v-b-tooltip title="Região censitária" class="fa fa-map"></i> RJ / {{$family->sector->id ?? "{$family->sector_id} (?)"}}<br />
 			<i v-b-tooltip title="Endereço" class="fa fa-map-marker"></i> {{$family->residence->address}}
 		</div>
 	</div>
@@ -24,23 +24,29 @@
 		<div>
 			<label class="detail__label">LOCALIZAÇÃO</label>
 
-			<div><i v-b-tooltip title="Região censitária" class="fa fa-map"></i> RJ / {{$family->sector->id}}</div>
-			<div><i v-b-tooltip title="Bairro" class="fa fa-map-marker"></i> Bairro {{$family->sector->getBairro()->name}}</div>
-			<div><i v-b-tooltip title="Região Administrativa (RA)" class="fa fa-map-marker"></i> RA {{$family->sector->getRA()->name}}</div>
-			<div><i v-b-tooltip title="Região de Planejamento (RP)" class="fa fa-map-marker"></i> RP {{$family->sector->getRP()->name}}</div>
-			<div><i v-b-tooltip title="Área de Planejamento (AP)" class="fa fa-map-marker"></i> AP {{$family->sector->cod_ap}}</div>
+			<div><i v-b-tooltip title="Região censitária" class="fa fa-map"></i> RJ / {{$family->sector->id ?? "{$family->sector_id} (?)"}}</div>
+			@if($family->sector)
+				<div><i v-b-tooltip title="Bairro" class="fa fa-map-marker"></i> Bairro {{$family->sector->getBairro()->name}}</div>
+				<div><i v-b-tooltip title="Região Administrativa (RA)" class="fa fa-map-marker"></i> RA {{$family->sector->getRA()->name}}</div>
+				<div><i v-b-tooltip title="Região de Planejamento (RP)" class="fa fa-map-marker"></i> RP {{$family->sector->getRP()->name}}</div>
+				<div><i v-b-tooltip title="Área de Planejamento (AP)" class="fa fa-map-marker"></i> AP {{$family->sector->cod_ap}}</div>
+			@else
+				<div class="text-danger"><i class="fa fa-exclamation-triangle"></i> Código de setor {{$family->sector_id}} não registrado no SGPS!</div>
+			@endif
 		</div>
 
-		<hr />
+		@if($family->sector)
+			<hr />
 
-		<div>
-			<label class="detail__label">EQUIPAMENTOS</label>
-			@foreach($family->sector->equipments as $equipment)
-				<div><i class="fa fa-university"></i> {{$equipment->type}} - {{$equipment->name}}</div>
-				<div><small>{{$equipment->address}}</small></div>
-				<br />
-			@endforeach
-		</div>
+			<div>
+				<label class="detail__label">EQUIPAMENTOS</label>
+				@foreach($family->sector->equipments as $equipment)
+					<div><i class="fa fa-university"></i> {{$equipment->type}} - {{$equipment->name}}</div>
+					<div><small>{{$equipment->address}}</small></div>
+					<br />
+				@endforeach
+			</div>
+		@endif
 	</div>
 	<div class="col-md-4">
 		<label class="detail__label">SITUAÇÃO</label>

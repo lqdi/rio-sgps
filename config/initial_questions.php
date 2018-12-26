@@ -623,13 +623,13 @@ return [
 //				'conditions' => null,
 //				'field_options' => null,
 //			],
-//			'CE73' => [
-//				'code' => 'CE73',
-//				'field_type' => 'numeric',
-//				'title' => 'Senha',
-//				'conditions' => null,
-//				'field_options' => null,
-//			],
+		'CE73' => [
+			'code' => 'CE73',
+			'field_type' => 'numeric',
+			'title' => 'Senha',
+			'conditions' => null,
+			'field_options' => null,
+		],
 		'CE74' => [
 			'code' => 'CE74',
 			'field_type' => 'date',
@@ -1246,7 +1246,7 @@ return [
 			'assistencia' => [],
 		],
 		'family' => [
-			'ipm' => ['CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE71', 'CE74'],
+			'ipm' => ['CE73', 'CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE71', 'CE74'],
 			'saude' => ['CE75', 'CE76', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE81', 'CE82'],
 			'educacao' => ['CE96'],
 			'emprego' => [],

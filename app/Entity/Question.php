@@ -147,7 +147,7 @@ class Question extends Model {
 	 */
 	public static function fetchByCode(string $questionCode) : ?Question {
 		return self::query()
-			->where('question_code', $questionCode)
+			->where('code', $questionCode)
 			->first();
 	}
 }

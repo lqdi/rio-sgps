@@ -233,6 +233,26 @@ class QuestionAnswer extends Model {
 	}
 
 	/**
+	 * Forcefully creates the answer value to a specific entity+question pair.
+	 * Will appropriately serialize and store the answer in the right field.
+	 * Will persist the change on the database.
+	 * @param Entity $entity The targeted entity
+	 * @param Question $question The question the answer regards to
+	 * @param mixed $answerValue The value of the answer
+	 */
+	public static function forceCreate(Entity $entity, Question $question, $answerValue) : void {
+		$answer = QuestionAnswer::create([
+			'entity_type' => $entity->getEntityType(),
+			'entity_id' => $entity->getEntityID(),
+			'question_id' => $question->id,
+			'question_code' => $question->code,
+			'type' => $question->field_type,
+		]);
+
+		$answer->updateValue($answerValue);
+	}
+
+	/**
 	 * Builds an associative array keyed by question code
 	 * @param Collection $answers
 	 * @return array
