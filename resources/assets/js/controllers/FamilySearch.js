@@ -28,7 +28,8 @@ export default {
 		setFilter: function (filterName, value) {
 			this.filters[filterName] = value;
 			this.filters = Object.assign({}, this.filters);
-			this.doSearch();
+
+			this.$nextTick(() => this.doSearch());
 		},
 
 		selectFlagsToFilter: async function() {
@@ -42,6 +43,8 @@ export default {
 
 		doSearch: function() {
 			this.isLoading = true;
+			this.$forceUpdate();
+
 			this.$nextTick(() => this.$refs.filterForm.submit());
 		}
 	}

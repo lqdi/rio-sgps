@@ -24,9 +24,10 @@ class FamiliesController extends Controller {
 
 	public function index(FamilySearchService $service) {
 
-		$filters = request('filters', $service->defaultFilters);
+		$filters = request('filters', $service->defaultCaseFilters);
 
 		$query = Family::query()
+			->notAlerts()
 			->with(['residence', 'personInCharge', 'allFlagAttributions', 'allActiveFlags'])
 			->orderBy('created_at', 'desc');
 

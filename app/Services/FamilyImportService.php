@@ -73,6 +73,9 @@ class FamilyImportService {
 			logger("[FamilyImportService.importFamily] Imported #{$residence->id} \t residence \t {$residence->shortcode}");
 
 			$family = new Family();
+			$family->is_alert = true;
+			$family->visit_attempt = 1;
+			$family->visit_status = Family::VISIT_PENDING_AGENT;
 			$family->id = $importedFamily->id;
 			$family->residence_id = $residence->id;
 
@@ -119,6 +122,11 @@ class FamilyImportService {
 		MapUtils::mapProperties($person, $importedMember, config('import_map.person.fields')); // Last one takes precedence (eg, for gis_global_id)
 
 		$person->save();
+
+		if($importedMember->parentesco === 1) {
+			$family->person_in_charge_id = $person->id;
+			$family->save();
+		}
 
 		$this->mapPersonAnswers($person, $importedMember);
 

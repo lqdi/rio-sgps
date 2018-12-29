@@ -31,6 +31,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  *
  * @property string $id
  * @property string $shortcode
+ * @property bool $is_alert
  * @property string $sector_id
  * @property string $residence_id
  * @property string $person_in_charge_id
@@ -58,9 +59,15 @@ class Family extends Entity {
 	use Searchable;
 	use LogsActivity;
 
+	const VISIT_PENDING_AGENT = 'pending_agent'; // triggers first visit attempt
+	const VISIT_DELIVERED = 'delivered'; // "snoozed" until is_alert is false or deadline passes
+	const VISIT_LATE_TO_CRAS = 'late_to_cras'; // triggers second visit attempt
+	const VISIT_PENDING_TECHNICAL_VISIT = 'pending_technical_visit'; // triggers technical visit
+
 	protected $table = 'families';
 
 	protected $fillable = [
+		'is_alert',
 		'sector_id',
 		'residence_id',
 		'person_in_charge_id',
@@ -73,6 +80,7 @@ class Family extends Entity {
 	];
 
 	protected $casts = [
+		'is_alert' => 'boolean',
 		'ipm_rate' => 'float',
 		'ipm_risk_factor' => 'integer',
 		'visit_attempt' => 'integer',
@@ -80,6 +88,7 @@ class Family extends Entity {
 	];
 
 	protected static $logAttributes = [
+		'is_alert',
 		'person_in_charge_id',
 		'ipm_rate',
 		'ipm_risk_factor',
@@ -146,6 +155,16 @@ class Family extends Entity {
 		return $this->hasManyThrough(Flag::class, FlagAttribution::class, 'residence_id', 'id', 'residence_id', 'flag_id')
 			->where('flag_attributions.is_completed', false)
 			->where('flag_attributions.is_cancelled', false);
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	public function scopeNotAlerts($query) {
+		return $query->where('is_alert', false);
+	}
+
+	public function scopeOnlyAlerts($query) {
+		return $query->where('is_alert', true);
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------

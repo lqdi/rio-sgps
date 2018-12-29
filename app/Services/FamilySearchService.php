@@ -22,10 +22,16 @@ use SGPS\Utils\Sanitizers;
 
 class FamilySearchService {
 
-	public $defaultFilters = [
+	public $defaultCaseFilters = [
 		'status' => 'ongoing',
 		'assigned_to' => 'all',
 		'flags' => [],
+		'q' => '',
+	];
+
+	public $defaultAlertFilters = [
+		'visit_status' => 'pending',
+		'sector_id' => '',
 		'q' => '',
 	];
 
@@ -39,6 +45,16 @@ class FamilySearchService {
 		if($filters->has('status') && strlen($filters['status']) > 0) {
 			$query = $query->where(function ($sq) use ($filters) {
 				return $this->filterByStatus($sq, $filters['status']);
+			});
+		}
+
+		if($filters->has('sector_id') && strlen($filters['sector_id']) > 0) {
+			$query = $query->where('sector_id', $filters['sector_id']);
+		}
+
+		if($filters->has('visit_status') && strlen($filters['visit_status']) > 0) {
+			$query = $query->where(function ($sq) use ($filters) {
+				return $this->filterByVisitStatus($sq, $filters['visit_status']);
 			});
 		}
 		if($filters->has('assigned_to') && strlen($filters['assigned_to']) > 0) {
@@ -75,6 +91,19 @@ class FamilySearchService {
 		return ($statusMode === 'archived')
 			? $query->whereHas('allFlagAttributions', $filterCompletedOrCancelled, '=', 0)
 			: $query->whereHas('allFlagAttributions', $filterCompletedOrCancelled, '>', 0);
+
+	}
+
+	public function filterByVisitStatus(Builder $query, string $statusMode) : Builder {
+
+		switch($statusMode) {
+			case 'pending':
+				return $query->whereIn('visit_status', [Family::VISIT_PENDING_AGENT, Family::VISIT_LATE_TO_CRAS]);
+			case 'delivered':
+				return $query->whereIn('visit_status', [Family::VISIT_DELIVERED]);
+			case 'noshow':
+				return $query->whereIn('visit_status', [Family::VISIT_PENDING_TECHNICAL_VISIT]);
+		}
 
 	}
 
