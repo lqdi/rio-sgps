@@ -14,6 +14,7 @@
 namespace SGPS\Http\Controllers\Web;
 
 
+use SGPS\Entity\Equipment;
 use SGPS\Entity\Family;
 use SGPS\Entity\Sector;
 use SGPS\Http\Controllers\Controller;
@@ -65,9 +66,30 @@ class AlertsController extends Controller {
 	}
 
 	public function print_referral(Family $family) {
-		$alerts = collect([$family]);
 
-		// TODO: render print view
+		$family->load(['personInCharge', 'residence', 'sector', 'sector.equipments']);
+
+		if(!$family->sector) {
+			die("Código de setor não cadastrado no sistema: {$family->sector_id}");
+		}
+
+		$cras = $family->sector->equipments->where('type', Equipment::TYPE_CRAS)->first();
+
+		if(!$cras) {
+			die("Setor {$family->sector_id} não possui uma CRAS associada!");
+		}
+
+		$cre = $family->sector->equipments->where('type', Equipment::TYPE_CRE)->first();
+
+		if(!$cre) {
+			die("Setor {$family->sector_id} não possui uma CRE associada!");
+		}
+
+		return view('print.alert_forwarding_single', [
+			'alert' => $family,
+			'cras' => $cras,
+			'cre' => $cre
+		]);
 	}
 
 	public function print_all_referrals(FamilySearchService $service) {
@@ -76,13 +98,35 @@ class AlertsController extends Controller {
 
 		$query = Family::query()
 			->onlyAlerts()
-			->with(['residence', 'personInCharge', 'allFlagAttributions', 'allActiveFlags'])
-			->orderBy('created_at', 'desc');
+			->with(['personInCharge', 'residence', 'sector', 'sector.equipments'])
+			->orderBy('created_at', 'asc');
 
 		$query = $service->applyFiltersToQuery($query, collect($filters));
-		$alerts = $query->get();
+		$alerts = $query->get()->map(function ($family) {
+			if(!$family->sector) {
+				die("Código de setor não cadastrado no sistema: {$family->sector_id}");
+			}
 
-		// TODO: render print view
+			$cras = $family->sector->equipments->where('type', Equipment::TYPE_CRAS)->first();
+
+			if(!$cras) {
+				die("Setor {$family->sector_id} não possui uma CRAS associada!");
+			}
+
+			$cre = $family->sector->equipments->where('type', Equipment::TYPE_CRE)->first();
+
+			if(!$cre) {
+				die("Setor {$family->sector_id} não possui uma CRE associada!");
+			}
+
+			$family->cras = $cras;
+			$family->cre = $cre;
+
+			return $family;
+		});
+
+
+		return view('print.alert_forwarding_multiple', compact('alerts'));
 
 	}
 

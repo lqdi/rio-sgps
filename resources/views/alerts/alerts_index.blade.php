@@ -35,13 +35,20 @@
 									</div>
 								</form>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<form method="GET" action="{{route('alerts.index')}}" class="form-inline justify-content-between">
 									<div class="form-group">
 										<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm mx-2" style="width: 200px" placeholder="Buscar ...">
 									</div>
+								</form>
+							</div>
+							<div class="col-md-1">
+								<form method="GET" action="{{route('alerts.print_all_referrals')}}" class="form-inline justify-content-between">
+									<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
+									<input type="hidden" name="filters[sector_id]" v-model="filters.sector_id" />
+									<input type="hidden" name="filters[q]" v-model="filters.q" />
 									<div class="form-group">
-										<button type="button" class="btn btn-sm btn-info"><i class="fa fa-print"></i> Imprimir fichas</button>
+										<button type="submit" class="btn btn-sm btn-info"><i class="fa fa-print"></i> Imprimir fichas</button>
 									</div>
 								</form>
 							</div>
