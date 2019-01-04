@@ -9,6 +9,8 @@ export default {
 	flag_cancelled: 'Etiqueta cancelada',
 	flag_completed: 'Etiqueta concluída',
 	added_comment: 'Anotação registrada',
+	alert_marked_as_delivered: 'Encaminhamento entregue',
+	alert_case_opened: 'Caso aberto à partir do alerta',
 
 	entity: 'Entidade',
 	family: 'Família',

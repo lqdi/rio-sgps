@@ -46,7 +46,7 @@ class FamiliesController extends Controller {
 
 	public function show(Family $family) {
 
-		$family->load(['members.flags', 'residence.flags', 'personInCharge', 'allFlagAttributions']);
+		$family->load(['members.flags', 'residence.flags', 'personInCharge', 'allFlagAttributions', 'caseOpenedBy']);
 
 		return view('families.families_view', compact('family'));
 

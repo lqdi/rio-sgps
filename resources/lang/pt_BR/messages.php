@@ -8,4 +8,7 @@ return [
 	'record_updated' => 'Informações armazenadas com sucesso!',
 	'record_deleted' => 'O item selecionado foi excluído com sucesso!',
 
+	'family_not_alert' => 'O caso dessa família já foi aberto e não é mais um alerta!',
+	'family_delivered' => 'Alerta registrado como entregue. O status será atualizado caso a família não compareça no CRAS dentro do prazo',
+
 ];

@@ -5,8 +5,8 @@
 	<div class="col-md-8">
 		<label class="detail__label">VISÃO GERAL</label>
 		<h3>Família #{{$family->shortcode}} - {{$family->residence->address}}</h3>
-		<div>Alerta registrado por <i class="fa fa-user"></i> ---</div>
-		<div>Caso aberto por <i class="fa fa-user"></i> ---</div>
+		<div><i class="fa fa-calendar"></i> Alerta registrado {{$family->created_at->diffForHumans()}}</div>
+		@if($family->caseOpenedBy) <div><i class="fa fa-user"></i> Caso aberto por {{$family->caseOpenedBy->name}}</div> @endif
 	</div>
 	<div class="col-md-4">
 		<label class="detail__label">LOCALIZAÇÃO</label>

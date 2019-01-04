@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use SGPS\Services\UserAssignmentService;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use SGPS\Utils\Sanitizers;
@@ -39,7 +40,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property integer $ipm_risk_factor
  * @property string $visit_status
  * @property integer $visit_attempt
+ * @property string $case_opened_by
  * @property Carbon|null $visit_last
+ * @property Carbon|null $opened_at
  * @property string $gis_global_id
  *
  * @property Carbon $created_at
@@ -50,6 +53,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property Residence $residence
  * @property Person $personInCharge
  * @property Person[]|Collection $members
+ * @property User|null $caseOpenedBy
  */
 class Family extends Entity {
 
@@ -76,6 +80,8 @@ class Family extends Entity {
 		'visit_status',
 		'visit_attempt',
 		'visit_last',
+		'case_opened_by',
+		'opened_at',
 		'gis_global_id',
 	];
 
@@ -85,6 +91,7 @@ class Family extends Entity {
 		'ipm_risk_factor' => 'integer',
 		'visit_attempt' => 'integer',
 		'visit_last' => 'date',
+		'opened_at' => 'datetime',
 	];
 
 	protected static $logAttributes = [
@@ -132,6 +139,14 @@ class Family extends Entity {
 	}
 
 	/**
+	 * Relationship: user that opened the case
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function caseOpenedBy() {
+		return $this->hasOne(User::class, 'id', 'case_opened_by')->withTrashed();
+	}
+
+	/**
 	 * Relationship: family with user assignments
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
@@ -165,6 +180,56 @@ class Family extends Entity {
 
 	public function scopeOnlyAlerts($query) {
 		return $query->where('is_alert', true);
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Marks the family referral as delivered.
+	 * Updates the "date of last visit" date.
+	 */
+	public function markAsDelivered() {
+		$this->visit_status = self::VISIT_DELIVERED;
+		$this->visit_last = Carbon::now();
+		$this->save();
+	}
+
+	/**
+	 * Marks the family visit status as "pending" once again.
+	 * If the visit attempt was the first (visit_attempt = 1), status goes to LATE_TO_CRAS.
+	 * If the visit attempt was the second (visit_attempt = 2), status goes to PENDING_TECHNICAL_VISIT.
+	 * Increases the visit attempt by 1 after the above validation.
+	 */
+	public function returnToPending() {
+		$this->visit_status = ($this->visit_attempt >= 2)
+			? self::VISIT_PENDING_TECHNICAL_VISIT
+			: self::VISIT_LATE_TO_CRAS;
+		$this->visit_attempt += 1;
+		$this->save();
+	}
+
+	/**
+	 * Marks the family case as open, removing it from the alerts list.
+	 * Will update the "case opened at" date.
+	 * If a user is given as parameter, they will be set as the user who opened the case.
+	 * @param null|User $user
+	 */
+	public function openCase(?User $user = null) {
+		$this->is_alert = false;
+		$this->opened_at = Carbon::now();
+
+
+		if($user) {
+			$this->case_opened_by = $user->id;
+		}
+
+		$this->save();
+
+		if(!$user) return;
+
+		app(UserAssignmentService::class)
+			->assignUserToEntity($user, $this, UserAssignment::TYPE_CREATOR);
+
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------
@@ -269,5 +334,21 @@ class Family extends Entity {
 		return self::query()
 			->where('shortcode', $shortcode)
 			->first();
+	}
+
+	/**
+	 * Fetches all alerts which the deadline is past to show up at the CRAS
+	 */
+	public static function fetchAlertsLateToCRAS() {
+
+		$cutoffDate = Carbon::now()
+			->addDays(-30)
+			->format('Y-m-d');
+
+		return self::query()
+			->onlyAlerts()
+			->where('visit_status', self::VISIT_DELIVERED)
+			->where('visit_last', '<=', $cutoffDate)
+			->get();
 	}
 }

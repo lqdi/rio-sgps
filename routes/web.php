@@ -15,7 +15,11 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/families/{family}', 'Web\FamiliesController@update')->name('families.update');
 
 	Route::get('/alerts', 'Web\AlertsController@index')->name('alerts.index');
+	Route::get('/alerts/print', 'Web\AlertsController@print_all_referrals')->name('alerts.print_all_referrals');
 	Route::get('/alerts/{family}', 'Web\AlertsController@show')->name('alerts.show');
+	Route::post('/alerts/{family}/open', 'Web\AlertsController@open_case')->name('alerts.open_case');
+	Route::post('/alerts/{family}/mark_as_delivered', 'Web\AlertsController@mark_as_delivered')->name('alerts.mark_as_delivered');
+	Route::get('/alerts/{family}/print', 'Web\AlertsController@print_referral')->name('alerts.print_referral');
 
 	Route::get('/reports', 'Web\AlertsController@index')->name('reports.index');
 

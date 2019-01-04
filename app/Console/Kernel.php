@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+    	$schedule->command('batch:check_late_alerts')->dailyAt('00:30:00');
     	$schedule->command('batch:run_daily_flag_behavior_hooks')->dailyAt('02:00:00');
     }
 

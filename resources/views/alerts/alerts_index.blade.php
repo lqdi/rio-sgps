@@ -12,33 +12,43 @@
 						<h1>Alertas</h1>
 					</div>
 					<div>
-						<form ref="filterForm" @submit.prevent="doSearch()"  class="form-inline justify-content-between" method="GET" action="{{route('alerts.index')}}">
-							<div class="form-group">
-								<i class="fa fa-filter"></i> &nbsp; <strong>Filtrar por</strong> &nbsp;&nbsp;
+						<div class="row">
+							<div class="col-md-8">
+								<form ref="filterForm" @submit.prevent="doSearch()" class="form-inline justify-content-between" method="GET" action="{{route('alerts.index')}}">
+									<div class="form-group">
+										<i class="fa fa-filter"></i> &nbsp; <strong>Filtrar por</strong> &nbsp;&nbsp;
+									</div>
+									<div class="btn-group" role="group">
+										<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
+										<button @click="setFilter('visit_status', 'pending')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'pending' ? 'btn-primary' : 'btn-outline-primary'}}">Pendentes</button>
+										<button @click="setFilter('visit_status', 'delivered')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'delivered' ? 'btn-primary' : 'btn-outline-primary'}}">Entregues</button>
+										<button @click="setFilter('visit_status', 'noshow')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'noshow' ? 'btn-primary' : 'btn-outline-primary'}}">Não compareceram</button>
+									</div>
+									<div class="form-group">
+										<select @change="doSearch()" class="form-control form-control-sm" name="filters[sector_id]">
+											<option value="" disabled @if(!isset($filters['sector_id']) || strlen($filters['sector_id']) <= 0) selected @endif >Filtrar por região censitária ... </option>
+											<option value="">-- Todas as regiões --</option>
+											@foreach($sectors as $sector)
+												<option @if(isset($filters['sector_id']) && strval($filters['sector_id']) === strval($sector->id)) selected @endif value="{{$sector->id}}">{{$sector->name}}</option>
+											@endforeach
+										</select>
+									</div>
+								</form>
 							</div>
-							<div class="btn-group" role="group">
-								<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
-								<button @click="setFilter('visit_status', 'pending')" type="button" class="btn btn-sm {{$filters['visit_status'] === 'pending' ? 'btn-primary' : 'btn-outline-primary'}}">Pendentes</button>
-								<button @click="setFilter('visit_status', 'delivered')" type="button" class="btn btn-sm {{$filters['visit_status'] === 'delivered' ? 'btn-primary' : 'btn-outline-primary'}}">Entregues</button>
-								<button @click="setFilter('visit_status', 'noshow')" type="button" class="btn btn-sm {{$filters['visit_status'] === 'noshow' ? 'btn-primary' : 'btn-outline-primary'}}">Não compareceram</button>
+							<div class="col-md-4">
+								<form method="GET" action="{{route('alerts.index')}}" class="form-inline justify-content-between">
+									<div class="form-group">
+										<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm mx-2" style="width: 200px" placeholder="Buscar ...">
+									</div>
+									<div class="form-group">
+										<button type="button" class="btn btn-sm btn-info"><i class="fa fa-print"></i> Imprimir fichas</button>
+									</div>
+								</form>
 							</div>
-							<div class="form-group">
-								<select @change="doSearch()" class="form-control form-control-sm" name="filters[sector_id]">
-									<option value="" disabled @if(!isset($filters['sector_id']) && strlen($filters['sector_id']) <= 0) selected @endif >Filtrar por região censitária ... </option>
-									<option value="">-- Todas as regiões --</option>
-									@foreach($sectors as $sector)
-										<option @if(isset($filters['sector_id']) && strval($filters['sector_id']) === strval($sector->id)) selected @endif value="{{$sector->id}}">{{$sector->name}}</option>
-									@endforeach
-								</select>
-							</div>
-							<div class="form-group">
-								<input type="search" class="form-control form-control-sm mx-2" style="width: 270px" placeholder="Buscar por nome, endereço, CPF...">
-							</div>
-							<div class="form-group">
-								<button type="button" class="btn btn-sm btn-info"><i class="fa fa-print"></i> Imprimir fichas</button>
-							</div>
-						</form>
+						</div>
 					</div>
+
+					@include('components.messages')
 				</div>
 			</div>
 			<div class="container-fluid">
@@ -79,13 +89,19 @@
 									@endif
 								</td>
 								<td>
-									<a class="btn btn-sm btn-light" v-b-tooltip title="Abrir caso"><i class="fa fa-folder-open"></i></a>
+									<form class="d-inline-block" method="POST" action="{{route('alerts.open_case', [$alert->id])}}">
+										@csrf
+										<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Abrir caso"><i class="fa fa-folder-open"></i></button>
+									</form>
 
-									@if($alert->visit_status === \SGPS\Entity\Family::VISIT_PENDING_AGENT)
-										<a class="btn btn-sm btn-light" v-b-tooltip title="Marcar encaminhamento como entregue"><i class="fa fa-check"></i></a>
+									@if(in_array($alert->visit_status, [\SGPS\Entity\Family::VISIT_PENDING_AGENT, \SGPS\Entity\Family::VISIT_LATE_TO_CRAS]))
+										<form class="d-inline-block" method="POST" action="{{route('alerts.mark_as_delivered', [$alert->id])}}">
+											@csrf
+											<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Marcar encaminhamento como entregue"><i class="fa fa-check"></i></button>
+										</form>
 									@endif
 
-									<a class="btn btn-sm btn-light" v-b-tooltip title="Imprimir encaminhamento"><i class="fa fa-print"></i></a>
+									<a target="_blank" href="{{route('alerts.print_referral', [$alert->id])}}" class="btn btn-sm btn-light" v-b-tooltip title="Imprimir encaminhamento"><i class="fa fa-print"></i></a>
 								</td>
 							</tr>
 							@endforeach

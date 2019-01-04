@@ -45,7 +45,7 @@ class UserAssignment extends Model {
 	const TYPE_ACTING = 'acting';
 	const TYPE_CREATOR = 'creator';
 
-	const TYPES = [self::TYPE_WATCHING, self::TYPE_ACTING, self::TYPE_ACTING];
+	const TYPES = [self::TYPE_WATCHING, self::TYPE_ACTING, self::TYPE_CREATOR];
 
 	protected $table = "user_assignments";
 	protected $with = ['user'];
