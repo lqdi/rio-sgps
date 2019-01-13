@@ -31,7 +31,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 				return factory(Equipment::class, 5)->create(['type' => $type]);
 			});
 
-		$sectors = factory(Sector::class, 15)
+		$sectors = factory(Sector::class, 3)
 			->create()
 			->each(function($sector) use ($equipmentsPerType, $faker) { /* @var $sector Sector */
 
@@ -43,7 +43,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 			})
 			->pluck('id');
 
-		$residences = factory(Residence::class, 30)
+		$residences = factory(Residence::class, 5)
 			->create(['sector_id' => $faker->randomElement($sectors)])
 			->each(function (Residence $residence) use ($faker) {
 

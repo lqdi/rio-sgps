@@ -274,7 +274,7 @@ class Family extends Entity {
 		return [
 			'type' => $this->getEntityType(),
 			'id' => $this->getEntityID(),
-			'name' => $this->personInCharge->name,
+			'name' => $this->personInCharge->name ?? '',
 			'shortcode' => $this->shortcode,
 		];
 	}
