@@ -36,11 +36,11 @@
 		</div>
 
 		<div class="col-md-6">
-			<a href="{{route('admin.settings.index')}}" class="card">
+			<a href="{{route('admin.imports.dashboard')}}" class="card">
 				<div class="card-body text-center">
-					<i class="fa fa-sliders-h" style="font-size: 48px"></i>
+					<i class="fa fa-upload" style="font-size: 48px"></i>
 				</div>
-				<div class="card-footer text-center">Configurações</div>
+				<div class="card-footer text-center">Importação</div>
 			</a>
 			<br />
 		</div>

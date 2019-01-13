@@ -14,17 +14,14 @@
 namespace SGPS\Console\Commands\Maintenance;
 
 
-use Excel;
 use Illuminate\Console\Command;
 use SGPS\Diagnostics\QueryAnalyser;
 use SGPS\Entity\Survey\SurveyImportJob;
-use SGPS\Importers\SurveyFamilyCSV;
-use SGPS\Importers\SurveyPersonCSV;
 use SGPS\Services\FamilyImportService;
 
-class ImportSurveyCSV extends Command {
+class ImportSampleSurveyCSV extends Command {
 
-	protected $signature = "maintenance:import_survey_csv";
+	protected $signature = "maintenance:import_sample_survey_csv";
 
 	const CSV_FAMILIES = 'demo_familias.csv';
 	const CSV_MEMBERS = 'demo_membros.csv';
@@ -40,6 +37,7 @@ class ImportSurveyCSV extends Command {
 
 		$this->info("Begin import job: {$importJob->id}");
 
+		$importJob->updateStage(SurveyImportJob::STAGE_CSV_READ);
 		$service->readFromCSV($importJob);
 
 		$importJob->refreshReadCounts();
@@ -48,6 +46,7 @@ class ImportSurveyCSV extends Command {
 
 		$this->info("Building family structures...");
 
+		$importJob->updateStage(SurveyImportJob::STAGE_GENERATE_FAMILIES);
 		$service->buildFamilyStructure($importJob);
 
 		$this->info("Completed!");
@@ -55,6 +54,8 @@ class ImportSurveyCSV extends Command {
 		$this->info("Query stats:");
 
 		dump($this->queryAnalyser->analyseTypeCount());
+
+		$importJob->updateStage(SurveyImportJob::STAGE_COMPLETED);
 
 	}
 

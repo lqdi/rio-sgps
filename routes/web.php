@@ -56,7 +56,8 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::post('/admin/equipments/{equipment?}', 'Admin\EquipmentsController@save')->name('admin.equipments.save');
 		Route::delete('/admin/equipments/{equipment}', 'Admin\EquipmentsController@destroy')->name('admin.equipments.destroy');
 
-		Route::get('/admin/settings', 'Admin\SettingsController@index')->name('admin.settings.index');
+		Route::get('/admin/import', 'Admin\ImportsController@dashboard')->name('admin.imports.dashboard');
+		Route::post('/admin/import/survey_csv', 'Admin\ImportsController@import_survey_csv')->name('admin.imports.survey_csv');
 	});
 
 

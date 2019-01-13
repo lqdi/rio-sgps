@@ -27,6 +27,8 @@ use SGPS\Traits\IndexedByUUID;
  * @property string $families_csv
  * @property string $members_csv
  * @property string $stage
+ * @property string $exception_message
+ * @property object $exception_object
  * @property int $num_families_read
  * @property int $num_families_imported
  * @property int $num_families_skipped
@@ -42,23 +44,29 @@ class SurveyImportJob extends Model {
 
 	use IndexedByUUID;
 
+	const STAGE_PENDING_START = 'pending_start';
 	const STAGE_CSV_READ = 'csv_read';
-	const STAGE_DELETE_DUPLICATES = 'delete_duplicates';
-	const STAGE_GENERATE_RESIDENCES = 'gen_residences';
 	const STAGE_GENERATE_FAMILIES = 'gen_families';
-	const STAGE_GENERATE_PERSONS = 'gen_persons';
+	const STAGE_COMPLETED = 'completed';
+	const STAGE_FAILED = 'failed';
 
 	protected $table = "survey_import_jobs";
 	protected $fillable = [
 		'families_csv',
 		'members_csv',
 		'stage',
+		'exception_string',
+		'exception_object',
 		'num_families_read',
 		'num_families_imported',
 		'num_families_skipped',
 		'num_persons_read',
 		'num_persons_imported',
 		'num_persons_skipped',
+	];
+
+	protected $casts = [
+		'exception_object' => 'object',
 	];
 
 	public function members() {
@@ -72,6 +80,17 @@ class SurveyImportJob extends Model {
 	public function refreshReadCounts() {
 		$this->num_families_read = ImportedFamily::where('import_id', $this->id)->count();
 		$this->num_persons_read = ImportedMember::where('import_id', $this->id)->count();
+		$this->save();
+	}
+
+	public function updateStage(string $stage) : void {
+		$this->stage = $stage;
+		$this->save();
+	}
+
+	public function updateException(\Exception $exception) : void {
+		$this->exception_message = $exception->getMessage();
+		$this->exception_object = $exception;
 		$this->save();
 	}
 
@@ -97,7 +116,7 @@ class SurveyImportJob extends Model {
 		return self::create([
 			'families_csv' => $familiesCSV,
 			'members_csv' => $membersCSV,
-			'stage' => self::STAGE_CSV_READ,
+			'stage' => self::STAGE_PENDING_START,
 		]);
 	}
 
