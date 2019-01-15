@@ -248,6 +248,8 @@ class Person extends Entity {
 		$data = [
 			'ID' => $this->id,
 			'Código' => $this->shortcode,
+			'Código Família' => $this->family->shortcode,
+			'Código Residência' => $this->residence->shortcode,
 			'Nome' => $this->name,
 			'Data de Nascimento' => $this->dob ? $this->dob->toDateTimeString() : null,
 			'Setor' => $this->sector->id,

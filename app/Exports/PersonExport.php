@@ -29,6 +29,8 @@ class PersonExport implements FromCollection, WithHeadings, WithMapping {
 	private $baseHeadings = [
 		'ID',
 		'Código',
+		'Código Família',
+		'Código Residência',
 		'Nome',
 		'Data de Nascimento',
 		'Setor',

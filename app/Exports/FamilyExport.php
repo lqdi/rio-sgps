@@ -28,6 +28,7 @@ class FamilyExport implements FromCollection, WithHeadings, WithMapping {
 	private $baseHeadings = [
 		'ID',
 		'Código',
+		'Código Residência',
 		'Responsável',
 		'Setor',
 		'Bairro',

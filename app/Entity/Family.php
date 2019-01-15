@@ -306,6 +306,7 @@ class Family extends Entity {
 		$data = [
 			'ID' => $this->id,
 			'Código' => $this->shortcode,
+			'Código Residência' => $this->residence->shortcode,
 			'Responsável' => $this->personInCharge->name,
 			'Setor' => $this->sector->id,
 			'Bairro' => $this->sector->cod_bairro,
