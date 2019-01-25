@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 		Route::get('/admin/import', 'Admin\ImportsController@dashboard')->name('admin.imports.dashboard');
 		Route::post('/admin/import/survey_csv', 'Admin\ImportsController@import_survey_csv')->name('admin.imports.survey_csv');
+		Route::post('/admin/import/geography_csv', 'Admin\ImportsController@import_geography_csv')->name('admin.imports.geography_csv');
 	});
 
 

@@ -16,6 +16,7 @@ namespace SGPS\Http\Controllers\Admin;
 
 use SGPS\Entity\Survey\SurveyImportJob;
 use SGPS\Http\Controllers\Controller;
+use SGPS\Jobs\ParseUploadedGeographyImport;
 use SGPS\Jobs\ParseUploadedSurveyCSVJob;
 
 class ImportsController extends Controller {
@@ -40,5 +41,16 @@ class ImportsController extends Controller {
 		return redirect()->route('admin.imports.dashboard')->with('success', 'import_queued');
 
 	}
+
+	public function import_geography_csv() {
+        $importUUID = uniqid('import_', true);
+
+        $equipmentsCSV = request()->file('equipments_csv')->storeAs('import/geo', "equipments_{$importUUID}.csv");
+        $sectorsCSV = request()->file('sectors_csv')->storeAs('import/geo', "sectors_{$importUUID}.csv");;
+
+        dispatch(new ParseUploadedGeographyImport($equipmentsCSV, $sectorsCSV));
+
+        return redirect()->route('admin.imports.dashboard')->with('success', 'import_queued');
+    }
 
 }

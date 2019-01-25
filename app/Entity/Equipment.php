@@ -44,13 +44,36 @@ class Equipment extends Model {
 	use SoftDeletes;
 	use LogsActivity;
 
+    /**
+     * Coordenadoria Regional de Educação
+     */
 	const TYPE_CRE = "CRE";
+
+    /**
+     * Unidade de Saúde
+     */
+	const TYPE_UBS = "UBS";
+
+    /**
+     * Centro de Referência em Assistência Social
+     */
 	const TYPE_CRAS = "CRAS";
+
+    /**
+     * Centro Municipal de Trabalho e Emprego
+     */
+	const TYPE_CMTE = "CMTE";
+
+    /**
+     * Secretaria Municipal da Saúde
+     */
 	const TYPE_SMS = "SMS";
 
 	const TYPES = [
 		self::TYPE_CRE,
+		self::TYPE_UBS,
 		self::TYPE_CRAS,
+		self::TYPE_CMTE,
 		self::TYPE_SMS
 	];
 

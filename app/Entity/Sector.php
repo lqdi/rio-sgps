@@ -25,10 +25,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @package SGPS\Entity
  *
  * @property integer $id
+ * @property string $name
  * @property integer $cod_bairro
  * @property integer $cod_ra
  * @property string $cod_rp
  * @property integer $cod_ap
+ *
+ * @property string $cod_cap
+ * @property string $cod_cms
+ * @property string $cod_esf
+ * @property string $cod_casdh
+ * @property string $cod_cras
+ * @property string $cod_cre
  *
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -38,6 +46,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property Family[]|Collection $families
  * @property Residence[]|Collection $residences
  * @property Person[]|Collection $persons
+ *
+ * @property Equipment|null $primaryCAP
+ * @property Equipment|null $primaryCMS
+ * @property Equipment|null $primaryESF
+ * @property Equipment|null $primaryCASDH
+ * @property Equipment|null $primaryCRAS
+ * @property Equipment|null $primaryCRE
  */
 class Sector extends Model {
 
@@ -46,10 +61,17 @@ class Sector extends Model {
 
 	protected $table = 'sectors';
 	protected $fillable = [
+		'name',
 		'cod_bairro',
 		'cod_ra',
 		'cod_rp',
 		'cod_ap',
+        'cod_cap',
+        'cod_cms',
+        'cod_esf',
+        'cod_casdh',
+        'cod_cras',
+        'cod_cre',
 	];
 
 	protected $casts = [
@@ -119,4 +141,24 @@ class Sector extends Model {
 		return $this->hasMany(Person::class, 'sector_id', 'id');
 	}
 
+	// ---------------------------------------------------------------------------------------------------------------
+
+    public function primaryCAP() {
+	    return $this->hasOne(Equipment::class, 'id', 'cod_cap');
+    }
+    public function primaryCMS() {
+	    return $this->hasOne(Equipment::class, 'id', 'cod_cms');
+    }
+    public function primaryESF() {
+	    return $this->hasOne(Equipment::class, 'id', 'cod_esf');
+    }
+    public function primaryCASDH() {
+	    return $this->hasOne(Equipment::class, 'id', 'cod_casdh');
+    }
+    public function primaryCRAS() {
+	    return $this->hasOne(Equipment::class, 'id', 'cod_cras');
+    }
+    public function primaryCRE() {
+	    return $this->hasOne(Equipment::class, 'id', 'cod_cre');
+    }
 }
