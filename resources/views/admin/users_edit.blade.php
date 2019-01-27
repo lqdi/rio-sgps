@@ -1,5 +1,5 @@
 @extends('admin.admin_layout')
-@section('admin_title') Operadores &raquo; {{!$user->id ? 'Novo' : "Editar: {$user->name}"}} @endsection
+@section('admin_title') Operadores &raquo; {{!$user->id ? 'Novo' : "Editar: {$user->getFirstName()}"}} @endsection
 @section('admin_buttons')
 
 @endsection
@@ -11,29 +11,44 @@
 		<div class="card">
 			<div class="card-header">Dados do usuário</div>
 			<div class="card-body row">
+				<div class="col-md-6 form-group">
+					<label for="fld-name">Nível</label>
+					<select @if($user->isExternal()) disabled @endif id="fld-level" name="level" class="form-control" type="text">
+						@foreach(\SGPS\Constants\UserLevel::LEVEL_HIERARCHY as $level => $hierarchy)
+							<option @if($user->level === $level) selected @endif value="{{$level}}">{{trans('user.level.' . $level)}}</option>
+						@endforeach
+					</select>
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="fld-name">Origem</label>
+					<div>
+						<span class="badge badge-light">{{trans('user.source.' . ($user->source ?? 'sgps'))}}</span>
+					</div>
+				</div>
+
 				<div class="col-md-12 form-group">
 					<label for="fld-name">Nome</label>
-					<input required id="fld-name" name="name" class="form-control" type="text" value="{{$user->name}}" />
+					<input @if($user->isExternal()) disabled @else required @endif id="fld-name" name="name" class="form-control" type="text" value="{{$user->name}}" />
 				</div>
 
 				<div class="col-md-6 form-group">
 					<label for="fld-cpf">CPF</label>
-					<input id="fld-cpf" name="cpf" class="form-control" type="tel" value="{{$user->cpf}}" />
+					<input @if($user->isExternal()) disabled @endif id="fld-cpf" name="cpf" class="form-control" type="tel" value="{{$user->cpf}}" />
 				</div>
 
 				<div class="col-md-6 form-group">
 					<label for="fld-registration_number">Matrícula</label>
-					<input id="fld-registration_number" name="registration_number" class="form-control" type="tel" value="{{$user->registration_number}}" />
+					<input @if($user->isExternal()) disabled @endif id="fld-registration_number" name="registration_number" class="form-control" type="tel" value="{{$user->registration_number}}" />
 				</div>
 
 				<div class="col-md-6 form-group">
 					<label for="fld-email">E-mail</label>
-					<input required id="fld-email" name="email" class="form-control" type="email" value="{{$user->email}}" />
+					<input @if($user->isExternal()) disabled @else required @endif id="fld-email" name="email" class="form-control" type="email" value="{{$user->email}}" />
 				</div>
 
 				<div class="col-md-6 form-group">
 					<label for="fld-password">Senha</label>
-					<input @if(!$user->id) required @endif id="fld-password" name="password" class="form-control" type="password" />
+					<input @if($user->isExternal()) disabled @elseif(!$user->id) required @endif id="fld-password" name="password" class="form-control" type="password" />
 				</div>
 			</div>
 		</div>

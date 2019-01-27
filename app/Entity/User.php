@@ -203,6 +203,51 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return UserLevel::check($level, $this->level);
 	}
 
+	/**
+	 * Checks if a user is external or local.
+	 * @return bool
+	 */
+	public function isExternal() : bool {
+		return isset($this->source) && $this->source !== 'sgps';
+	}
+
+	/**
+	 * Updates the user from new external provider data.
+	 * Must have at least one logon key (email, CPF or registration number).
+	 * Source cannot be 'sgps', as these are reserved for local users.
+	 * Given level must be a valid SGPS level.
+	 *
+	 * @param null|string $name
+	 * @param null|string $email
+	 * @param null|string $cpf
+	 * @param null|string $registrationNumber
+	 * @param string $level
+	 */
+	public function updateFromExternal(?string $name, ?string $email, ?string $cpf, ?string $registrationNumber, string $level = UserLevel::OPERADOR) {
+
+		if(is_null($email) && is_null($cpf) && is_null($registrationNumber)) {
+			throw new \InvalidArgumentException("Cannot update external user with no logon data (email, CPF or registration number)");
+		}
+
+		if($this === 'sgps') {
+			throw new \InvalidArgumentException("User is not an external user, so cannot be updated from external.");
+		}
+
+		if(!UserLevel::exists($level)) {
+			throw new \InvalidArgumentException("Cannot update external user with invalid level: {$level}");
+		}
+
+		$this->fill([
+			'level' => $level,
+			'email' => $email,
+			'name' => $name,
+			'cpf' => $cpf,
+			'registration_number' => $registrationNumber,
+		]);
+
+		$this->save();
+	}
+
 	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—
 
 	/**

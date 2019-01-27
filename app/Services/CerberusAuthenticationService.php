@@ -52,6 +52,35 @@ class CerberusAuthenticationService {
 	public function authenticate(string $login, string $password, bool $remember = false) : User {
 		$cerberusUser = $this->client->authenticateUser($login, $password);
 
+		// Ensures this user is valid and can login
+		$this->validateCerberusUserIsAuthenticable($cerberusUser);
+
+		// Looks for the local user with these credentials
+		$user = $this->findUserWithCerberusLogon($cerberusUser);
+
+		// If not found, we create one
+		if(!$user) {
+			$user = $this->createUserWithCerberusLogon($cerberusUser);
+		} else {
+			$this->updateUserWithCerberusLogon($user, $cerberusUser);
+		}
+
+		// Login the user into the current session
+		auth()->login($user, $remember);
+
+		return $user;
+	}
+
+	/**
+	 * Will check if CERBERUS user can be authenticated:
+	 * - Must be a valid complete object
+	 * - Must be active
+	 * - Must have logon data (email, cpf or matrícula)
+	 * @param CerberusUser $cerberusUser
+	 * @throws AuthenticationException
+	 */
+	public function validateCerberusUserIsAuthenticable(CerberusUser $cerberusUser) : void {
+
 		if(is_null($cerberusUser)) { // Checks if the response from the server was a valid object
 			throw new AuthenticationException('cerberus_user_not_found');
 		}
@@ -65,18 +94,6 @@ class CerberusAuthenticationService {
 			throw new AccessDeniedHttpException('cerberus_user_has_no_login_data');
 		}
 
-		// Looks for the local user with these credentials
-		$user = $this->findUserWithCerberusLogon($cerberusUser);
-
-		// If not found, we create one
-		if(!$user) {
-			$user = $this->createUserWithCerberusLogon($cerberusUser);
-		}
-
-		// Login the user into the current session
-		auth()->login($user, $remember);
-
-		return $user;
 	}
 
 	/**
@@ -100,6 +117,10 @@ class CerberusAuthenticationService {
 	 */
 	public function createUserWithCerberusLogon(CerberusUser $cerberusUser) : User {
 
+		if(!$cerberusUser->ativo) {
+			throw new \InvalidArgumentException("cerberus_user_not_active");
+		}
+
 		return User::createFromExternal(
 			$cerberusUser->nome,
 			$cerberusUser->email,
@@ -109,6 +130,38 @@ class CerberusAuthenticationService {
 			'cerberus'
 		);
 
+	}
+
+	/**
+	 * Updates user details based on their CERBERUS logon
+	 * @param User $user The linked user to update.
+	 * @param CerberusUser $cerberusUser The CERBERUS logon data. @see self::authenticate
+	 * @throws AuthenticationException If the user became invalidated.
+	 * @throws \Exception If an invalid user fails to be deleted.
+	 */
+	public function updateUserWithCerberusLogon(User $user, CerberusUser $cerberusUser) {
+
+		// Check if we're updating an actual CERBERUS user.
+		if($user->source !== 'cerberus') {
+			throw new \Exception('cerberus_user_mismatched_source');
+		}
+
+		// Check if user became invalid in CERBERUS (deleted, inactive or missing logon)
+		try {
+			$this->validateCerberusUserIsAuthenticable($cerberusUser);
+		} catch (\Exception $ex) {
+			$user->delete();
+			throw new AuthenticationException('cerberus_user_invalidated');
+		}
+
+		// Updates the local user attributes
+		$user->updateFromExternal(
+			$cerberusUser->nome,
+			$cerberusUser->email,
+			$cerberusUser->cpf,
+			$cerberusUser->matricula,
+			$this->resolveUserLevel($cerberusUser)
+		);
 	}
 
 	/**

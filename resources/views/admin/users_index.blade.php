@@ -9,7 +9,9 @@
 		<tr>
 			<th>#</th>
 			<th>Nome</th>
+			<th>Nível</th>
 			<th>E-mail</th>
+			<th>CPF</th>
 			<th>Matrícula</th>
 			<th>Opções</th>
 		</tr>
@@ -18,9 +20,11 @@
 		@foreach($users as $user)
 			@php /* @var $user \SGPS\Entity\User */ @endphp
 			<tr>
-				<td><a href="{{route('admin.users.show', [$user->id])}}" class="btn btn-sm btn-block btn-outline-danger"><code>{{$user->id}}</code></a></td>
+				<td><a href="{{route('admin.users.show', [$user->id])}}" class="btn btn-sm btn-block btn-outline-danger"><code>{{$user->id}}</code> <span class="badge badge-light">{{strtoupper($user->source)}}</span></a></td>
 				<td>{{$user->name}}</td>
+				<td>{{trans('user.level.' . $user->level)}}</td>
 				<td>{{$user->email}}</td>
+				<td>{{$user->cpf}}</td>
 				<td>{{$user->registration_number}}</td>
 				<td>
 					<a href="{{route('admin.users.show', [$user->id])}}" class="btn btn-sm btn-outline-dark"><i class="fa fa-edit"></i> Editar</a>

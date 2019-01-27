@@ -13,8 +13,6 @@
 
 namespace SGPS\Integrations;
 
-
-use Config;
 use Curl;
 
 abstract class AbstractHttpClient {
