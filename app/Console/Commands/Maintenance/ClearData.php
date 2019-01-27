@@ -46,6 +46,7 @@ class ClearData extends Command {
 			DB::statement('TRUNCATE TABLE user_equipments');
 			DB::statement('TRUNCATE TABLE equipments');
 			DB::statement('TRUNCATE TABLE sectors');
+			DB::statement('TRUNCATE TABLE sector_equipments');
 
 			$this->info("Tables truncated!");
 		}
