@@ -1,3 +1,4 @@
+@inject('permissions', SGPS\Services\UserPermissionsService)
 @extends('shared.layout')
 @section('main')
 	<div
@@ -96,12 +97,12 @@
 									@endif
 								</td>
 								<td>
-									<form class="d-inline-block" method="POST" action="{{route('alerts.open_case', [$alert->id])}}">
+									<form onsubmit="return confirm('Tem certeza que deseja ABRIR o caso? Essa operação não pode ser cancelada.')" class="d-inline-block" method="POST" action="{{route('alerts.open_case', [$alert->id])}}">
 										@csrf
 										<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Abrir caso"><i class="fa fa-folder-open"></i></button>
 									</form>
 
-									@if(in_array($alert->visit_status, [\SGPS\Entity\Family::VISIT_PENDING_AGENT, \SGPS\Entity\Family::VISIT_LATE_TO_CRAS]))
+									@if($permissions->canEditEntity(auth()->user(), $alert) && in_array($alert->visit_status, [\SGPS\Entity\Family::VISIT_PENDING_AGENT, \SGPS\Entity\Family::VISIT_LATE_TO_CRAS]))
 										<form class="d-inline-block" method="POST" action="{{route('alerts.mark_as_delivered', [$alert->id])}}">
 											@csrf
 											<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Marcar encaminhamento como entregue"><i class="fa fa-check"></i></button>

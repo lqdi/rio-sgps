@@ -27,8 +27,13 @@ class AlertsController extends Controller {
 		$filters = request('filters', $service->defaultAlertFilters);
 
 		$query = Family::query()
+			->with([
+				'residence',
+				'sector',
+				'flags.groups',
+				'personInCharge',
+			])
 			->onlyAlerts()
-			->with(['residence', 'sector', 'personInCharge', 'allFlagAttributions', 'allActiveFlags'])
 			->orderBy('created_at', 'desc');
 
 		$query = $service->applyFiltersToQuery($query, collect($filters));

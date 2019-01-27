@@ -55,9 +55,11 @@
 						@endforeach
 					</div>
 
-					<div class="tree__options">
-						<a @click="addMemberToFamily()" class="btn btn-success d-block"><i class="fa fa-plus"></i> Adicionar membro</a>
-					</div>
+					@if($permissions->canEdit($family))
+						<div class="tree__options">
+							<a @click="addMemberToFamily()" class="btn btn-success d-block"><i class="fa fa-plus"></i> Adicionar membro</a>
+						</div>
+					@endif
 				</div>
 
 			</div>

@@ -255,7 +255,7 @@ abstract class Entity extends Model {
 	 */
 	public function resolveLinkedGroups() {
 		return $this
-			->load('flags.groups')
+			->loadMissing(['flags.groups'])
 			->flags
 			->map(function ($flag) {
 				return $flag->groups;
@@ -269,7 +269,7 @@ abstract class Entity extends Model {
 	 */
 	public function resolveLinkedEquipments() {
 		return $this
-			->load('sector.equipments')
+			->loadMissing('sector.equipments')
 			->sector
 			->equipments;
 	}
