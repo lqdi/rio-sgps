@@ -39,7 +39,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fa fa-key"></i></span>
 								</div>
-								<input type="password" name="password" class="form-control" placeholder="Login..." required >
+								<input type="password" name="password" class="form-control" placeholder="Senha..." required >
 							</div>
 
 							<div class="checkbox mb-3">
@@ -74,7 +74,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fa fa-key"></i></span>
 								</div>
-								<input type="password" name="password" class="form-control" placeholder="Login..." required>
+								<input type="password" name="password" class="form-control" placeholder="Senha..." required>
 							</div>
 
 							<div class="checkbox mb-3">
