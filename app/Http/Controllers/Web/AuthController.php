@@ -38,7 +38,7 @@ class AuthController extends Controller {
 				->with('error', 'invalid_credentials');
 		}
 
-		return redirect()->route('dashboard.index');
+		return redirect()->route('dashboard.post_login');
 	}
 
 	public function loginWithCerberus(CerberusAuthenticationService $service) {
@@ -57,7 +57,7 @@ class AuthController extends Controller {
 				->with('exception', $ex->getMessage());
 		}
 
-		return redirect()->route('dashboard.index');
+		return redirect()->route('dashboard.post_login');
 
 	}
 

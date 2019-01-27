@@ -163,35 +163,12 @@
 
 .login__form {
 	width: 100%;
-	max-width: 330px;
-	padding: 15px;
+	max-width: 350px;
+	//padding: 15px;
 	margin: 0 auto;
 
 	.checkbox {
 		font-weight: 400;
-	}
-
-	.form-control {
-		position: relative;
-		box-sizing: border-box;
-		height: auto;
-		padding: 10px;
-		font-size: 16px;
-	}
-	.form-control:focus {
-		z-index: 2;
-	}
-
-	input[type="email"] {
-		margin-bottom: -1px;
-		border-bottom-right-radius: 0;
-		border-bottom-left-radius: 0;
-	}
-
-	input[type="password"] {
-		margin-bottom: 10px;
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
 	}
 
 }
@@ -352,4 +329,16 @@
 	small {
 		font-size: 20pt;
 	}
+}
+
+.navbar .navbar-brand {
+	position: relative;
+	top: -8px;
+	height: 56px;
+	margin-bottom: -16px;
+	padding: 0 8px;
+	line-height: 56px;
+	background: #008eb7 !important;
+	color: white !important;
+
 }

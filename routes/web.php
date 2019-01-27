@@ -8,6 +8,7 @@ Route::group([], function() {
 
 Route::group(['middleware' => 'auth'], function() {
 
+	Route::get('/welcome', 'Web\DashboardController@post_login')->name('dashboard.post_login');
 	Route::get('/', 'Web\DashboardController@index')->name('dashboard.index');
 
 	Route::get('/families', 'Web\FamiliesController@index')->name('families.index');

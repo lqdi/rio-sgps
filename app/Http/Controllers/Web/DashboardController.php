@@ -20,6 +20,10 @@ use SGPS\Http\Controllers\Controller;
 
 class DashboardController extends Controller {
 
+	public function post_login() {
+		return view('dashboard.post_login_cover');
+	}
+
 	public function index() {
 		$user = auth()->user(); /* @var $user \SGPS\Entity\User */
 		$user->load(['groups', 'equipments.sectors']);

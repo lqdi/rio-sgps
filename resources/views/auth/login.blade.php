@@ -3,64 +3,95 @@
 
 	<div class="login__form text-center">
 
-		<img class="mb-4" src="{{asset('images/logo-w200.png')}}" alt="SGPS">
+		<img class="mb-4" src="{{asset('images/sgps-w350.png')}}" alt="SGPS">
 
 		<h1 class="h3 mb-3 font-weight-normal">Acessar o sistema</h1>
 
-		<ul class="nav nav-tabs mb-3" role="tablist">
+		<ul class="nav nav-pills mb-3 justify-content-center" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="pill" href="#login-with-cerberus" role="tab" aria-controls="pills-home">CERBERUS</a>
+				<a class="nav-link active" data-toggle="pill" href="#login-with-cerberus" role="tab" aria-controls="pills-home"><i class="fa fa-globe"></i> CERBERUS</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="pill" href="#login-with-sgps" role="tab" aria-controls="pills-profile">SGPS</a>
+				<a class="nav-link" data-toggle="pill" href="#login-with-sgps" role="tab" aria-controls="pills-profile"><i class="fa fa-cog"></i> SGPS</a>
 			</li>
 		</ul>
-		<div class="tab-content">
-			<div class="tab-pane fade show active" id="login-with-cerberus" role="tabpanel">
+		<div class="panel">
+			<div class="panel-content bg-light p-3">
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="login-with-cerberus" role="tabpanel">
 
-				<form method="POST" action="{{route('auth.login.with_cerberus')}}">
-					@csrf
 
-					<label for="fld-cerberus-email" class="sr-only">E-mail</label>
-					<input required type="text" name="login" id="fld-cerberus-email" class="form-control" placeholder="Login ..." autofocus />
+						<div class="mb-3">
+							<small class="text-secondary">Entre com seu RioMail, CPF ou matrícula.</small>
+						</div>
 
-					<label for="fld-cerberus-password" class="sr-only">Senha</label>
-					<input required type="password" name="password" id="fld-cerberus-password" class="form-control" placeholder="Senha ..." />
+						<form method="POST" action="{{route('auth.login.with_cerberus')}}">
+							@csrf
 
-					<div class="checkbox mb-3">
-						<label>
-							<input type="checkbox" name="remember" value="yes"> Manter-se conectado
-						</label>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-globe"></i></span>
+								</div>
+								<input type="text" name="login" class="form-control" placeholder="Login..." required autofocus>
+							</div>
+
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-key"></i></span>
+								</div>
+								<input type="password" name="password" class="form-control" placeholder="Login..." required >
+							</div>
+
+							<div class="checkbox mb-3">
+								<label>
+									<input type="checkbox" name="remember" value="yes"> Manter-se conectado
+								</label>
+							</div>
+
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Acessar <i class="fa fa-arrow-right"></i></button>
+
+						</form>
+
 					</div>
+					<div class="tab-pane fade" id="login-with-sgps" role="tabpanel">
 
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Acessar <i class="fa fa-arrow-right"></i></button>
+						<div class="mb-3">
+							<small class="text-secondary">Entre com seu e-mail e senha do sistema SGPS.</small>
+						</div>
 
-				</form>
 
-			</div>
-			<div class="tab-pane fade" id="login-with-sgps" role="tabpanel">
+						<form method="POST" action="{{route('auth.login')}}">
+							@csrf
 
-				<form method="POST" action="{{route('auth.login')}}">
-					@csrf
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-envelope"></i></span>
+								</div>
+								<input type="email" name="email" class="form-control" placeholder="E-mail..." required autofocus>
+							</div>
 
-					<label for="fld-sgps-email" class="sr-only">E-mail</label>
-					<input required type="email" name="email" id="fld-sgps-email" class="form-control" placeholder="E-mail ..." autofocus />
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text"><i class="fa fa-key"></i></span>
+								</div>
+								<input type="password" name="password" class="form-control" placeholder="Login..." required>
+							</div>
 
-					<label for="fld-sgps-password" class="sr-only">Senha</label>
-					<input required type="password" name="password" id="fld-sgps-password" class="form-control" placeholder="Senha ..." />
+							<div class="checkbox mb-3">
+								<label>
+									<input type="checkbox" name="remember" value="yes"> Manter-se conectado
+								</label>
+							</div>
 
-					<div class="checkbox mb-3">
-						<label>
-							<input type="checkbox" name="remember" value="yes"> Manter-se conectado
-						</label>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Acessar <i class="fa fa-arrow-right"></i></button>
+
+						</form>
+
 					</div>
-
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Acessar <i class="fa fa-arrow-right"></i></button>
-
-				</form>
-
+				</div>
 			</div>
 		</div>
+
 
 	</div>
 @endsection
