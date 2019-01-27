@@ -14,11 +14,11 @@
 namespace SGPS\Constants;
 
 
-class Role {
+class UserLevel {
 
 	const ADMIN = 'admin';
 	const GESTOR = 'gestor';
-	const INTERMEDIARIO = 'intermediario';
+	const COORDENADOR = 'coordenador';
 	const OPERADOR = 'operador';
 
 }

@@ -21,11 +21,9 @@ use Illuminate\Notifications\Notifiable;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Tymon\JWTAuth\JWTAuth;
 
 /**
  * Class User
@@ -36,6 +34,7 @@ use Tymon\JWTAuth\JWTAuth;
  * @property string $group_id
  * @property string $registration_number
  * @property string $cpf
+ * @property string $level @see \SGPS\Constants\UserLevel
  * @property string $email
  * @property string $name
  * @property string $password
@@ -56,7 +55,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	use IndexedByUUID;
 	use SoftDeletes;
 	use Notifiable;
-	use HasRoles;
 	use HasShortCode;
 	use LogsActivity;
 
@@ -64,6 +62,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 	protected $fillable = [
 		'name',
+		'level',
 		'email',
 		'group_id',
 		'registration_number',
@@ -77,6 +76,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 	protected static $logAttributes = [
 		'name',
+		'level',
 		'email',
 		'group_id',
 		'registration_number',
