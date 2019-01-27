@@ -284,7 +284,7 @@ return [
 		'CE38' => [
 			'code' => 'CE38',
 			'field_type' => 'yesnonullable',
-			'title' => 'Nos últimos 5 anos, alguma criança de até 5 anos que morava nesta casa morreu? (relativa à data do IPM?)',
+			'title' => 'Nos últimos 5 anos, alguma criança de até 5 anos que morava nesta casa morreu?',
 			'conditions' => null,
 			'field_options' => null,
 		],
@@ -461,7 +461,7 @@ return [
 		'CE57' => [
 			'code' => 'CE57',
 			'field_type' => 'numeric',
-			'title' => 'Numero do RG (condição de o individuo é o responsavel-(CE50) e possui o documento-(CE56))',
+			'title' => 'Número do RG',
 			'conditions' => [
 				['CE50', 'eq', 1],
 				['CE56', 'is_true'],
@@ -478,7 +478,7 @@ return [
 		'CE59' => [
 			'code' => 'CE59',
 			'field_type' => 'numeric',
-			'title' => 'Numero do CPF (condição de o individuo é o responsavel-(CE50) e possui o documento - (CE58))',
+			'title' => 'Numero do CPF',
 			'conditions' => [
 				['CE50', 'eq', 1],
 				['CE58', 'is_true']
@@ -523,13 +523,32 @@ return [
 				1 => 'SIM - rede municipal',
 				2 => 'SIM - outra rede publica',
 				3 => 'SIM - rede privada',
-				4 => 'NÃO',
+				4 => 'NÃO, mas já estudou',
+				5 => 'NÃO, nunca estudou',
+				99 => 'Não sabe / Não respondeu',
+			]
+		],
+		'CE62B' => [
+			'code' => 'CE62B',
+			'field_type' => 'select_one',
+			'title' => 'Indique o último curso concluído ou em conclusão',
+			'conditions' => null,
+			'field_options' => [
+				1 => 'Creche',
+				2 => 'Pré-escolar (maternal e jardim de infância)',
+				3 => 'Classe de alfabetização',
+				4 => 'Regular do ensino fundamental',
+				5 => 'Educação de jovens e adultos – EJA',
+				6 => 'Regular do ensino médio',
+				7 => 'Alfabetização de jovens e adultos',
+				8 => 'Superior de graduação ou acima',
+				99 => 'Não sabe / Não respondeu',
 			]
 		],
 		'CE63' => [
 			'code' => 'CE63',
 			'field_type' => 'yesnonullable',
-			'title' => 'Possui 5 anos de estudos completos? (perguntado caso já tenha frequentado a escola- (CE62) e possua mais de 14 anos - (CE553))',
+			'title' => 'Possui 5 anos de estudos completos?',
 			'conditions' => [
 				['CE53', 'age_gt', 14],
 				['CE62', 'is_true']
@@ -539,7 +558,7 @@ return [
 		'CE64' => [
 			'code' => 'CE64',
 			'field_type' => 'select_one',
-			'title' => 'Na última semana, tinha algum trabalho remunerado ou jovem aprendiz? (Só para pessoas acima de 10 anos - (CE53))',
+			'title' => 'Na última semana, tinha algum trabalho remunerado ou jovem aprendiz?',
 			'conditions' => [
 				['CE53', 'age_gt', 14],
 			],
@@ -640,14 +659,14 @@ return [
 		'CE75' => [
 			'code' => 'CE75',
 			'field_type' => 'date',
-			'title' => 'data da primeira visita do Agente Comunitário de Saude - ACS (registrado quando ocorre o primeiro contato)',
+			'title' => 'data da primeira visita do Agente Comunitário de Saude - ACS',
 			'conditions' => null,
 			'field_options' => null,
 		],
 		'CE76' => [
 			'code' => 'CE76',
 			'field_type' => 'date',
-			'title' => 'data da segunda visita do Agente Comunitário de Saude - ACS (caso não tenha comparecido)',
+			'title' => 'data da segunda visita do Agente Comunitário de Saude - ACS',
 			'conditions' => [
 				['CE75', 'is_filled'],
 				['CE75', 'before_today'],
@@ -710,7 +729,7 @@ return [
 		'CE81' => [
 			'code' => 'CE81',
 			'field_type' => 'select_one',
-			'title' => 'Encaminhamento à CRE (perguntado em caso de alerta de criança fora da escola) (alerta condição 62)',
+			'title' => 'Encaminhamento à CRE',
 			'conditions' => [
 				['CE62', 'is_false']
 			],
@@ -745,7 +764,7 @@ return [
 		'CE85' => [
 			'code' => 'CE85',
 			'field_type' => 'date',
-			'title' => 'Em caso de entrega de Filtro - registro da data (acionado pelo alerta - (Alerta - 29)',
+			'title' => 'Em caso de entrega de Filtro - registro da data',
 			'conditions' => [
 				['CE29', 'is_false']
 			],
@@ -762,8 +781,8 @@ return [
 		],
 		'CE87' => [
 			'code' => 'CE87',
-			'field_type' => 'yesno',
-			'title' => 'Acompanhamento pelo ACS segundo protocolos de visitas para cada categoria de atendimento em dia (confirmação mensal se os atendimento de saúde está em dia)',
+			'field_type' => 'date',
+			'title' => 'Data da visita de seguimento do Territórios Sociais',
 			'conditions' => [
 				['CE75', 'is_filled']
 			],
@@ -782,7 +801,7 @@ return [
 		'CE89' => [
 			'code' => 'CE89',
 			'field_type' => 'yesno',
-			'title' => 'gestantes em acompanhamento pré-natal em dia (alerta mensal) (se condição "Grávida" estiver ligada) (duração máxima 9 meses, a partir da data estimada ou do registro da gravidez)',
+			'title' => 'gestantes em acompanhamento pré-natal em dia',
 			'conditions' => [
 				['CE54', 'is_true'],
 				['CE75', 'is_filled'],
@@ -792,7 +811,7 @@ return [
 		'CE90' => [
 			'code' => 'CE90',
 			'field_type' => 'yesno',
-			'title' => 'para crianças, vacinação em dia  - colocar um verificador da idade da criança - (CE53))',
+			'title' => 'para crianças, vacinação em dia',
 			'conditions' => [
 				['CE53', 'is_children'],
 				['CE75', 'is_filled'],
@@ -802,7 +821,7 @@ return [
 		'CE91' => [
 			'code' => 'CE91',
 			'field_type' => 'yesno',
-			'title' => 'crianças menores de 6 anos com registro de avaliação de crescimento e desenvolvimento no prontuário em dia (alerta ativado pela idade para 1 e 2 anos  (CE53)',
+			'title' => 'crianças menores de 6 anos com registro de avaliação de crescimento e desenvolvimento no prontuário em dia',
 			'conditions' => [
 				['CE53', 'age_lt', 6],
 				['CE75', 'is_filled'],
@@ -812,7 +831,7 @@ return [
 		'CE92' => [
 			'code' => 'CE92',
 			'field_type' => 'yesnonullable',
-			'title' => 'Mulheres em idade fértil de 12 a 49 anos com informação de acompanhamento de planejamento reprodutivo no prontuário no último ano. (CE53)',
+			'title' => 'Mulheres em idade fértil de 12 a 49 anos com informação de acompanhamento de planejamento reprodutivo no prontuário no último ano',
 			'conditions' => [
 				['CE53', 'age_between', 12, 49],
 				['CE51', 'eq', 2],
@@ -844,7 +863,7 @@ return [
 		'CE95' => [
 			'code' => 'CE95',
 			'field_type' => 'date',
-			'title' => 'Data do último exame de mamografia para Mulheres entre 50 e 69 anos (fez? sim ou não. Alerta de dois anos a partir da data da última mamografia)',
+			'title' => 'Data do último exame de mamografia para Mulheres entre 50 e 69 anos',
 			'conditions' => [
 				['CE51', 'eq', 2],
 				['CE53', 'age_between', 50, 69],
@@ -916,7 +935,7 @@ return [
 		'CE102' => [
 			'code' => 'CE102',
 			'field_type' => 'select_one',
-			'title' => 'Situação de frequência escolar (guardar a série histórica mensal)',
+			'title' => 'Situação de frequência escolar',
 			'conditions' => [
 				['CE97', 'eq', 1],
 				['CE98', 'is_true'],
@@ -931,7 +950,7 @@ return [
 		'CE103' => [
 			'code' => 'CE103',
 			'field_type' => 'date',
-			'title' => 'Data de chegada de individuo encaminhado à SMDEI (alerte do CRAS) ',
+			'title' => 'Data de chegada de individuo encaminhado à SMDEI',
 			'conditions' => [
 				['CE104A', 'is_true']
 			],
@@ -965,7 +984,7 @@ return [
 		'CE104C' => [
 			'code' => 'CE104C',
 			'field_type' => 'select_one',
-			'title' => 'Encaminhamento  - emissão de CTPS (alerta para todos os parceiros quando o documento estiver com status de emitido, cai o alerta quando o status for documento entregue)',
+			'title' => 'Encaminhamento - Emissão de CTPS',
 			'conditions' => [
 				['CE104A', 'is_true'],
 			],
@@ -1124,7 +1143,7 @@ return [
 		'CE122' => [
 			'code' => 'CE122',
 			'field_type' => 'text',
-			'title' => 'Órgão para onde foi feito o encaminhamento',
+			'title' => 'Órgão de encaminhamento para emissão do CPF',
 			'conditions' => null,
 			'field_options' => null,
 		],
@@ -1216,7 +1235,7 @@ return [
 		'CE134' => [
 			'code' => 'CE134',
 			'field_type' => 'date',
-			'title' => 'Data de entrada da família no Sistema TS (início do protocolo)',
+			'title' => 'Data de entrada da família no Sistema TS',
 			'conditions' => null,
 			'field_options' => null,
 		],
@@ -1230,6 +1249,7 @@ return [
 	],
 
 	'categories' => [
+		'busca_ativa' => 'Busca Ativa',
 		'ipm' => 'IPM',
 		'saude' => 'Saúde',
 		'educacao' => 'Educação',
@@ -1239,6 +1259,7 @@ return [
 
 	'category_map' => [
 		'residence' => [
+			'busca_ativa' => [],
 			'ipm' => ['CE06A', 'CE06B', 'CE06C', 'CE06D', 'CE07', 'CE08', 'CE09', 'CE10', 'CE11', 'CE20', 'CE21', 'CE22', 'CE23', 'CE24', 'CE25', 'CE26', 'CE27', 'CE28', 'CE29', 'CE30'],
 			'saude' => ['CE85'],
 			'educacao' => [],
@@ -1246,6 +1267,7 @@ return [
 			'assistencia' => [],
 		],
 		'family' => [
+			'busca_ativa' => ['CE113'],
 			'ipm' => ['CE73', 'CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE71', 'CE74'],
 			'saude' => ['CE75', 'CE76', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE81', 'CE82'],
 			'educacao' => ['CE96'],
@@ -1253,11 +1275,12 @@ return [
 			'assistencia' => ['CE108', 'CE109', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE110', 'CE41', 'CE34', 'CE112', 'CE113', 'CE114', 'CE115', 'CE116', 'CE124', 'CE125', 'CE126', 'CE127', 'CE128', 'CE46', 'CE129', 'CE35', 'CE81'],
 		],
 		'person' => [
-			'ipm' => ['CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE63', 'CE70'],
+			'busca_ativa' => ['CE66', 'CE67', 'CE68', 'CE69'],
+			'ipm' => ['CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE62B', 'CE63', 'CE70'],
 			'saude' => ['CE86', 'CE133', 'CE87', 'CE54', 'CE83', 'CE89', 'CE90', 'CE91', 'CE92', 'CE93', 'CE94', 'CE95'],
 			'educacao' => ['CE97', 'CE98', 'CE99', 'CE100', 'CE101', 'CE102', 'CE66', 'CE67', 'CE68', 'CE69'],
 			'emprego' => ['CE103', 'CE104A', 'CE104B', 'CE104C', 'CE104D'],
-			'assistencia' => ['CE55', 'CE117', 'CE118', 'CE56', 'CE57', 'CE119', 'CE120', 'CE58', 'CE59', 'CE121', 'CE122', 'CE60', 'CE61', 'CE123', 'CE66', 'CE67', 'CE68', 'CE69', 'CE130', 'CE131', 'CE132', 'CE104A', 'CE104B', 'CE104C', 'CE104D', 'CE62', 'CE63', 'CE64'],
+			'assistencia' => ['CE55', 'CE117', 'CE118', 'CE56', 'CE57', 'CE119', 'CE120', 'CE58', 'CE59', 'CE121', 'CE122', 'CE60', 'CE61', 'CE123', 'CE66', 'CE67', 'CE68', 'CE69', 'CE130', 'CE131', 'CE132', 'CE104A', 'CE104B', 'CE104C', 'CE104D', 'CE62', 'CE62B', 'CE63', 'CE64'],
 		],
 	],
 
