@@ -26,13 +26,7 @@
 										<button @click="setFilter('visit_status', 'noshow')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'noshow' ? 'btn-primary' : 'btn-outline-primary'}}">Não compareceram</button>
 									</div>
 									<div class="form-group">
-										<select @change="doSearch()" class="form-control form-control-sm" name="filters[sector_id]">
-											<option value="" disabled @if(!isset($filters['sector_id']) || strlen($filters['sector_id']) <= 0) selected @endif >Filtrar por região censitária ... </option>
-											<option value="">-- Todas as regiões --</option>
-											@foreach($sectors as $sector)
-												<option @if(isset($filters['sector_id']) && strval($filters['sector_id']) === strval($sector->id)) selected @endif value="{{$sector->id}}">{{$sector->name}}</option>
-											@endforeach
-										</select>
+										<input type="number" @change="doSearch()" class="form-control form-control-sm" value="{{$filters['sector_id'] ?? ''}}" name="filters[sector_id]" placeholder="Região censitária ..." />
 									</div>
 								</form>
 							</div>

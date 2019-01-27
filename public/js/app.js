@@ -91996,6 +91996,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -92010,6 +92011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			isLoading: false,
+			isReadOnly: false,
 			view: {
 				openCategory: null
 			},
@@ -92022,6 +92024,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		var _this = this;
 
+		this.isReadOnly = !this.canEdit;
 		this.fetchCategories().then(function (categories) {
 			_this.openCategory(categories[0]);
 		});
@@ -92106,6 +92109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.fetchQuestionsByCategory(category).then(function () {
 				_this5.view.openCategory = category;
+				_this5.isReadOnly = category.name === 'Busca Ativa' || !_this5.canEdit;
 			});
 		}
 
@@ -92235,7 +92239,21 @@ var render = function() {
                   ? _c("i", { staticClass: "fa fa-circle text-secondary" })
                   : _vm._e(),
                 _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(category.name))])
+                _c("span", [_vm._v(_vm._s(category.name))]),
+                _vm._v(" "),
+                category.name === "Busca Ativa"
+                  ? _c("i", {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      staticClass: "text-secondary fa fa-lock",
+                      attrs: { title: "Somente leitura" }
+                    })
+                  : _vm._e()
               ]
             )
           })
@@ -92282,7 +92300,7 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("strong", [_vm._v(_vm._s(question.title))]),
                                 _vm._v(" "),
-                                !_vm.canEdit
+                                _vm.isReadOnly
                                   ? _c("i", {
                                       directives: [
                                         {
@@ -92317,7 +92335,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
-                                            disabled: !_vm.canEdit,
+                                            disabled: _vm.isReadOnly,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_yes"
@@ -92370,7 +92388,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
-                                            disabled: !_vm.canEdit,
+                                            disabled: _vm.isReadOnly,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_no"
@@ -92429,7 +92447,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
-                                            disabled: !_vm.canEdit,
+                                            disabled: _vm.isReadOnly,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_yes"
@@ -92482,7 +92500,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
-                                            disabled: !_vm.canEdit,
+                                            disabled: _vm.isReadOnly,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_no"
@@ -92535,7 +92553,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
-                                            disabled: !_vm.canEdit,
+                                            disabled: _vm.isReadOnly,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_null"
@@ -92588,7 +92606,7 @@ var render = function() {
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      readonly: !_vm.canEdit,
+                                      readonly: _vm.isReadOnly,
                                       type: "text"
                                     },
                                     domProps: {
@@ -92623,7 +92641,7 @@ var render = function() {
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      readonly: !_vm.canEdit,
+                                      readonly: _vm.isReadOnly,
                                       type: "date"
                                     },
                                     domProps: {
@@ -92669,7 +92687,7 @@ var render = function() {
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      readonly: !_vm.canEdit,
+                                      readonly: _vm.isReadOnly,
                                       type: "tel"
                                     },
                                     domProps: {
@@ -92704,7 +92722,7 @@ var render = function() {
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      readonly: !_vm.canEdit,
+                                      readonly: _vm.isReadOnly,
                                       type: "number"
                                     },
                                     domProps: {
@@ -92750,7 +92768,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
-                                            disabled: !_vm.canEdit,
+                                            disabled: _vm.isReadOnly,
                                             type: "radio",
                                             id:
                                               "rd_" + question.id + "_" + value
@@ -92807,7 +92825,7 @@ var render = function() {
                                       ],
                                       staticClass: "form-radio-input",
                                       attrs: {
-                                        disabled: !_vm.canEdit,
+                                        disabled: _vm.isReadOnly,
                                         type: "checkbox",
                                         id:
                                           "chk_" + question.id + "_" + _vm.value

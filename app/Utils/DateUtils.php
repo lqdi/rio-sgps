@@ -22,6 +22,10 @@ class DateUtils {
 		return Carbon::parse($date)->diffInYears();
 	}
 
+	public static function calculateAgeInDays(string $date) : int {
+		return Carbon::parse($date)->diffInDays();
+	}
+
 	const BR_DATE_TIME = 'd/m/Y H:i:s';
 	const BR_DATE = 'd/m/Y';
 

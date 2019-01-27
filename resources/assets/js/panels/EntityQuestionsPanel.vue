@@ -9,6 +9,7 @@
 						<i v-if="isCategoryOpen(category)" class="fa fa-circle text-success"></i>
 						<i v-if="!isCategoryOpen(category)" class="fa fa-circle text-secondary"></i>
 						<span>{{category.name}}</span>
+						<i v-if="category.name === 'Busca Ativa'" class="text-secondary fa fa-lock" v-b-tooltip.hover title="Somente leitura"></i>
 					</a>
 				</div>
 			</div>
@@ -21,17 +22,17 @@
 							<label :for="'q_' + question.id">
 								<span class="badge badge-secondary">{{question.code}}</span>
 								<strong>{{question.title}}</strong>
-								<i v-if="!canEdit" class="text-secondary fa fa-lock" v-b-tooltip.hover title="Somente leitura"></i>
+								<i v-if="isReadOnly" class="text-secondary fa fa-lock" v-b-tooltip.hover title="Somente leitura"></i>
 							</label>
 
 							<div v-if="question.field_type === 'yesno'" class="form-control">
 								<div class="row">
 									<div class="form-radio col-md-6">
-										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
+										<input :disabled="isReadOnly" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_yes'">Sim</label>
 									</div>
 									<div class="form-radio col-md-6">
-										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
+										<input :disabled="isReadOnly" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_no'">Não</label>
 									</div>
 								</div>
@@ -41,46 +42,46 @@
 							<div v-if="question.field_type === 'yesnonullable'" class="form-control">
 								<div class="row">
 									<div class="form-radio col-md-4">
-										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
+										<input :disabled="isReadOnly" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_yes'">Sim</label>
 									</div>
 									<div class="form-radio col-md-4">
-										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
+										<input :disabled="isReadOnly" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_no'">Não</label>
 									</div>
 									<div class="form-radio col-md-4">
-										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_null'" :value="null">
+										<input :disabled="isReadOnly" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_null'" :value="null">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_null'">Não sabe / Não respondeu</label>
 									</div>
 								</div>
 							</div>
 
 							<div v-if="question.field_type === 'text'">
-								<input :readonly="!canEdit" class="form-control" type="text" v-model="answers[question.code]" />
+								<input :readonly="isReadOnly" class="form-control" type="text" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'date'">
-								<input :readonly="!canEdit" class="form-control" type="date" v-model="answers[question.code]" />
+								<input :readonly="isReadOnly" class="form-control" type="date" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'numeric'">
-								<input :readonly="!canEdit" class="form-control" type="tel" v-mask="(question.field_options && question.field_options.mask) ? question.field_options.mask : null" v-model="answers[question.code]" />
+								<input :readonly="isReadOnly" class="form-control" type="tel" v-mask="(question.field_options && question.field_options.mask) ? question.field_options.mask : null" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'number'">
-								<input :readonly="!canEdit" class="form-control" type="number" v-model="answers[question.code]" />
+								<input :readonly="isReadOnly" class="form-control" type="number" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'select_one'" class="form-control">
 								<div class="form-radio" v-for="(label, value) in question.field_options">
-									<input :disabled="!canEdit" class="form-radio-input" type="radio" v-model="answers[question.code]" :id="'rd_' + question.id + '_' + value" :value="value">
+									<input :disabled="isReadOnly" class="form-radio-input" type="radio" v-model="answers[question.code]" :id="'rd_' + question.id + '_' + value" :value="value">
 									<label class="form-radio-label" :for="'rd_' + question.id + '_' + value">{{label}}</label>
 								</div>
 							</div>
 
 							<div v-if="question.field_type === 'select_many'" class="form-control">
 								<div class="form-check">
-									<input :disabled="!canEdit" class="form-radio-input" type="checkbox" v-model="answers[question.code]" :id="'chk_' + question.id + '_' + value" :value="value">
+									<input :disabled="isReadOnly" class="form-radio-input" type="checkbox" v-model="answers[question.code]" :id="'chk_' + question.id + '_' + value" :value="value">
 									<label class="form-radio-label" :for="'chk_' + question.id + '_' + value">{{label}}</label>
 								</div>
 							</div>
@@ -109,6 +110,7 @@
 
 		data: () => { return {
 			isLoading: false,
+			isReadOnly: false,
 			view: {
 				openCategory: null
 			},
@@ -118,6 +120,7 @@
 		}},
 
 		mounted: function() {
+			this.isReadOnly = !this.canEdit;
 			this.fetchCategories()
 				.then((categories) => {
 					this.openCategory(categories[0]);
@@ -180,8 +183,7 @@
 				return axios
 					.put(
 						API.url(Endpoints.Questions.SaveAnswers, {type: this.entityType, id: this.entityId}),
-						{answers: this.answers},
-						API.headers()
+						{answers: this.answers},						API.headers()
 					)
 					.then((res) => {
 						console.log(res.data);
@@ -216,6 +218,7 @@
 
 				this.fetchQuestionsByCategory(category).then(() => {
 					this.view.openCategory = category;
+					this.isReadOnly = (category.name === 'Busca Ativa') || !this.canEdit
 				})
 
 			}

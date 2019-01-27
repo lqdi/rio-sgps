@@ -39,9 +39,8 @@ class AlertsController extends Controller {
 		$query = $service->applyFiltersToQuery($query, collect($filters));
 
 		$alerts = $query->paginate(24);
-		$sectors = Sector::all();
 
-		return view('alerts.alerts_index', compact('alerts', 'filters', 'sectors'));
+		return view('alerts.alerts_index', compact('alerts', 'filters'));
 	}
 
 	public function mark_as_delivered(Family $family) {

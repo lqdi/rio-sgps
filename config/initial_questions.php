@@ -1259,7 +1259,7 @@ return [
 
 	'category_map' => [
 		'residence' => [
-			'busca_ativa' => [],
+			'busca_ativa' => ['CE20', 'CE21', 'CE22', 'CE23', 'CE24', 'CE25', 'CE26', 'CE28', 'CE29', 'CE30'],
 			'ipm' => ['CE06A', 'CE06B', 'CE06C', 'CE06D', 'CE07', 'CE08', 'CE09', 'CE10', 'CE11', 'CE20', 'CE21', 'CE22', 'CE23', 'CE24', 'CE25', 'CE26', 'CE27', 'CE28', 'CE29', 'CE30'],
 			'saude' => ['CE85'],
 			'educacao' => [],
@@ -1267,7 +1267,7 @@ return [
 			'assistencia' => [],
 		],
 		'family' => [
-			'busca_ativa' => ['CE113'],
+			'busca_ativa' => ['CE38', 'CE39', 'CE37'],
 			'ipm' => ['CE73', 'CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE71', 'CE74'],
 			'saude' => ['CE75', 'CE76', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE81', 'CE82'],
 			'educacao' => ['CE96'],
@@ -1275,7 +1275,7 @@ return [
 			'assistencia' => ['CE108', 'CE109', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE110', 'CE41', 'CE34', 'CE112', 'CE113', 'CE114', 'CE115', 'CE116', 'CE124', 'CE125', 'CE126', 'CE127', 'CE128', 'CE46', 'CE129', 'CE35', 'CE81'],
 		],
 		'person' => [
-			'busca_ativa' => ['CE66', 'CE67', 'CE68', 'CE69'],
+			'busca_ativa' => ['CE62', 'CE63'],
 			'ipm' => ['CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE62B', 'CE63', 'CE70'],
 			'saude' => ['CE86', 'CE133', 'CE87', 'CE54', 'CE83', 'CE89', 'CE90', 'CE91', 'CE92', 'CE93', 'CE94', 'CE95'],
 			'educacao' => ['CE97', 'CE98', 'CE99', 'CE100', 'CE101', 'CE102', 'CE66', 'CE67', 'CE68', 'CE69'],

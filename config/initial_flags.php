@@ -173,11 +173,11 @@ return [
 	'F022' => [
 		'code' => 'F022',
 		'entity_type' => 'family',
-		'name' => 'Protocolo de visitas da ESF pendente',
+		'name' => 'Visita da ESF pendente',
 		'behavior' => '\\SGPS\\Behavior\\DefaultFlag',
 		'conditions' =>  [
 			['CE87', 'is_filled'],
-			['CE87', 'is_false'],
+			['CE87', 'days_since_gt', 31],
 		],
 		'groups' => ['SMS'],
 	],

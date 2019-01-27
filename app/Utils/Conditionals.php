@@ -88,6 +88,16 @@ class Conditionals {
 		return DateUtils::calculateAgeInYears($fieldValue) <= $param;
 	}
 
+	public function days_since_gt($fieldValue, $param) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
+		return DateUtils::calculateAgeInDays($fieldValue) >= $param;
+	}
+
+	public function days_since_lt($fieldValue, $param) : bool {
+		if(!$this->is_valid_date($fieldValue)) return false;
+		return DateUtils::calculateAgeInDays($fieldValue) <= $param;
+	}
+
 	public function is_children($fieldValue) : bool {
 		if(!$this->is_valid_date($fieldValue)) return false;
 		return DateUtils::calculateAgeInYears($fieldValue) <= self::CHILDREN_MAX_AGE;
