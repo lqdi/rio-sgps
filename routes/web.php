@@ -2,6 +2,7 @@
 Route::group([], function() {
 	Route::get('/login', 'Web\AuthController@index')->name('auth.index');
 	Route::post('/login', 'Web\AuthController@login')->name('auth.login');
+	Route::post('/login/with_cerberus', 'Web\AuthController@loginWithCerberus')->name('auth.login.with_cerberus');
 	Route::post('/logout', 'Web\AuthController@logout')->name('auth.logout');
 });
 
@@ -23,7 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('/reports', 'Web\AlertsController@index')->name('reports.index');
 
-	Route::group(['prefix' => 'admin'], function() { // TODO: middleware to filter out admins
+	Route::group(['prefix' => 'admin', 'middleware' => 'level:admin'], function() {
 		Route::get('/', 'Admin\DashboardController@index')->name('admin.dashboard.index');
 
 		Route::get('/admin/users', 'Admin\UsersController@index')->name('admin.users.index');
@@ -60,7 +61,6 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::post('/admin/import/survey_csv', 'Admin\ImportsController@import_survey_csv')->name('admin.imports.survey_csv');
 		Route::post('/admin/import/geography_csv', 'Admin\ImportsController@import_geography_csv')->name('admin.imports.geography_csv');
 	});
-
 
 });
 

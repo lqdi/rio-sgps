@@ -16,6 +16,7 @@ namespace SGPS\Http\Controllers\Web;
 
 use Auth;
 use SGPS\Http\Controllers\Controller;
+use SGPS\Services\CerberusAuthenticationService;
 
 class AuthController extends Controller {
 
@@ -26,6 +27,8 @@ class AuthController extends Controller {
 	public function login() {
 
 		$credentials = request()->only(['email', 'password']);
+		$credentials['source'] = 'sgps'; // Can only login by email if user was created on SGPS. Else we cannot check validity.
+
 		$shouldRemember = request('remember') === 'yes';
 
 		$user = Auth::attempt($credentials, $shouldRemember);
@@ -36,6 +39,26 @@ class AuthController extends Controller {
 		}
 
 		return redirect()->route('dashboard.index');
+	}
+
+	public function loginWithCerberus(CerberusAuthenticationService $service) {
+
+		$login = request('login', '');
+		$password = request('password', '');
+		$shouldRemember = request('remember') === 'yes';
+
+		try {
+
+			$service->authenticate($login, $password, $shouldRemember);
+
+		} catch (\Exception $ex) {
+			return redirect()->route('auth.index')
+				->with('error', 'invalid_credentials')
+				->with('exception', $ex->getMessage());
+		}
+
+		return redirect()->route('dashboard.index');
+
 	}
 
 	public function logout() {

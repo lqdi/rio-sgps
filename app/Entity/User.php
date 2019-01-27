@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use SGPS\Constants\UserLevel;
 use SGPS\Traits\HasShortCode;
 use SGPS\Traits\IndexedByUUID;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -30,6 +31,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @package SGPS\Entity
  *
  * @property string $id
+ * @property string $source
  * @property string $shortcode
  * @property string $group_id
  * @property string $registration_number
@@ -61,6 +63,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	protected $table = "users";
 
 	protected $fillable = [
+		'source',
 		'name',
 		'level',
 		'email',
@@ -75,6 +78,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	];
 
 	protected static $logAttributes = [
+		'source',
 		'name',
 		'level',
 		'email',
@@ -184,5 +188,65 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	 */
 	public function getJWTCustomClaims() {
 		return [];
+	}
+
+	/**
+	 * Checks if a user has a certain level or higher.
+	 *
+	 * @param null|string $level
+	 * @return bool
+	 */
+	public function hasLevel(?string $level) : bool {
+		if(!$level) return false;
+		if(!$this->level) return false;
+
+		return UserLevel::check($level, $this->level);
+	}
+
+	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—
+
+	/**
+	 * Creates a user via an external provider.
+	 * Must have at least one logon key (email, CPF or registration number).
+	 * Will generate a random long password to prevent password authentication.
+	 * Source cannot be 'sgps', as these are reserved for local users.
+	 * Given level must be a valid SGPS level.
+	 *
+	 * @param null|string $name [optional] The user name.
+	 * @param null|string $email The user e-mail. Optional if CPF or reg number is given.
+	 * @param null|string $cpf The user CPF. Optional if e-mail or reg number is given.
+	 * @param null|string $registrationNumber The user registration number. Optional if e-mail or CPF is given.
+	 * @param string $level The user level. @see \SGPS\Constants\UserLevel
+	 * @param string $source The external user source. Identify here which system is providing this user.
+	 * @return User
+	 */
+	public static function createFromExternal(?string $name, ?string $email, ?string $cpf, ?string $registrationNumber, string $level = UserLevel::OPERADOR, string $source = 'external') : User {
+
+		if(is_null($email) && is_null($cpf) && is_null($registrationNumber)) {
+			throw new \InvalidArgumentException("Cannot create external user with no logon data (email, CPF or registration number)");
+		}
+
+		if($source === 'sgps') {
+			throw new \InvalidArgumentException("Cannot create external user with source 'sgps'. Must inform another source.");
+		}
+
+		if(!UserLevel::exists($level)) {
+			throw new \InvalidArgumentException("Cannot create external user with invalid level: {$level}");
+		}
+
+		$user = new User();
+		$user->fill([
+			'source' => $source,
+			'level' => $level,
+			'email' => $email,
+			'name' => $name,
+			'cpf' => $cpf,
+			'registration_number' => $registrationNumber,
+		]);
+
+		// External users cannot login with password
+		$user->setPassword(str_random(64));
+
+		return $user;
 	}
 }
