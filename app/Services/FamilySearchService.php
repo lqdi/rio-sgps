@@ -25,6 +25,10 @@ class FamilySearchService {
 	public $defaultCaseFilters = [
 		'status' => 'ongoing',
 		'assigned_to' => 'all',
+		'sector_id' => '',
+		'sector_cre' => '',
+		'sector_casdh' => '',
+		'sector_cap' => '',
 		'flags' => [],
 		'q' => '',
 	];
@@ -32,6 +36,9 @@ class FamilySearchService {
 	public $defaultAlertFilters = [
 		'visit_status' => 'pending',
 		'sector_id' => '',
+		'sector_cre' => '',
+		'sector_casdh' => '',
+		'sector_cap' => '',
 		'q' => '',
 	];
 
@@ -45,6 +52,24 @@ class FamilySearchService {
 		if($filters->has('status') && strlen($filters['status']) > 0) {
 			$query = $query->where(function ($sq) use ($filters) {
 				return $this->filterByStatus($sq, $filters['status']);
+			});
+		}
+
+		if($filters->has('sector_cre') && strlen($filters['sector_cre']) > 0) {
+			$query = $query->whereHas('sector', function ($sq) use ($filters) {
+				return $sq->where('cod_cre', $filters['sector_cre']);
+			});
+		}
+
+		if($filters->has('sector_casdh') && strlen($filters['sector_casdh']) > 0) {
+			$query = $query->whereHas('sector', function ($sq) use ($filters) {
+				return $sq->where('cod_casdh', $filters['sector_casdh']);
+			});
+		}
+
+		if($filters->has('sector_cap') && strlen($filters['sector_cap']) > 0) {
+			$query = $query->whereHas('sector', function ($sq) use ($filters) {
+				return $sq->where('cod_cap', $filters['sector_cap']);
 			});
 		}
 

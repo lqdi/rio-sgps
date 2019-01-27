@@ -13,40 +13,34 @@
 						<h1>Alertas</h1>
 					</div>
 					<div>
-						<div class="row">
-							<div class="col-md-8">
-								<form ref="filterForm" @submit.prevent="doSearch()" class="form-inline justify-content-between" method="GET" action="{{route('alerts.index')}}">
-									<div class="form-group">
-										<i class="fa fa-filter"></i> &nbsp; <strong>Filtrar por</strong> &nbsp;&nbsp;
-									</div>
-									<div class="btn-group" role="group">
-										<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
-										<button @click="setFilter('visit_status', 'pending')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'pending' ? 'btn-primary' : 'btn-outline-primary'}}">Pendentes</button>
-										<button @click="setFilter('visit_status', 'delivered')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'delivered' ? 'btn-primary' : 'btn-outline-primary'}}">Entregues</button>
-										<button @click="setFilter('visit_status', 'noshow')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'noshow' ? 'btn-primary' : 'btn-outline-primary'}}">Não compareceram</button>
-									</div>
-									<div class="form-group">
-										<input type="number" @change="doSearch()" class="form-control form-control-sm" value="{{$filters['sector_id'] ?? ''}}" name="filters[sector_id]" placeholder="Região censitária ..." />
-									</div>
-								</form>
-							</div>
-							<div class="col-md-3">
-								<form method="GET" action="{{route('alerts.index')}}" class="form-inline justify-content-between">
-									<div class="form-group">
-										<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm mx-2" style="width: 200px" placeholder="Buscar ...">
-									</div>
-								</form>
-							</div>
-							<div class="col-md-1">
-								<form method="GET" action="{{route('alerts.print_all_referrals')}}" class="form-inline justify-content-between">
-									<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
-									<input type="hidden" name="filters[sector_id]" v-model="filters.sector_id" />
-									<input type="hidden" name="filters[q]" v-model="filters.q" />
-									<div class="form-group">
-										<button type="submit" class="btn btn-sm btn-info"><i class="fa fa-print"></i> Imprimir fichas</button>
-									</div>
-								</form>
-							</div>
+						<div class="form-inline">
+							<form ref="filterForm" @submit.prevent="doSearch()" class="form-inline justify-content-between" method="GET" action="{{route('alerts.index')}}">
+								<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
+								<div class="btn-group mr-2" role="group">
+									<button @click="setFilter('visit_status', 'pending')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'pending' ? 'btn-primary' : 'btn-outline-primary'}}">Pendentes</button>
+									<button @click="setFilter('visit_status', 'delivered')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'delivered' ? 'btn-primary' : 'btn-outline-primary'}}">Entregues</button>
+									<button @click="setFilter('visit_status', 'noshow')" type="button" class="btn btn-sm {{($filters['visit_status'] ?? null) === 'noshow' ? 'btn-primary' : 'btn-outline-primary'}}">Não compareceram</button>
+								</div>
+								<div class="form-group input-group justify-content-between">
+									<input type="number" @change="doSearch()" class="form-control form-control-sm" value="{{$filters['sector_id'] ?? ''}}" name="filters[sector_id]" placeholder="Região censitária..." />
+									<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_cre'] ?? ''}}" name="filters[sector_cre]" placeholder="CRE..." />
+									<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_casdh'] ?? ''}}" name="filters[sector_casdh]" placeholder="CASDH..." />
+									<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_cap'] ?? ''}}" name="filters[sector_cap]" placeholder="CAP..." />
+								</div>
+							</form>
+							<form method="GET" action="{{route('alerts.index')}}" class="form-inline justify-content-between">
+								<div class="form-group">
+									<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm mx-2" style="max-width: 150px" placeholder="Buscar ...">
+								</div>
+							</form>
+							<form method="GET" action="{{route('alerts.print_all_referrals')}}" class="form-inline justify-content-between">
+								<input type="hidden" name="filters[visit_status]" v-model="filters.visit_status" />
+								<input type="hidden" name="filters[sector_id]" v-model="filters.sector_id" />
+								<input type="hidden" name="filters[q]" v-model="filters.q" />
+								<div class="form-group">
+									<button type="submit" class="btn btn-sm btn-info"><i class="fa fa-print"></i> Imprimir fichas</button>
+								</div>
+							</form>
 						</div>
 					</div>
 

@@ -13,31 +13,34 @@
 				</div>
 				<div>
 					<form ref="filterForm" @submit.prevent="doSearch()" class="form-inline justify-content-between" method="GET" action="{{route('families.index')}}">
-						<div class="form-group">
-							<i class="fa fa-filter"></i> &nbsp; <strong>Filtrar por</strong> &nbsp;&nbsp;
-						</div>
+						<input type="hidden" name="filters[status]" v-model="filters.status" />
+						<input type="hidden" name="filters[assigned_to]" v-model="filters.assigned_to" />
+						<input v-if="filters.flags" v-for="(flag_id, i) in filters.flags" type="hidden" :name="'filters[flags][' + i + ']'" :value="flag_id" />
+
 						<div class="btn-group" role="group">
-							<input type="hidden" name="filters[status]" v-model="filters.status" />
 							<button type="button" @click="setFilter('status', 'ongoing')" class="btn btn-sm {{$filters['status'] === 'ongoing' ? 'btn-primary' : 'btn-outline-primary'}}">Em aberto</button>
 							<button type="button" @click="setFilter('status', 'archived')" class="btn btn-sm {{$filters['status'] === 'archived' ? 'btn-primary' : 'btn-outline-primary'}}">Arquivados</button>
 						</div>
+
 						<div class="form-group">
-							<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm mx-2" style="width: 270px" placeholder="Buscar por nome, endereço, CPF...">
+							<input type="search" name="filters[q]" value="{{$filters['q'] ?? ''}}" class="form-control form-control-sm" style="width: 150px" placeholder="Buscar...">
 						</div>
 
-						<div class="btn-group-sm" role="group">
-							<input type="hidden" name="filters[assigned_to]" v-model="filters.assigned_to" />
+						<div class="btn-group" role="group">
 							<button type="button" @click="setFilter('assigned_to', 'all')" class="btn btn-sm {{$filters['assigned_to'] === 'all' ? 'btn-primary' : 'btn-outline-primary'}}">Todos</button>
 							<button type="button" @click="setFilter('assigned_to', 'to_me')" class="btn btn-sm {{$filters['assigned_to'] === 'to_me' ? 'btn-primary' : 'btn-outline-primary'}}">Meus casos</button>
 						</div>
 
-						<div class="form-group">
-							<input v-if="filters.flags" v-for="(flag_id, i) in filters.flags" type="hidden" :name="'filters[flags][' + i + ']'" :value="flag_id" />
-							<button type="button" @click="selectFlagsToFilter()" class="btn btn-sm btn-dark mx-2">Filtrar por Etiquetas</button>
+						<div class="form-group input-group justify-content-between">
+							<input type="number" @change="doSearch()" class="form-control form-control-sm" value="{{$filters['sector_id'] ?? ''}}" name="filters[sector_id]" placeholder="Região censitária..." />
+							<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_cre'] ?? ''}}" name="filters[sector_cre]" placeholder="CRE..." />
+							<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_casdh'] ?? ''}}" name="filters[sector_casdh]" placeholder="CASDH..." />
+							<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_cap'] ?? ''}}" name="filters[sector_cap]" placeholder="CAP..." />
 						</div>
 
 						<div class="form-group">
-							<button type="button" @click="exportResults(filters)" class="btn btn-sm btn-dark mx-2">Exportar <span class="badge badge-primary">{{$families->total()}}</span> <i class="fa fa-download"></i></button>
+							<button type="button" @click="selectFlagsToFilter()" class="btn btn-sm btn-dark mr-1"><i class="fa fa-filter"></i> Etiquetas</button>
+							<button type="button" @click="exportResults(filters)" class="btn btn-sm btn-dark"><i class="fa fa-download"></i> Exportar <span class="badge badge-primary">{{$families->total()}}</span></button>
 						</div>
 					</form>
 				</div>

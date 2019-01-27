@@ -25,7 +25,7 @@ class FamiliesController extends Controller {
 
 	public function index(FamilySearchService $service) {
 
-		$filters = request('filters', $service->defaultCaseFilters);
+		$filters = array_merge($service->defaultCaseFilters, request('filters', []));
 
 		$query = Family::query()
 			->notAlerts()
