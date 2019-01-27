@@ -21,16 +21,17 @@
 							<label :for="'q_' + question.id">
 								<span class="badge badge-secondary">{{question.code}}</span>
 								<strong>{{question.title}}</strong>
+								<i v-if="!canEdit" class="text-secondary fa fa-lock" v-b-tooltip.hover title="Somente leitura"></i>
 							</label>
 
 							<div v-if="question.field_type === 'yesno'" class="form-control">
 								<div class="row">
 									<div class="form-radio col-md-6">
-										<input class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
+										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_yes'">Sim</label>
 									</div>
 									<div class="form-radio col-md-6">
-										<input class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
+										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_no'">Não</label>
 									</div>
 								</div>
@@ -40,52 +41,52 @@
 							<div v-if="question.field_type === 'yesnonullable'" class="form-control">
 								<div class="row">
 									<div class="form-radio col-md-4">
-										<input class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
+										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_yes'" :value="true">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_yes'">Sim</label>
 									</div>
 									<div class="form-radio col-md-4">
-										<input class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
+										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_no'" :value="false">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_no'">Não</label>
 									</div>
 									<div class="form-radio col-md-4">
-										<input class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_null'" :value="null">
+										<input :disabled="!canEdit" class="form-radio-input" type="radio" :name="'yesno_' + question.id" v-model="answers[question.code]" :id="'yesno_' + question.id + '_null'" :value="null">
 										<label class="form-radio-label" :for="'yesno_' + question.id + '_null'">Não sabe / Não respondeu</label>
 									</div>
 								</div>
 							</div>
 
 							<div v-if="question.field_type === 'text'">
-								<input class="form-control" type="text" v-model="answers[question.code]" />
+								<input :readonly="!canEdit" class="form-control" type="text" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'date'">
-								<input class="form-control" type="date" v-model="answers[question.code]" />
+								<input :readonly="!canEdit" class="form-control" type="date" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'numeric'">
-								<input class="form-control" type="tel" v-mask="(question.field_options && question.field_options.mask) ? question.field_options.mask : null" v-model="answers[question.code]" />
+								<input :readonly="!canEdit" class="form-control" type="tel" v-mask="(question.field_options && question.field_options.mask) ? question.field_options.mask : null" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'number'">
-								<input class="form-control" type="number" v-model="answers[question.code]" />
+								<input :readonly="!canEdit" class="form-control" type="number" v-model="answers[question.code]" />
 							</div>
 
 							<div v-if="question.field_type === 'select_one'" class="form-control">
 								<div class="form-radio" v-for="(label, value) in question.field_options">
-									<input class="form-radio-input" type="radio" v-model="answers[question.code]" :id="'rd_' + question.id + '_' + value" :value="value">
+									<input :disabled="!canEdit" class="form-radio-input" type="radio" v-model="answers[question.code]" :id="'rd_' + question.id + '_' + value" :value="value">
 									<label class="form-radio-label" :for="'rd_' + question.id + '_' + value">{{label}}</label>
 								</div>
 							</div>
 
 							<div v-if="question.field_type === 'select_many'" class="form-control">
 								<div class="form-check">
-									<input class="form-radio-input" type="checkbox" v-model="answers[question.code]" :id="'chk_' + question.id + '_' + value" :value="value">
+									<input :disabled="!canEdit" class="form-radio-input" type="checkbox" v-model="answers[question.code]" :id="'chk_' + question.id + '_' + value" :value="value">
 									<label class="form-radio-label" :for="'chk_' + question.id + '_' + value">{{label}}</label>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="card-footer">
+					<div class="card-footer" v-if="canEdit">
 						<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-upload"></i> Salvar dados</button>
 					</div>
 
@@ -104,7 +105,7 @@
 
 	export default {
 
-		props: ['entityType', 'entityId'],
+		props: ['entityType', 'entityId', 'canEdit'],
 
 		data: () => { return {
 			isLoading: false,
@@ -171,6 +172,8 @@
 			},
 
 			saveAnswers: function() {
+				if(!this.canEdit) return;
+
 				let hasChangedProfile = false;
 				this.isLoading = true;
 

@@ -1,5 +1,6 @@
 @extends('shared.layout')
 @php /* @var $family \SGPS\Entity\Family */ @endphp
+@php /* @var $permissions \SGPS\Utils\FamilyPermissionGrid */ @endphp
 @section('main')
 	<div is="family-view"
 	     inline-template
@@ -34,13 +35,23 @@
 
 				<hr />
 
-				<a @click="openTab('residence')" href="#residence" :class="{active: isOpen('residence')}" class="sgps__sidebar-link"><i class="fa fa-home"></i> Domicílio</a>
+				<a @click="openTab('residence')" href="#residence" :class="{active: isOpen('residence')}" class="sgps__sidebar-link">
+					<i class="fa fa-home"></i> Domicílio
+					@include('components.entity_permission_icon', ['permissions' => $permissions, 'entity' => $family->residence, 'class' => 'pull-right mt-3 mr-1'])
+				</a>
 
 				<div class="tree__container">
-					<a @click="openTab('family')" href="#family" :class="{active: isOpen('family')}" class="tree__leaf"><i class="fa fa-sitemap"></i> Família</a>
+					<a @click="openTab('family')" href="#family" :class="{active: isOpen('family')}" class="tree__leaf">
+						<i class="fa fa-sitemap"></i> Família
+						@include('components.entity_permission_icon', ['permissions' => $permissions, 'entity' => $family, 'class' => 'pull-right mt-3 mr-1'])
+					</a>
 					<div class="tree__children open">
 						@foreach($family->members as $member)
-							<a @click="openTab('member', '{{$member->id}}')" href="#member/{{$member->id}}" :class="{active: isOpen('member', '{{$member->id}}')}" class="tree__leaf @if($member->isArchived()) tree__deleted @endif"><i class="fa fa-male"></i> {{$member->name}} @if($member->id === $family->person_in_charge_id)<i v-b-tooltip.hover title="Responsável" class="fa fa-star"></i>@endif</a>
+							<a @click="openTab('member', '{{$member->id}}')" href="#member/{{$member->id}}" :class="{active: isOpen('member', '{{$member->id}}')}" class="tree__leaf @if($member->isArchived()) tree__deleted @endif">
+								<i class="fa fa-male"></i> {{$member->name}}
+								@if($member->id === $family->person_in_charge_id) <i v-b-tooltip.hover title="Responsável" class="fa fa-star"></i> @endif
+								@include('components.entity_permission_icon', ['permissions' => $permissions, 'entity' => $member, 'class' => 'pull-right mt-3 mr-1'])
+							</a>
 						@endforeach
 					</div>
 

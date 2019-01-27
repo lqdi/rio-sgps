@@ -17,13 +17,17 @@
 		@endif
 	</div>
 	<div class="card-footer">
-		@if(!$attribution->is_cancelled && !$attribution->is_completed)
-			<button type="button" v-b-tooltip @click="completeFlagAttribution('{{$attribution->entity_type}}', '{{$attribution->entity_id}}', '{{$attribution->flag->id}}')" title="Marcar etiqueta como resolvida" class="btn btn-sm mx-1 btn-outline-success pull-right"><i class="fa fa-check"></i> Concluído</button>
-			<button type="button" v-b-tooltip @click="cancelFlagAttribution('{{$attribution->entity_type}}', '{{$attribution->entity_id}}', '{{$attribution->flag->id}}')" title="Cancelar e remover etiqueta" class="btn btn-sm mx-1 btn-outline-danger pull-right"><i class="fa fa-trash"></i> Cancelar</button>
-		@elseif($attribution->is_cancelled)
-			<div class="badge badge-danger"><i class="fa fa-ban"></i> Etiqueta cancelada!</div>
-		@elseif($attribution->is_completed)
-			<div class="badge badge-success"><i class="fa fa-check"></i> Etiqueta concluída!</div>
+		@if($permissions->canEdit($attribution->entity))
+			@if(!$attribution->is_cancelled && !$attribution->is_completed)
+				<button type="button" v-b-tooltip @click="completeFlagAttribution('{{$attribution->entity_type}}', '{{$attribution->entity_id}}', '{{$attribution->flag->id}}')" title="Marcar etiqueta como resolvida" class="btn btn-sm mx-1 btn-outline-success pull-right"><i class="fa fa-check"></i> Concluído</button>
+				<button type="button" v-b-tooltip @click="cancelFlagAttribution('{{$attribution->entity_type}}', '{{$attribution->entity_id}}', '{{$attribution->flag->id}}')" title="Cancelar e remover etiqueta" class="btn btn-sm mx-1 btn-outline-danger pull-right"><i class="fa fa-trash"></i> Cancelar</button>
+			@elseif($attribution->is_cancelled)
+				<div class="badge badge-danger"><i class="fa fa-ban"></i> Etiqueta cancelada!</div>
+			@elseif($attribution->is_completed)
+				<div class="badge badge-success"><i class="fa fa-check"></i> Etiqueta concluída!</div>
+			@endif
+		@else
+			<div class="badge badge-secondary">Etiqueta associada a outra secretaria</div>
 		@endif
 	</div>
 </div>

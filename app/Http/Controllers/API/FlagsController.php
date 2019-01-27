@@ -34,6 +34,10 @@ class FlagsController extends Controller {
 
 	public function cancel(Entity $entity, Flag $flag, FlagAttributionService $service) {
 
+		if(!$this->permissions->canEditEntity($this->currentUser, $entity)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
+
 		if(!$service->isFlagAttributedToEntity($entity, $flag)) {
 			return $this->api_failure('flag_not_assigned');
 		}
@@ -47,6 +51,10 @@ class FlagsController extends Controller {
 
 	public function complete(Entity $entity, Flag $flag, FlagAttributionService $service) {
 
+		if(!$this->permissions->canEditEntity($this->currentUser, $entity)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
+
 		if(!$service->isFlagAttributedToEntity($entity, $flag)) {
 			return $this->api_failure('flag_not_assigned');
 		}
@@ -59,6 +67,10 @@ class FlagsController extends Controller {
 	}
 
 	public function add_to_entity(Entity $entity, FlagAttributionService $service) {
+
+		if(!$this->permissions->canEditEntity($this->currentUser, $entity)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
 
 		$flag = Flag::findOrFail(request('flag_id')); /* @var $flag Flag */
 		$referenceDate = Carbon::createFromFormat('Y-m-d', request('reference_date'));

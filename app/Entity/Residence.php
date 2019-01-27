@@ -83,14 +83,6 @@ class Residence extends Entity {
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Relationship: residences with sectors
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
-	 */
-	public function sector() {
-		return $this->hasOne(Sector::class, 'id', 'sector_id');
-	}
-
-	/**
 	 * Relationship: residences with families
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */

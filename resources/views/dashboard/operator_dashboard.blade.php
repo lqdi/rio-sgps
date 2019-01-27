@@ -19,7 +19,7 @@
 									<div class="col-md-6">
 										<dl>
 											<dt><i class="fa fa-cog"></i> Tipo:</dt>
-											<dd><strong class="badge badge-primary">{{$user->type ?? 'Operador'}}</strong></dd>
+											<dd><strong class="badge badge-primary">{{trans('user.level.' . $user->level)}}</strong></dd>
 											<dt><i class="fa fa-users"></i> Grupos:</dt>
 											<dd>
 												@if(sizeof($user->groups) > 0)

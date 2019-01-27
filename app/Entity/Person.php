@@ -88,14 +88,6 @@ class Person extends Entity {
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Relationship: person with sector
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
-	 */
-	public function sector() {
-		return $this->hasOne(Sector::class, 'id', 'sector_id');
-	}
-
-	/**
 	 * Relationship: person with residence
 	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */

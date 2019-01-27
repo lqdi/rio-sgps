@@ -32,5 +32,5 @@
 
 	<hr />
 
-	<entity-questions-panel key="forms_residence_{{$residence->id}}" entity-type="residence" entity-id="{{$residence->id}}"></entity-questions-panel>
+	<entity-questions-panel key="forms_residence_{{$residence->id}}" entity-type="residence" entity-id="{{$residence->id}}" :can-edit="{{$permissions->canEdit($residence) ? 'true' : 'false'}}"></entity-questions-panel>
 </div>

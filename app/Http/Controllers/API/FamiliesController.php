@@ -22,6 +22,11 @@ use SGPS\Services\FamilyManagementService;
 class FamiliesController extends Controller {
 
 	public function add_member(Family $family, FamilyManagementService $service) {
+
+		if(!$this->permissions->canEditEntity($this->currentUser, $family)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
+
 		$memberName = request('member_name');
 
 		$member = $service->addMemberToFamily($family, $memberName);
@@ -34,6 +39,10 @@ class FamiliesController extends Controller {
 	}
 
 	public function archive_member(Family $family, Person $member, FamilyManagementService $service) {
+
+		if(!$this->permissions->canEditEntity($this->currentUser, $family)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
 
 		$reason = request('reason');
 

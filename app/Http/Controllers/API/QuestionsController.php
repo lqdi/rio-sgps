@@ -68,6 +68,10 @@ class QuestionsController extends Controller {
 		$answers = request('answers');
 		$entity = Entity::fetchByID($entity_type, $entity_id);
 
+		if(!$this->permissions->canEditEntity($this->currentUser, $entity)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
+
 		$questions = Question::query()
 			->whereIn('code', array_keys($answers))
 			->get()

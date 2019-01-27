@@ -14,7 +14,7 @@
 					<li class="nav-item @if(Route::is('dashboard.*')) active @endif"><a class="nav-link" href="{{route('dashboard.index')}}"><i class="fa fa-tachometer-alt"></i> Meu Painel</a></li>
 					<li class="nav-item @if(Route::is('families.*')) active @endif"><a class="nav-link" href="{{route('families.index')}}"><i class="fa fa-male"></i> Famílias</a></li>
 					<li class="nav-item @if(Route::is('alerts.*')) active @endif"><a class="nav-link" href="{{route('alerts.index')}}"><i class="fa fa-exclamation-triangle"></i> Alertas</a></li>
-					<li class="nav-item @if(Route::is('admin.*')) active @endif"><a class="nav-link" href="{{route('admin.dashboard.index')}}"><i class="fa fa-cog"></i> Administração</a></li>
+					@if(auth()->user()->hasLevel(\SGPS\Constants\UserLevel::ADMIN))<li class="nav-item @if(Route::is('admin.*')) active @endif"><a class="nav-link" href="{{route('admin.dashboard.index')}}"><i class="fa fa-cog"></i> Administração</a></li>@endif
 					<li class="nav-item nav-logout">
 						<form method="POST" action="{{route('auth.logout')}}">
 							@csrf

@@ -45,6 +45,10 @@ class AlertsController extends Controller {
 			return redirect()->route('alerts.index')->with('error', 'family_not_alert');
 		}
 
+		if(!$this->permissions->canEditEntity($this->currentUser, $family)) {
+			return $this->api_failure('user_cannot_edit_entity');
+		}
+
 		$family->markAsDelivered();
 
 		$this->activityLog->writeToFamilyLog($family, 'alert_marked_as_delivered', ['attempt' => $family->visit_attempt]);

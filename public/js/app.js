@@ -91995,6 +91995,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -92004,7 +92005,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-	props: ['entityType', 'entityId'],
+	props: ['entityType', 'entityId', 'canEdit'],
 
 	data: function data() {
 		return {
@@ -92068,6 +92069,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		saveAnswers: function saveAnswers() {
 			var _this4 = this;
+
+			if (!this.canEdit) return;
 
 			var hasChangedProfile = false;
 			this.isLoading = true;
@@ -92277,7 +92280,21 @@ var render = function() {
                                   [_vm._v(_vm._s(question.code))]
                                 ),
                                 _vm._v(" "),
-                                _c("strong", [_vm._v(_vm._s(question.title))])
+                                _c("strong", [_vm._v(_vm._s(question.title))]),
+                                _vm._v(" "),
+                                !_vm.canEdit
+                                  ? _c("i", {
+                                      directives: [
+                                        {
+                                          name: "b-tooltip",
+                                          rawName: "v-b-tooltip.hover",
+                                          modifiers: { hover: true }
+                                        }
+                                      ],
+                                      staticClass: "text-secondary fa fa-lock",
+                                      attrs: { title: "Somente leitura" }
+                                    })
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -92300,6 +92317,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
+                                            disabled: !_vm.canEdit,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_yes"
@@ -92352,6 +92370,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
+                                            disabled: !_vm.canEdit,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_no"
@@ -92410,6 +92429,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
+                                            disabled: !_vm.canEdit,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_yes"
@@ -92462,6 +92482,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
+                                            disabled: !_vm.canEdit,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_no"
@@ -92514,6 +92535,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
+                                            disabled: !_vm.canEdit,
                                             type: "radio",
                                             name: "yesno_" + question.id,
                                             id: "yesno_" + question.id + "_null"
@@ -92565,7 +92587,10 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "text" },
+                                    attrs: {
+                                      readonly: !_vm.canEdit,
+                                      type: "text"
+                                    },
                                     domProps: {
                                       value: _vm.answers[question.code]
                                     },
@@ -92597,7 +92622,10 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "date" },
+                                    attrs: {
+                                      readonly: !_vm.canEdit,
+                                      type: "date"
+                                    },
                                     domProps: {
                                       value: _vm.answers[question.code]
                                     },
@@ -92640,7 +92668,10 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "tel" },
+                                    attrs: {
+                                      readonly: !_vm.canEdit,
+                                      type: "tel"
+                                    },
                                     domProps: {
                                       value: _vm.answers[question.code]
                                     },
@@ -92672,7 +92703,10 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "number" },
+                                    attrs: {
+                                      readonly: !_vm.canEdit,
+                                      type: "number"
+                                    },
                                     domProps: {
                                       value: _vm.answers[question.code]
                                     },
@@ -92716,6 +92750,7 @@ var render = function() {
                                           ],
                                           staticClass: "form-radio-input",
                                           attrs: {
+                                            disabled: !_vm.canEdit,
                                             type: "radio",
                                             id:
                                               "rd_" + question.id + "_" + value
@@ -92772,6 +92807,7 @@ var render = function() {
                                       ],
                                       staticClass: "form-radio-input",
                                       attrs: {
+                                        disabled: !_vm.canEdit,
                                         type: "checkbox",
                                         id:
                                           "chk_" + question.id + "_" + _vm.value
@@ -92846,7 +92882,9 @@ var render = function() {
                   })
                 ),
                 _vm._v(" "),
-                _vm._m(0),
+                _vm.canEdit
+                  ? _c("div", { staticClass: "card-footer" }, [_vm._m(0)])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("loading-feedback", {
                   attrs: { "is-loading": _vm.isLoading }
@@ -92864,16 +92902,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary pull-right",
-          attrs: { type: "submit" }
-        },
-        [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Salvar dados")]
-      )
-    ])
+    return _c(
+      "button",
+      { staticClass: "btn btn-primary pull-right", attrs: { type: "submit" } },
+      [_c("i", { staticClass: "fa fa-upload" }), _vm._v(" Salvar dados")]
+    )
   }
 ]
 render._withStripped = true

@@ -107,14 +107,6 @@ class Family extends Entity {
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Relationship: family with sector
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
-	 */
-	public function sector() {
-		return $this->hasOne(Sector::class, 'id', 'sector_id');
-	}
-
-	/**
 	 * Relationship: family with residence
 	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
@@ -327,9 +319,24 @@ class Family extends Entity {
 	}
 
 	/**
+	 * Returns a collection with all entities linked to this one, including itself as first item.
+	 *
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function fetchLinkedEntities() {
+		$entities = collect([$this, $this->residence]);
+
+		$this->members->each(function($member) use ($entities) {
+			$entities->push($member);
+		});
+
+		return $entities;
+	}
+
+	/**
 	 * Fetches a family by its shortcode
 	 * @param string $shortcode
-	 * @return null|Family
+	 * @return null|Family|Model
 	 */
 	public static function fetchByShortcode(string $shortcode) : ?Family {
 		return self::query()

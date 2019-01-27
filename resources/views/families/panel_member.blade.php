@@ -44,6 +44,6 @@
 	@if(!$member->isArchived())
 		<hr />
 
-		<entity-questions-panel key="forms_person_{{$member->id}}" entity-type="person" entity-id="{{$member->id}}"></entity-questions-panel>
+		<entity-questions-panel key="forms_person_{{$member->id}}" entity-type="person" entity-id="{{$member->id}}" :can-edit="{{$permissions->canEdit($member) ? 'true' : 'false'}}"></entity-questions-panel>
 	@endif
 </div>

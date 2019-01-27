@@ -69,6 +69,9 @@ class Equipment extends Model {
      */
 	const TYPE_SMS = "SMS";
 
+	/**
+	 * Valid equipment types
+	 */
 	const TYPES = [
 		self::TYPE_CRE,
 		self::TYPE_UBS,

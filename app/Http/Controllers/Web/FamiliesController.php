@@ -19,6 +19,7 @@ use SGPS\Entity\Flag;
 use SGPS\Entity\Residence;
 use SGPS\Http\Controllers\Controller;
 use SGPS\Services\FamilySearchService;
+use SGPS\Utils\FamilyPermissionGrid;
 
 class FamiliesController extends Controller {
 
@@ -46,9 +47,21 @@ class FamiliesController extends Controller {
 
 	public function show(Family $family) {
 
-		$family->load(['members.flags', 'residence.flags', 'personInCharge', 'allFlagAttributions', 'caseOpenedBy']);
+		$this->currentUser->load('assignments');
 
-		return view('families.families_view', compact('family'));
+		$family->load([
+			'flags.groups',
+			'members.flags.groups',
+			'residence.flags.groups',
+			'sector.equipments',
+			'personInCharge',
+			'allFlagAttributions',
+			'caseOpenedBy'
+		]);
+
+		$permissions = FamilyPermissionGrid::build($this->currentUser, $family, $this->permissions);
+
+		return view('families.families_view', compact('family', 'permissions'));
 
 	}
 

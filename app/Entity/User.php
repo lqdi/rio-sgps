@@ -212,6 +212,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	/**
+	 * Check if the user has an assignment for the target entity.
+	 * @param Entity $entity The target entity.
+	 * @param array|null $assignmentTypes Which assignment types to look for. If omitted, will look for all of them.
+	 * @return bool
+	 */
+	public function isAssignedToEntity(Entity $entity, ?array $assignmentTypes = null) : bool {
+		return $this
+			->assignments
+			->where('entity_id', $entity->getEntityID())
+			->whereIn('type', $assignmentTypes ?? UserAssignment::TYPES)
+			->isNotEmpty();
+	}
+
+	/**
 	 * Updates the user from new external provider data.
 	 * Must have at least one logon key (email, CPF or registration number).
 	 * Source cannot be 'sgps', as these are reserved for local users.

@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Entity
  * @package SGPS\Entity
+ * @property Sector $sector
  * @property QuestionAnswer[]|Collection $answers
  * @property Flag[]|Collection $flags
  * @property User[]|Collection $assignedUsers
@@ -73,6 +74,14 @@ abstract class Entity extends Model {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Relationship: entities with sector
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function sector() {
+		return $this->hasOne(Sector::class, 'id', 'sector_id');
+	}
 
 	/**
 	 * Relationship: entities with question answers
@@ -238,6 +247,31 @@ abstract class Entity extends Model {
 	 */
 	public function getFlagAttribution(Flag $flag) : ?FlagAttribution {
 		return $this->attributedFlags()->where('id', $flag->id)->first();
+	}
+
+	/**
+	 * Gets the list of all groups linked to this entity by their flag.
+	 * @return Group[]|Collection
+	 */
+	public function resolveLinkedGroups() {
+		return $this
+			->load('flags.groups')
+			->flags
+			->map(function ($flag) {
+				return $flag->groups;
+			})
+			->flatten();
+	}
+
+	/**
+	 * Gets the list of all equipments linked to this entity by their sector.
+	 * @return Equipment[]|Collection
+	 */
+	public function resolveLinkedEquipments() {
+		return $this
+			->load('sector.equipments')
+			->sector
+			->equipments;
 	}
 
 }

@@ -21,5 +21,5 @@
 
 	<hr />
 
-	<entity-questions-panel key="forms_family_{{$family->id}}" entity-type="family" entity-id="{{$family->id}}"></entity-questions-panel>
+	<entity-questions-panel key="forms_family_{{$family->id}}" entity-type="family" entity-id="{{$family->id}}" :can-edit="{{$permissions->canEdit($family) ? 'true' : 'false'}}"></entity-questions-panel>
 </div>

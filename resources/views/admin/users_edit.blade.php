@@ -58,12 +58,12 @@
 		<div class="card">
 			<div class="card-header">Grupos e Secretarias</div>
 			<div class="card-body row">
-				@foreach($groups->split(2) as $chunk)
-					<table class="table col-md-6">
+				@foreach($groups->split(3) as $chunk)
+					<table class="table col-md-4">
 						@foreach($chunk as $group)
 							<tr>
 								<td width="10%"><input id="chk-group-{{$group->id}}" type="checkbox" name="groups[]" value="{{$group->id}}" @if(in_array($group->id, $currentGroups)) checked @endif /></td>
-								<td width="90%"><label for="chk-group-{{$group->id}}">{{$group->name}}</label></td>
+								<td width="90%"><label for="chk-group-{{$group->id}}">{{$group->code}}</label></td>
 							</tr>
 						@endforeach
 					</table>
