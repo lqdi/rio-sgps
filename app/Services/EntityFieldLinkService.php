@@ -49,7 +49,9 @@ class EntityFieldLinkService {
 
 		}
 
-		$entity->save();
+		if($hasChanges) {
+			$entity->save();
+		}
 
 		return $hasChanges;
 	}

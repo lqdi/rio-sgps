@@ -30,6 +30,28 @@ use SGPS\Utils\MapUtils;
 
 class FamilyImportService {
 
+	/**
+	 * @var EntityFieldLinkService
+	 */
+	private $entityFieldLinkService;
+
+	/**
+	 * @var FlagBehaviorService
+	 */
+	private $flagBehaviorService;
+
+	public function __construct(EntityFieldLinkService $entityFieldLinkService, FlagBehaviorService $flagBehaviorService) {
+
+		$this->entityFieldLinkService = $entityFieldLinkService;
+		$this->flagBehaviorService = $flagBehaviorService;
+	}
+
+	/**
+	 * Processes the CSVs for the given import job.
+	 *
+	 * @param SurveyImportJob $importJob
+	 * @param string $disk
+	 */
 	public function readFromCSV(SurveyImportJob $importJob, string $disk = 'static_data') : void {
 
 		logger("[FamilyImportService.readFromCSV] Loading families...");
@@ -40,6 +62,12 @@ class FamilyImportService {
 
 	}
 
+	/**
+	 * Builds tje family structure based on the completed import job.
+	 *
+	 * @param SurveyImportJob $importJob
+	 * @throws \Exception
+	 */
 	public function buildFamilyStructure(SurveyImportJob $importJob) : void {
 
 		logger("[FamilyImportService.buildFamilyStructure] Building structure for {$importJob->num_families_read} families and {$importJob->num_persons_read} persons read");
@@ -56,6 +84,13 @@ class FamilyImportService {
 
 	}
 
+	/**
+	 * Imports a single family in the system, cascading the entities beneath it.
+	 *
+	 * @param SurveyImportJob $importJob
+	 * @param ImportedFamily $importedFamily
+	 * @throws \Exception
+	 */
 	public function importFamily(SurveyImportJob $importJob, ImportedFamily $importedFamily) : void {
 
 		$existingFamily = Family::find($importedFamily->id); /* @var $existingFamily Family|null */
@@ -68,7 +103,7 @@ class FamilyImportService {
 
 			$residence->save();
 
-			$this->mapResidenceAnswers($residence, $importedFamily);
+			$this->mapEntityAnswers($residence, $importedFamily, config('import_map.residence.questions'));
 
 			logger("[FamilyImportService.importFamily] Imported #{$residence->id} \t residence \t {$residence->shortcode}");
 
@@ -83,7 +118,7 @@ class FamilyImportService {
 
 			$family->save();
 
-			$this->mapFamilyAnswers($family, $importedFamily);
+			$this->mapEntityAnswers($family, $importedFamily, config('import_map.family.questions'));
 
 			logger("[FamilyImportService.importFamily] Imported #{$family->id} \t family \t {$family->shortcode}");
 
@@ -104,6 +139,16 @@ class FamilyImportService {
 
 	}
 
+	/**
+	 * Imports a single member of a family.
+	 *
+	 * @param SurveyImportJob $importJob
+	 * @param Residence $residence
+	 * @param Family $family
+	 * @param ImportedFamily $importedFamily
+	 * @param ImportedMember $importedMember
+	 * @throws \Exception
+	 */
 	public function importMember(SurveyImportJob $importJob, Residence $residence, Family $family, ImportedFamily $importedFamily, ImportedMember $importedMember) : void {
 
 		if(Person::where('id', $importedMember->id)->exists()) {
@@ -128,7 +173,7 @@ class FamilyImportService {
 			$family->save();
 		}
 
-		$this->mapPersonAnswers($person, $importedMember);
+		$this->mapEntityAnswers($person, $importedMember, config('import_map.person.questions'));
 
 		logger("[FamilyImportService.importMember] Imported #{$person->id} \t person \t {$person->shortcode}");
 
@@ -137,6 +182,13 @@ class FamilyImportService {
 
 	private $_questionsByCode = [];
 
+	/**
+	 * Quickly looks up a question by it's code.
+	 * Has a local class cache.
+	 *
+	 * @param string $code
+	 * @return null|Question
+	 */
 	private function getQuestionByCode(string $code) : ?Question {
 		if(!isset($this->_questionsByCode[$code])) {
 			$this->_questionsByCode[$code] = Question::fetchByCode($code);
@@ -145,61 +197,46 @@ class FamilyImportService {
 		return $this->_questionsByCode[$code];
 	}
 
-	public function mapResidenceAnswers(Entity $entity, ImportedFamily $importedFamily) {
-
-		$answerGrid = [];
-
-		MapUtils::mapProperties($answerGrid, $importedFamily, config('import_map.residence.questions'));
-
-		foreach ($answerGrid as $questionCode => $value) {
-			$question = $this->getQuestionByCode($questionCode);
-
-			if(!$question) {
-				logger("[FamilyImportService.mapResidenceAnswers] Failed to locate question with code: {$questionCode}");
-				return;
-			}
-
-			QuestionAnswer::forceCreate($entity, $question, $value);
-		}
-
+	/**
+	 * Triggers changes for entities by checking updated fields and flag behavior classes.
+	 *
+	 * @param Entity $entity
+	 * @param array $answers
+	 * @throws \Exception
+	 */
+	public function triggerEntityChanges(Entity $entity, array $answers) {
+		$this->entityFieldLinkService->updateEntityFields($entity, [], $answers);
+		$this->flagBehaviorService->evaluateBehaviorsForAnswers($entity, $answers);
 	}
 
-	public function mapFamilyAnswers(Entity $entity, ImportedFamily $importedFamily) {
 
+	/**
+	 * Maps a set of imported entity data to entity properties and entity answers.
+	 * Will create the answers when relevant.
+	 * Will trigger the necessary changes for flag attributions and entity back updates.
+	 *
+	 * @param Entity $entity
+	 * @param $importedEntity
+	 * @param array $mappingConfig
+	 * @throws \Exception
+	 */
+	protected function mapEntityAnswers(Entity $entity, $importedEntity, array $mappingConfig) {
 		$answerGrid = [];
 
-		MapUtils::mapProperties($answerGrid, $importedFamily, config('import_map.family.questions'));
+		MapUtils::mapProperties($answerGrid, $importedEntity, $mappingConfig);
 
 		foreach ($answerGrid as $questionCode => $value) {
 			$question = $this->getQuestionByCode($questionCode);
 
 			if(!$question) {
-				logger("[FamilyImportService.mapFamilyAnswers] Failed to locate question with code: {$questionCode}");
+				logger("[FamilyImportService.mapEntityAnswers] Failed to locate question with code: {$questionCode}");
 				return;
 			}
 
 			QuestionAnswer::forceCreate($entity, $question, $value);
 		}
 
-	}
-
-	public function mapPersonAnswers(Entity $entity, ImportedMember $importedMember) {
-
-		$answerGrid = [];
-
-		MapUtils::mapProperties($answerGrid, $importedMember, config('import_map.person.questions'));
-
-		foreach ($answerGrid as $questionCode => $value) {
-			$question = $this->getQuestionByCode($questionCode);
-
-			if(!$question) {
-				logger("[FamilyImportService.mapPersonAnswers] Failed to locate question with code: {$questionCode}");
-				return;
-			}
-
-			QuestionAnswer::forceCreate($entity, $question, $value);
-		}
-
+		$this->triggerEntityChanges($entity, $answerGrid);
 	}
 
 }

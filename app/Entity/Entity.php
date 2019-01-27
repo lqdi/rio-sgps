@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Flag[]|Collection $flags
  * @property User[]|Collection $assignedUsers
  * @property UserAssignment[]|Collection $assignments
+ * @property FlagAttribution[]|Collection $attributedFlags
  */
 abstract class Entity extends Model {
 
@@ -194,7 +195,7 @@ abstract class Entity extends Model {
 	 * Fetches an entity by type/ID pair
 	 * @param string $type The entity type ('residence', 'family' or 'person')
 	 * @param string $id The entity ID
-	 * @return Entity|null The found entity, or null if not found.
+	 * @return Entity|Model|null The found entity, or null if not found.
 	 */
 	public static function fetchByID(string $type, string $id) : ?Entity {
 		return static::getQuery($type)
@@ -237,7 +238,7 @@ abstract class Entity extends Model {
 	 * @return bool
 	 */
 	public function hasFlagAttribution(Flag $flag) : bool {
-		return $this->attributedFlags()->where('flag_id', $flag->id)->exists();
+		return $this->attributedFlags->where('flag_id', $flag->id)->isNotEmpty();
 	}
 
 	/**
@@ -246,7 +247,7 @@ abstract class Entity extends Model {
 	 * @return null|FlagAttribution
 	 */
 	public function getFlagAttribution(Flag $flag) : ?FlagAttribution {
-		return $this->attributedFlags()->where('id', $flag->id)->first();
+		return $this->attributedFlags->where('id', $flag->id)->first();
 	}
 
 	/**

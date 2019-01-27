@@ -167,13 +167,19 @@ class Flag extends Model {
 
 	// ---------------------------------------------------------------------------------------------------------------
 
+	private static $allFlagsForType = null;
+
 	/**
 	 * Fetches all flags that target a specific entity type.
 	 * @param string $entityType
 	 * @return Flag[]|Collection
 	 */
 	public static function fetchAllForType(string $entityType) {
-		return self::query()
+		if(self::$allFlagsForType !== null) {
+			return self::$allFlagsForType;
+		}
+
+		return self::$allFlagsForType = self::query()
 			->where('entity_type', $entityType)
 			->get();
 	}

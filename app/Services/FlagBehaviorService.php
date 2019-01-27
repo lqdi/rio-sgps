@@ -25,6 +25,7 @@ class FlagBehaviorService {
 	 * @param Entity $entity The entity being updated.
 	 * @param array $answers The answer grid.
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function evaluateBehaviorsForAnswers(Entity $entity, array $answers) : bool {
 
@@ -47,6 +48,7 @@ class FlagBehaviorService {
 	/**
 	 * Evaluates the behavior handler hooks for all flag attributions eligibile.
 	 * @param Carbon $today Today's date.
+	 * @throws \Exception
 	 */
 	public function evaluateBehaviorsForDailyCron(Carbon $today) {
 
