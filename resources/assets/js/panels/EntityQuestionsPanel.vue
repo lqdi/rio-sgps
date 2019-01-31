@@ -218,7 +218,7 @@
 
 				this.fetchQuestionsByCategory(category).then(() => {
 					this.view.openCategory = category;
-					this.isReadOnly = (category.name === 'Busca Ativa') || !this.canEdit
+					this.isReadOnly = (category.name === 'IPM') || !this.canEdit
 				})
 
 			}
