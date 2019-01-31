@@ -20,7 +20,10 @@ use SGPS\Http\Controllers\Controller;
 class QuestionsController extends Controller {
 
 	public function index() {
-		$questions = Question::query()->with(['categories'])->paginate(24);
+		$questions = Question::query()
+			->with(['categories'])
+			->orderBy('code', 'ASC')
+			->paginate(128);
 		return view('admin.questions_index', compact('questions'));
 	}
 
