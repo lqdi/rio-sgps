@@ -945,7 +945,17 @@ return [
 				2 => 'Infrequente Leve (de 2 a 3 faltas no mês)',
 				3 => 'Infrequente Grave (de 4 a 9 faltas no mês)',
 				4 => 'Risco de Abandono (a partir de 10 faltas no mês)',
+				5 => 'Abandono Escolar',
 			]
+		],
+		'CE102B' => [
+			'code' => 'CE102B',
+			'field_type' => 'date',
+			'title' => 'Data de verificação da frequência escolar',
+			'conditions' => [
+				['CE102', 'is_filled'],
+			],
+			'field_options' => null,
 		],
 		'CE103' => [
 			'code' => 'CE103',
@@ -1268,19 +1278,19 @@ return [
 		],
 		'family' => [
 			'ipm' => ['CE38', 'CE39', 'CE37'],
-			'busca_ativa' => ['CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41'],
+			'busca_ativa' => ['CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41', 'CE113'],
 			'saude' => ['CE75', 'CE76', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE81', 'CE82'],
 			'educacao' => ['CE96'],
 			'emprego' => [],
-			'assistencia' => ['CE108', 'CE109', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE110', 'CE41', 'CE34', 'CE112', 'CE113', 'CE114', 'CE115', 'CE116', 'CE124', 'CE125', 'CE126', 'CE127', 'CE128', 'CE46', 'CE129', 'CE35', 'CE81'],
+			'assistencia' => ['CE108', 'CE109', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE110', 'CE41', 'CE34', 'CE112', 'CE114', 'CE115', 'CE116', 'CE124', 'CE125', 'CE126', 'CE127', 'CE128', 'CE46', 'CE129', 'CE35', 'CE81'],
 		],
 		'person' => [
 			'ipm' => ['CE62', 'CE63'],
-			'busca_ativa' => ['CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE62B', 'CE63', 'CE70'],
+			'busca_ativa' => ['CE48', 'CE49', 'CE50', 'CE51', 'CE52', 'CE53', 'CE54', 'CE55', 'CE56', 'CE57', 'CE58', 'CE59', 'CE62', 'CE62B', 'CE63', 'CE70', 'CE66', 'CE67', 'CE68', 'CE69'],
 			'saude' => ['CE86', 'CE133', 'CE87', 'CE54', 'CE83', 'CE89', 'CE90', 'CE91', 'CE92', 'CE93', 'CE94', 'CE95'],
 			'educacao' => ['CE97', 'CE98', 'CE99', 'CE100', 'CE101', 'CE102', 'CE66', 'CE67', 'CE68', 'CE69'],
 			'emprego' => ['CE103', 'CE104A', 'CE104B', 'CE104C', 'CE104D'],
-			'assistencia' => ['CE55', 'CE117', 'CE118', 'CE56', 'CE57', 'CE119', 'CE120', 'CE58', 'CE59', 'CE121', 'CE122', 'CE60', 'CE61', 'CE123', 'CE66', 'CE67', 'CE68', 'CE69', 'CE130', 'CE131', 'CE132', 'CE104A', 'CE104B', 'CE104C', 'CE104D', 'CE62', 'CE62B', 'CE63', 'CE64'],
+			'assistencia' => ['CE55', 'CE117', 'CE118', 'CE56', 'CE57', 'CE119', 'CE120', 'CE58', 'CE59', 'CE121', 'CE122', 'CE60', 'CE61', 'CE123', 'CE130', 'CE131', 'CE132', 'CE104A', 'CE104B', 'CE104C', 'CE104D', 'CE62', 'CE62B', 'CE63', 'CE64'],
 		],
 	],
 
