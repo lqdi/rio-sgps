@@ -32,7 +32,7 @@ class ActivityLogService {
 
 	public function writeToFamilyLog(Entity $entity, string $event, array $properties = []) : Activity {
 
-		$targetEntity = ($entity->getEntityType() === 'member')
+		$targetEntity = ($entity->getEntityType() === 'person')
 			? $entity->family // Members have their events attached to the parent family instead
 			: $entity; // Families are the root log; residences also have their own log (which gets fetched in the family log)
 
