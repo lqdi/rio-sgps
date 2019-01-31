@@ -16,6 +16,7 @@ namespace SGPS\Services;
 
 use SGPS\Entity\Family;
 use SGPS\Entity\Person;
+use SGPS\Entity\Question;
 
 class FamilyManagementService {
 
@@ -27,12 +28,17 @@ class FamilyManagementService {
 	 */
 	public function addMemberToFamily(Family $family, string $memberName) : Person {
 
-		return Person::create([
+		$person = Person::create([
 			'family_id' => $family->id,
 			'residence_id' => $family->residence_id,
 			'sector_id' => $family->sector_id,
 			'name' => $memberName,
-		]);
+		]); /* @var $person Person */
+
+		$nameQuestion = Question::fetchByCode('CE48');
+		$person->setAnswer($nameQuestion, $memberName);
+
+		return $person;
 
 	}
 

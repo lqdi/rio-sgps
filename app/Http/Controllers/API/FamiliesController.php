@@ -16,6 +16,8 @@ namespace SGPS\Http\Controllers\API;
 
 use SGPS\Entity\Family;
 use SGPS\Entity\Person;
+use SGPS\Entity\Question;
+use SGPS\Entity\QuestionAnswer;
 use SGPS\Http\Controllers\Controller;
 use SGPS\Services\FamilyManagementService;
 
