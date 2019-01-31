@@ -1232,13 +1232,13 @@ return [
 				'mask' => '###############',
 			],
 		],
-		'CE134' => [
-			'code' => 'CE134',
-			'field_type' => 'date',
-			'title' => 'Data de entrada da família no Sistema TS',
-			'conditions' => null,
-			'field_options' => null,
-		],
+//		'CE134' => [
+//			'code' => 'CE134',
+//			'field_type' => 'date',
+//			'title' => 'Data de entrada da família no Sistema TS',
+//			'conditions' => null,
+//			'field_options' => null,
+//		],
 		'CE135' => [
 			'code' => 'CE135',
 			'field_type' => 'numeric',
@@ -1268,7 +1268,7 @@ return [
 		],
 		'family' => [
 			'ipm' => ['CE38', 'CE39', 'CE37'],
-			'busca_ativa' => ['CE134', 'CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41'],
+			'busca_ativa' => ['CE32', 'CE33', 'CE34', 'CE35', 'CE36', 'CE37', 'CE38', 'CE39', 'CE41'],
 			'saude' => ['CE75', 'CE76', 'CE78', 'CE79', 'CE80A', 'CE80B', 'CE80C', 'CE80D', 'CE81', 'CE82'],
 			'educacao' => ['CE96'],
 			'emprego' => [],
