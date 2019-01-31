@@ -25,6 +25,7 @@
 									<span class="badge badge-success">&check; {{$job->num_persons_imported}}</span>
 									<span class="badge badge-warning">&circlearrowleft; {{$job->num_persons_skipped}}</span>
 								</td>
+								<td>{{$job->exception_message}}</td>
 							</tr>
 						@endforeach
 					</table>
