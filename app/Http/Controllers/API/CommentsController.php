@@ -14,6 +14,7 @@
 namespace SGPS\Http\Controllers\API;
 
 
+use SGPS\Constants\UserLevel;
 use SGPS\Entity\Comment;
 use SGPS\Entity\Entity;
 use SGPS\Entity\User;
@@ -59,7 +60,7 @@ class CommentsController extends Controller {
 
 	public function delete_comment(Comment $comment) {
 
-		if(!$comment->isOwnedBy(auth()->user())) {
+		if(!$comment->isOwnedBy(auth()->user()) && auth()->user()->level !== UserLevel::ADMIN) {
 			return $this->api_failure('not_allowed', [], 403);
 		}
 
@@ -71,7 +72,7 @@ class CommentsController extends Controller {
 
 	public function update_comment(Comment $comment) {
 
-		if(!$comment->isOwnedBy(auth()->user())) {
+		if(!$comment->isOwnedBy(auth()->user()) && auth()->user()->level !== UserLevel::ADMIN) {
 			return $this->api_failure('not_allowed', [], 403);
 		}
 

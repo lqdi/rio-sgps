@@ -24,6 +24,7 @@ class QuestionsController extends Controller {
 			->with(['categories'])
 			->orderBy('code', 'ASC')
 			->paginate(128);
+
 		return view('admin.questions_index', compact('questions'));
 	}
 

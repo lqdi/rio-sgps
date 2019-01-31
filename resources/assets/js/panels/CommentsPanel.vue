@@ -31,7 +31,7 @@
 						</form>
 					</td>
 					<td width="5">
-						<div v-if="!comment.is_editing && comment.is_owned_by_me">
+						<div v-if="!comment.is_editing && (comment.is_owned_by_me || isAdmin)">
 							<a @click="beginEditComment(comment)" class="btn btn-light btn-sm"><i class="fa fa-edit"></i></a>
 							<a @click="deleteComment(comment)" class="btn btn-light text-danger btn-sm"><i class="fa fa-trash"></i></a>
 						</div>
@@ -62,7 +62,7 @@
 	import axios from "axios";
 
 	export default {
-		props: ['entityType', 'entityId'],
+		props: ['entityType', 'entityId', 'isAdmin'],
 
 		data: () => { return {
 			newComment: {message: ''},
