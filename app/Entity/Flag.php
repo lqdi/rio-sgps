@@ -102,7 +102,7 @@ class Flag extends Model {
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function families() {
-		return $this->morphedByMany(Family::class, 'entity', 'flag_assignments');
+		return $this->morphedByMany(Family::class, 'entity', 'flag_attributions');
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Flag extends Model {
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function residences() {
-		return $this->morphedByMany(Residence::class, 'entity', 'flag_assignments');
+		return $this->morphedByMany(Residence::class, 'entity', 'flag_attributions');
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Flag extends Model {
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
 	public function persons() {
-		return $this->morphedByMany(Person::class, 'entity', 'flag_assignments');
+		return $this->morphedByMany(Person::class, 'entity', 'flag_attributions');
 	}
 
 	/**
