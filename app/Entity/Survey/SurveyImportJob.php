@@ -89,8 +89,8 @@ class SurveyImportJob extends Model {
 	}
 
 	public function updateException(\Exception $exception) : void {
-		$this->exception_message = $exception->getMessage();
-		$this->exception_object = $exception;
+		$this->exception_message = substr($exception->getMessage(), 0, 255);
+		$this->exception_object = json_encode($exception);
 		$this->save();
 	}
 
