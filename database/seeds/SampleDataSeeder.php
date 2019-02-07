@@ -92,7 +92,7 @@ class SampleDataSeeder extends \Illuminate\Database\Seeder {
 						break;
 
 					case 'person':
-						$residences->random(rand(4, 8))->each(function (Residence $residence) use ($faker, $flag) {
+						$residences->each(function (Residence $residence) use ($faker, $flag) {
 							$residence->_families->random(rand(1, sizeof($residence->_families)))
 								->each(function (Family $family) use ($faker, $flag) {
 
