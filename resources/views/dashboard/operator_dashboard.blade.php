@@ -140,6 +140,29 @@
 						</b-card>
 
 					</div>
+
+				</div>
+
+				<br />
+
+				<div class="row">
+
+
+					<div class="col-md-12">
+
+						<div class="card">
+							<div class="card-header">
+								<strong><i class="fa fa-chart"></i> Métricas do sistema</strong>
+							</div>
+							<div class="card-body">
+
+								<dashboard-metrics :metrics-to-view="{{json_encode(auth()->user()->getMetricsToView()->toArray())}}"></dashboard-metrics>
+
+							</div>
+						</div>
+
+					</div>
+
 				</div>
 
 			</div>

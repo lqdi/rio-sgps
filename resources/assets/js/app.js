@@ -38,6 +38,7 @@ Vue.use(Toasted, {
 Vue.component('flag-display-tooltip', require('./components/FlagDisplayTooltip.vue'));
 Vue.component('loading-feedback', require('./components/LoadingFeedback.vue'));
 Vue.component('multiselect', require('./components/Multiselect.vue'));
+Vue.component('dashboard-metrics', require('./components/DashboardMetrics.vue'));
 
 // Panels
 Vue.component('activity-log-panel', require('./panels/ActivityLogPanel.vue'));

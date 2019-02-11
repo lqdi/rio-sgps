@@ -37,4 +37,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('assignments/{entity}/assignable_users', 'API\AssignmentsController@fetch_assignable_users')->name('api.assignments.fetch_assignable_users');
 	Route::post('assignments/{entity}/assign', 'API\AssignmentsController@assign')->name('api.assignments.assign');
 	Route::post('assignments/{entity}/unassign', 'API\AssignmentsController@unassign')->name('api.assignments.unassign');
+
+	Route::get('reports/all_metrics', 'API\ReportsController@all_metrics')->name('api.reports.all_metrics');
 });

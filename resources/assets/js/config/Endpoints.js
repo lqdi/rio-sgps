@@ -40,6 +40,10 @@ export default {
 		FetchAssignableUsers: 'api/assignments/@entity@/assignable_users',
 		AssignUserToEntity: 'api/assignments/@entity@/assign',
 		UnassignUserFromEntity: 'api/assignments/@entity@/unassign',
+	},
+
+	Reports: {
+		AllMetrics: 'api/reports/all_metrics',
 	}
 
 }

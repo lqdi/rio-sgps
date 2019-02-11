@@ -262,6 +262,29 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		$this->save();
 	}
 
+	/**
+	 * Gets the list of codes for user groups
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getGroupCodes() {
+		return $this->groups()->pluck('code');
+	}
+
+	/**
+	 * Gets the list of metrics that this user can view, based on his group membership.
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function getMetricsToView() {
+
+		return $this
+			->getGroupCodes()
+			->map(function ($code) {
+				return config('group_metrics.' . $code, []);
+			})
+			->flatten();
+
+	}
+
 	// ---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—---------—
 
 	/**

@@ -174,6 +174,10 @@ class Family extends Entity {
 		return $query->where('is_alert', true);
 	}
 
+	public function scopeAlreadyHadVisit($query) {
+		return $query->where('visit_status', '!=', self::VISIT_PENDING_AGENT);
+	}
+
 	// ---------------------------------------------------------------------------------------------------------------
 
 	/**

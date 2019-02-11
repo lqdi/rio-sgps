@@ -109,6 +109,16 @@ abstract class Entity extends Model {
 	}
 
 	/**
+	 * Relationship: entities with flags, through flag attributions, that are active
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
+	public function activeFlags() {
+		return $this->morphToMany(Flag::class, 'entity', 'flag_attributions')
+			->where('is_completed', false)
+			->where('is_cancelled', false);
+	}
+
+	/**
 	 * Relationship: entities with assigned users (through UserAssignment's table)
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
@@ -125,6 +135,22 @@ abstract class Entity extends Model {
 	public function assignments() {
 		// This is possible because of UUID uniqueness; otherwise, entity_type would be necessary
 		return $this->hasMany(UserAssignment::class, 'entity_id', 'id');
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+
+	public function scopeHasAnsweredQuestionWith($query, $questionCode, $questionType, $expectedAnswer) {
+		return $query->whereHas('answers', function ($sq) use ($questionCode, $questionType, $expectedAnswer) {
+			return $sq
+				->where('question_code', $questionCode)
+				->valueEqualsTo($questionType, $expectedAnswer);
+		});
+	}
+
+	public function scopeHasActiveFlag($query, $flagCode) {
+		return $query->whereHas('activeFlags', function ($sq) use ($flagCode) {
+			return $sq->where('code', $flagCode);
+		});
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------

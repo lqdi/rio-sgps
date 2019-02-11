@@ -97,6 +97,12 @@ class QuestionAnswer extends Model {
 
 	// ---------------------------------------------------------------------------------------------------------------
 
+	public function scopeValueEqualsTo($query, $questionType, $expectedValue) {
+		return $query->where(self::getAnswerValueField($questionType), $expectedValue);
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * Sets the value of the answer; will handle answer type and appropriately serialize and store in the right field.
 	 * @param $value
@@ -264,6 +270,29 @@ class QuestionAnswer extends Model {
 				return $answer->getValue();
 			})
 			->toArray();
+	}
+
+	/**
+	 * Gets the name of the field where the answer value is contained, given a specific question type.
+	 * @param string $questionType The question type. @see Question::TYPE_*
+	 * @return string
+	 */
+	public static function getAnswerValueField($questionType) : string {
+		switch($questionType) {
+			case Question::TYPE_TEXT:
+			case Question::TYPE_NUMERIC:
+			case Question::TYPE_SELECT_ONE:
+			case Question::TYPE_DATE:
+				return 'value_string';
+			case Question::TYPE_NUMBER:
+			case Question::TYPE_YESNO:
+			case Question::TYPE_YESNO_NULLABLE:
+				return 'value_integer';
+			case Question::TYPE_SELECT_MANY:
+			default:
+				return 'value_json';
+		}
+
 	}
 
 }

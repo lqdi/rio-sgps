@@ -113,6 +113,17 @@ class Person extends Entity {
 
 	// ---------------------------------------------------------------------------------------------------------------
 
+	public function scopeWithAgeUpTo($query, $age) {
+		$cutoffDate = Carbon::now()->addYears(0 - intval($age))->format('Y-m-d');
+		return $query->where('dob', '>=', $cutoffDate);
+	}
+	public function scopeWithAgeOver($query, $age) {
+		$cutoffDate = Carbon::now()->addYears(0 - intval($age))->format('Y-m-d');
+		return $query->where('dob', '<', $cutoffDate);
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * Checks if the person has the age information available
 	 * @return bool
