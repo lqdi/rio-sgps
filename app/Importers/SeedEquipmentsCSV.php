@@ -32,6 +32,7 @@ class SeedEquipmentsCSV implements WithHeadingRow, ToCollection, WithCustomCsvSe
             $equipment = Equipment::findOrNew($equipmentID);
             $equipment->id = $equipmentID;
             $equipment->code = $equipmentID;
+            $equipment->group_code = strval(trim($data['codsecr']));
             $equipment->type = $this->convertType($data);
             $equipment->name = strval($data['nomeequip'] ?? '');
             $equipment->address = strval($data['addrequip'] ?? '');
@@ -43,9 +44,8 @@ class SeedEquipmentsCSV implements WithHeadingRow, ToCollection, WithCustomCsvSe
     }
 
     private function convertType($data) : string {
-        // TODO: figure out why Excel lib is leaving this "false" in some cases
         //$equipmentType = trim(strtolower(substr($data['tipoequip'] ?? '', 0, 4)));
-        $equipmentType = $data['nomeequip'] ?? $data['id']; // some CRAS dont have name, but have CRAS in ID
+        $equipmentType = $data['nomeequip'] ?? $data['id']; // some CRAS dont have name, but have CRAS in ID (???)
         $equipmentType = trim(substr(strtolower($equipmentType), 0, strpos($equipmentType, ' ')));
         switch ($equipmentType) {
             case "us": return Equipment::TYPE_UBS;

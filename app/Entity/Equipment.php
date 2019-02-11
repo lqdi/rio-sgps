@@ -28,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $id
  * @property string $type
  * @property string $code
+ * @property string $group_code
  * @property string $name
  * @property string $address
  *
@@ -84,6 +85,7 @@ class Equipment extends Model {
 	protected $fillable = [
 		'type',
 		'code',
+		'group_code',
 		'name',
 		'address',
 	];
@@ -91,6 +93,7 @@ class Equipment extends Model {
 	protected static $logAttributes = [
 		'type',
 		'code',
+		'group_code',
 		'name',
 		'address',
 	];
