@@ -104,7 +104,7 @@ class SurveyImportJob extends Model {
 
 	public function printDebugTree(Command $command) {
 		foreach($this->families as $family) { /* @var $family \SGPS\Entity\Survey\ImportedFamily */
-			$command->comment("=> Family #{$family->id} \t [{$family->endereco}]");
+			$command->comment("=> Family #{$family->id} \t [{$family->logradouro}]");
 
 			foreach($family->members as $member) { /* @var $family \SGPS\Entity\Survey\ImportedMember */
 				$command->comment("\t Member #{$member->id} \t\t [{$member->nome}]");

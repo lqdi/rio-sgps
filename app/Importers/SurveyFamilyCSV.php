@@ -63,7 +63,7 @@ class SurveyFamilyCSV implements WithHeadingRow, ToCollection, WithCustomCsvSett
 
 			ImportedFamily::create($family->toArray());
 
-			logger()->debug("[survey_importer.family] Found: #{$family['id']} -> {$family['endereco']}");
+			logger()->debug("[survey_importer.family] Found: #{$family['id']} -> {$family['logradouro']}");
 		}
 
 	}

@@ -7,7 +7,7 @@ return [
 			'lat' => 'x',
 			'lng' => 'y',
 			'sector_id' => 'setor',
-			'address' => 'endereco',
+			'address' => 'logradouro',
 			'territory' => 'comunidade',
 			'reference' => 'referencia',
 			'gis_global_id' => 'globalid',
