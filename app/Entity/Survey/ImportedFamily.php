@@ -33,7 +33,10 @@ use SGPS\Traits\NonIncrementingIndex;
  * @property string $setor
  * @property string $x
  * @property string $y
- * @property string $endereco
+ * @property string $logradouro
+ * @property string $numero
+ * @property string $complement
+ * @property string $cep
  * @property string $comunidade
  * @property string $referencia
  * @property string $obs
@@ -45,7 +48,7 @@ use SGPS\Traits\NonIncrementingIndex;
  * @property string $flag_cfc
  * @property string $flag_bpc
  * @property string $flag_outro
- * @property string $qual_outro
+ * @property string $outro_prog
  * @property string $preoc_alim
  * @property string $flag_mi
  * @property string $idade_mi
@@ -61,6 +64,9 @@ use SGPS\Traits\NonIncrementingIndex;
  * @property string $flag_fogao
  * @property string $flag_filt
  * @property string $flag_gel
+ * @property string $renda_fam
+ * @property string $renda_cpta
+ * @property string $perf_renda
  * @property string $ipma1
  * @property string $ipma2
  * @property string $ipma3
@@ -74,6 +80,7 @@ use SGPS\Traits\NonIncrementingIndex;
  * @property string $ipmc11
  * @property string $ipm
  * @property string $risco_ipm
+ * @property string $sem_ref
  * @property string $created_date
  * @property string $created_user
  * @property string $last_edited_date
