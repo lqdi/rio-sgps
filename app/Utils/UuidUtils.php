@@ -19,7 +19,7 @@ class UuidUtils {
 
 	public static function fromSurveyGUID(string $guid) : string {
 	    if(strlen($guid) !== 38) { // not a GUID, so generate one
-	        return (string) Uuid::generate(5, "guid_{$guid}", Uuid::NS_DNS);
+	        return (string) Uuid::generate(3, "guid_{$guid}", Uuid::NS_DNS);
         }
 
 		return trim(strtolower(str_replace(['{', '}'], '', $guid)));
