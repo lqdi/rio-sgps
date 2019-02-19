@@ -267,7 +267,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	 * @return \Illuminate\Support\Collection
 	 */
 	public function getGroupCodes() {
-		return $this->groups()->pluck('code');
+		return $this->groups->pluck('code');
 	}
 
 	/**

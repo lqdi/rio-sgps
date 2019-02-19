@@ -88,7 +88,7 @@
 
 									<a target="_blank" href="{{route('families.show', [$alert->id])}}" class="btn btn-sm btn-light" v-b-tooltip title="Ver ficha do caso"><i class="fa fa-eye"></i></a>
 
-									@if($permissions->canEditEntity(auth()->user(), $alert))
+									@if($permissions->canPerformAction(auth()->user(), 'open_case'))
 										<form onsubmit="return confirm('Tem certeza que deseja ABRIR o caso? Essa operação não pode ser cancelada.')" class="d-inline-block" method="POST" action="{{route('alerts.open_case', [$alert->id])}}">
 											@csrf
 											<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Abrir caso"><i class="fa fa-folder-open"></i></button>

@@ -36,8 +36,20 @@ class UserPermissionsService {
 	 * @return bool
 	 */
 	public function canPerformAction(User $user, string $action) : bool {
-		// TODO: implement permission grid when it becomes relevant
-		return true;
+
+		if(in_array($action, config('user_level_permissions.' . $user->level, []))) {
+			return true;
+		}
+
+		$isAllowedByGroupPerms = ($user->getGroupCodes()->first(function ($groupCode) use ($action) {
+			return in_array($action, config('group_permissions.' . $groupCode, []));
+		}) !== null);
+
+		if($isAllowedByGroupPerms) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
