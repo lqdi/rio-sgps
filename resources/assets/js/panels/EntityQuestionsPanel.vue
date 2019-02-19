@@ -9,7 +9,7 @@
 						<i v-if="isCategoryOpen(category)" class="fa fa-circle text-success"></i>
 						<i v-if="!isCategoryOpen(category)" class="fa fa-circle text-secondary"></i>
 						<span>{{category.name}}</span>
-						<i v-if="category.name === 'Busca Ativa'" class="text-secondary fa fa-lock" v-b-tooltip.hover title="Somente leitura"></i>
+						<i v-if="category.name === 'IPM'" class="text-secondary fa fa-lock" v-b-tooltip.hover title="Somente leitura"></i>
 					</a>
 				</div>
 			</div>
