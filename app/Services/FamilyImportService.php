@@ -168,7 +168,7 @@ class FamilyImportService {
 
 		$person->save();
 
-		if($importedMember->parentesco === 1) {
+		if(intval($importedMember->parentesco) === 1) {
 			$family->person_in_charge_id = $person->id;
 			$family->save();
 		}
