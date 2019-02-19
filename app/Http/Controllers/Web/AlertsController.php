@@ -66,6 +66,10 @@ class AlertsController extends Controller {
 			return redirect()->route('alerts.index')->with('error', 'family_not_alert');
 		}
 
+		if(!$this->permissions->canEditEntity($this->currentUser, $family)) {
+			return redirect()->route('alerts.index')->with('error', 'user_cannot_edit_entity');
+		}
+
 		$family->openCase(auth()->user());
 
 		$this->activityLog->writeToFamilyLog($family, 'alert_case_opened');

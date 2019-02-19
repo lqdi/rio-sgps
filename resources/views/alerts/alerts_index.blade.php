@@ -85,10 +85,15 @@
 									@endif
 								</td>
 								<td>
-									<form onsubmit="return confirm('Tem certeza que deseja ABRIR o caso? Essa operação não pode ser cancelada.')" class="d-inline-block" method="POST" action="{{route('alerts.open_case', [$alert->id])}}">
-										@csrf
-										<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Abrir caso"><i class="fa fa-folder-open"></i></button>
-									</form>
+
+									<a target="_blank" href="{{route('families.show', [$alert->id])}}" class="btn btn-sm btn-light" v-b-tooltip title="Ver ficha do caso"><i class="fa fa-eye"></i></a>
+
+									@if($permissions->canEditEntity(auth()->user(), $alert))
+										<form onsubmit="return confirm('Tem certeza que deseja ABRIR o caso? Essa operação não pode ser cancelada.')" class="d-inline-block" method="POST" action="{{route('alerts.open_case', [$alert->id])}}">
+											@csrf
+											<button type="submit" class="btn btn-sm btn-light" v-b-tooltip title="Abrir caso"><i class="fa fa-folder-open"></i></button>
+										</form>
+									@endif
 
 									@if($permissions->canEditEntity(auth()->user(), $alert) && in_array($alert->visit_status, [\SGPS\Entity\Family::VISIT_PENDING_AGENT, \SGPS\Entity\Family::VISIT_LATE_TO_CRAS]))
 										<form class="d-inline-block" method="POST" action="{{route('alerts.mark_as_delivered', [$alert->id])}}">
@@ -98,6 +103,7 @@
 									@endif
 
 									<a target="_blank" href="{{route('alerts.print_referral', [$alert->id])}}" class="btn btn-sm btn-light" v-b-tooltip title="Imprimir encaminhamento"><i class="fa fa-print"></i></a>
+
 								</td>
 							</tr>
 							@endforeach
