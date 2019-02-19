@@ -17,6 +17,7 @@ namespace SGPS\Http\Controllers\Web;
 use SGPS\Entity\Family;
 use SGPS\Entity\Flag;
 use SGPS\Entity\Residence;
+use SGPS\Entity\Sector;
 use SGPS\Http\Controllers\Controller;
 use SGPS\Services\FamilySearchService;
 use SGPS\Utils\FamilyPermissionGrid;
@@ -27,6 +28,14 @@ class FamiliesController extends Controller {
 
 		$filters = array_merge($service->defaultCaseFilters, request('filters', []));
 
+		$filterOptions = cache()->remember('family_filter_options', 60, function () {
+			return [
+				'sector_cre' => Sector::fetchAvailableGroupingCodes('cod_cre'),
+				'sector_casdh' => Sector::fetchAvailableGroupingCodes('cod_casdh'),
+				'sector_cap' => Sector::fetchAvailableGroupingCodes('cod_cap'),
+			];
+		});
+
 		$query = Family::query()
 			->notAlerts()
 			->with(['residence', 'personInCharge', 'allFlagAttributions', 'allActiveFlags'])
@@ -36,7 +45,7 @@ class FamiliesController extends Controller {
 
 		$families = $query->paginate(24);
 
-		return view('families.families_index', compact('families', 'filters'));
+		return view('families.families_index', compact('families', 'filters', 'filterOptions'));
 
 	}
 

@@ -161,4 +161,21 @@ class Sector extends Model {
     public function primaryCRE() {
 	    return $this->hasOne(Equipment::class, 'id', 'cod_cre');
     }
+
+	// ---------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * Gets the list of distinct grouping codes available for a given group code key.
+	 * @param string $codeKey
+	 * @return array
+	 */
+	public static function fetchAvailableGroupingCodes(string $codeKey) : array {
+		return self::query()
+			->select($codeKey)
+			->distinct()
+			->get()
+			->pluck($codeKey)
+			->sort()
+			->toArray();
+    }
 }
