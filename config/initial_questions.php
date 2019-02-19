@@ -551,7 +551,7 @@ return [
 			'title' => 'Possui 5 anos de estudos completos?',
 			'conditions' => [
 				['CE53', 'age_gt', 14],
-				['CE62', 'is_true']
+				['CE62', 'is_one_of', [1,2,3,4]]
 			],
 			'field_options' => null,
 		],
@@ -731,7 +731,7 @@ return [
 			'field_type' => 'select_one',
 			'title' => 'Encaminhamento à CRE',
 			'conditions' => [
-				['CE62', 'is_false']
+				['CE62', 'is_one_of', [4, 5]]
 			],
 			'field_options' => [
 				1 => 'Confirmada existência de criança fora da escola e encaminhada pelo ACS',

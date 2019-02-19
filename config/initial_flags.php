@@ -122,7 +122,7 @@ return [
 				'or',
 				[
 					['CE62', 'is_filled'],
-					['CE62', 'is_false'],
+					['CE62', 'is_one_of', [4, 5]],
 					['CE53', 'is_filled'],
 					['CE53', 'age_lt', 18],
 				],
