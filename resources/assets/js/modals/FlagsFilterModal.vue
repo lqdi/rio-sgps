@@ -5,13 +5,13 @@
 		<form @submit.prevent="doFilter()" slot="body" class="justify-content-around">
 			<div class="form-group">
 				<div class="row">
-					<div class="col-md-4" v-for="(flag, i) in flags">
+					<div class="col-md-3" v-for="(flag, i) in flags">
 						<label class="checkbox">
 							<input type="checkbox" v-model="selected" :name="'flags[' + i + ']'" :value="flag.id" />
 							<i v-if="flag.entity_type === 'family'" class="fa fa-users"></i>
 							<i v-if="flag.entity_type === 'residence'" class="fa fa-home"></i>
 							<i v-if="flag.entity_type === 'person'" class="fa fa-male"></i>
-							<span>{{flag.name}}</span>
+							<small>{{flag.name}}</small>
 						</label>
 					</div>
 				</div>

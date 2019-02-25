@@ -189,9 +189,7 @@
 	background-color: rgba(black, 0.5);
 
     .modal-dialog {
-        @media (min-width: 800px) {
-            max-width: 800px;
-        }
+        max-width: 90% !important;
     }
 }
 
