@@ -290,9 +290,10 @@ class FlagAttribution extends Model {
 	/**
 	 * @param $groupCodes
 	 * @param array $with
-	 * @return FlagAttribution[]|\Illuminate\Database\Eloquent\Collection
+	 * @param int|null $perPage
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|FlagAttribution[]
 	 */
-	public static function fetchAllUnderGroups($groupCodes, array $with = []) {
+	public static function fetchAllUnderGroups($groupCodes, array $with = [], ?int $perPage = null) {
 
 		$flagsIDs = Flag::query()
 			->whereHas('groups', function ($sq) use ($groupCodes) {
@@ -301,28 +302,40 @@ class FlagAttribution extends Model {
 			->get(['id'])
 			->pluck('id');
 
-		return self::query()
+		$query = self::query()
 			->with($with)
 			->whereIn('flag_id', $flagsIDs)
 			->where('is_completed', false)
-			->where('is_cancelled', false)
-			->get();
+			->where('is_cancelled', false);
+
+
+		if($perPage === null) {
+			return $query->get();
+		}
+
+		return $query->paginate($perPage, ['*'], 'page_bygroup');
 
 	}
 
 	/**
 	 * @param $sectorIDs
 	 * @param array $with
-	 * @return FlagAttribution[]|\Illuminate\Database\Eloquent\Collection
+	 * @param int|null $perPage
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|FlagAttribution[]
 	 */
-	public static function fetchAllUnderSectors($sectorIDs, array $with = []) {
+	public static function fetchAllUnderSectors($sectorIDs, array $with = [], ?int $perPage = null) {
 
-		return self::query()
+		$query = self::query()
 			->with($with)
 			->whereIn('sector_id', $sectorIDs)
 			->where('is_completed', false)
-			->where('is_cancelled', false)
-			->get();
+			->where('is_cancelled', false);
+
+		if($perPage === null) {
+			return $query->get();
+		}
+
+		return $query->paginate($perPage, ['*'], 'page_bysector');
 
 	}
 

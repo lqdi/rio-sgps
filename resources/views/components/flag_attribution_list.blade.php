@@ -65,3 +65,5 @@
 	@endforeach
 	</tbody>
 </table>
+
+{!! $attributions->links() !!}

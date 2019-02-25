@@ -35,8 +35,8 @@ class DashboardController extends Controller {
 			})
 			->flatten();
 
-		$myGroupAttributions = FlagAttribution::fetchAllUnderGroups($groupCodes, ['entity', 'flag', 'residence']);
-		$myEquipmentAttributions = FlagAttribution::fetchAllUnderSectors($sectorIDs, ['entity', 'flag', 'residence']);
+		$myGroupAttributions = FlagAttribution::fetchAllUnderGroups($groupCodes, ['entity', 'flag', 'residence'], 32);
+		$myEquipmentAttributions = FlagAttribution::fetchAllUnderSectors($sectorIDs, ['entity', 'flag', 'residence'], 32);
 		$myAssignments = UserAssignment::fetchByUser($user, ['entity.personInCharge', 'entity.residence']);
 
 		return view('dashboard.operator_dashboard', compact('user',  'myGroupAttributions', 'myEquipmentAttributions', 'myAssignments'));
