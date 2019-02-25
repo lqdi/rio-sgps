@@ -26,6 +26,14 @@ class AlertsController extends Controller {
 
 		$filters = array_merge($service->defaultAlertFilters, request('filters', []));
 
+        $filterOptions = cache()->remember('family_filter_options', 60, function () {
+            return [
+                'sector_cre' => Sector::fetchAvailableGroupingCodes('cod_cre'),
+                'sector_casdh' => Sector::fetchAvailableGroupingCodes('cod_casdh'),
+                'sector_cap' => Sector::fetchAvailableGroupingCodes('cod_cap'),
+            ];
+        });
+
 		$query = Family::query()
 			->with([
 				'residence',
@@ -40,7 +48,7 @@ class AlertsController extends Controller {
 
 		$alerts = $query->paginate(24);
 
-		return view('alerts.alerts_index', compact('alerts', 'filters'));
+		return view('alerts.alerts_index', compact('alerts', 'filters', 'filterOptions'));
 	}
 
 	public function mark_as_delivered(Family $family) {

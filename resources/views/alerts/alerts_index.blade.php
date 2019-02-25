@@ -23,9 +23,27 @@
 								</div>
 								<div class="form-group input-group justify-content-between">
 									<input type="number" @change="doSearch()" class="form-control form-control-sm" value="{{$filters['sector_id'] ?? ''}}" name="filters[sector_id]" placeholder="Região censitária..." />
-									<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_cre'] ?? ''}}" name="filters[sector_cre]" placeholder="CRE..." />
-									<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_casdh'] ?? ''}}" name="filters[sector_casdh]" placeholder="CASDH..." />
-									<input type="number" @change="doSearch()" style="max-width: 80px" class="form-control form-control-sm" value="{{$filters['sector_cap'] ?? ''}}" name="filters[sector_cap]" placeholder="CAP..." />
+
+                                    <select @change="doSearch()" style="max-width: 60px; -webkit-appearance: none;" class="form-control form-control-sm" name="filters[sector_cre]">
+                                        <option selected value="">CRE...</option>
+                                        @foreach($filterOptions['sector_cre'] as $code)
+                                            <option @if($filters['sector_cre'] === $code) selected @endif value="{{$code}}">{{$code}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select @change="doSearch()" style="max-width: 80px; -webkit-appearance: none;" class="form-control form-control-sm" name="filters[sector_casdh]">
+                                        <option selected value="">CASDH...</option>
+                                        @foreach($filterOptions['sector_casdh'] as $code)
+                                            <option @if($filters['sector_casdh'] === $code) selected @endif value="{{$code}}">{{$code}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <select @change="doSearch()" style="max-width: 60px; -webkit-appearance: none;" class="form-control form-control-sm" name="filters[sector_cap]">
+                                        <option selected value="">CAP...</option>
+                                        @foreach($filterOptions['sector_cap'] as $code)
+                                            <option @if($filters['sector_cap'] === $code) selected @endif value="{{$code}}">{{$code}}</option>
+                                        @endforeach
+                                    </select>
 								</div>
 							</form>
 							<form method="GET" action="{{route('alerts.index')}}" class="form-inline justify-content-between">
