@@ -29,7 +29,7 @@ class RedesignAnswersTable extends Migration
 
 		    $table->string('value_string')->nullable();
 		    $table->integer('value_integer')->nullable();
-		    $table->json('value_json')->nullable();
+		    $table->longText('value_json')->nullable();
 
 		    $table->boolean('is_filled')->index()->default(false);
 

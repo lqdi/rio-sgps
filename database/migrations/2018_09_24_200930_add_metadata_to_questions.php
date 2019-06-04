@@ -16,9 +16,9 @@ class AddMetadataToQuestions extends Migration
         Schema::table('questions', function (Blueprint $table) {
         	$table->renameColumn('type', 'field_type');
         	$table->renameColumn('entity', 'entity_type');
-        	$table->json('field_settings')->nullable()->after('type');
-        	$table->json('field_options')->nullable()->after('field_settings');
-        	$table->json('conditions')->nullable()->after('triggers');
+        	$table->longText('field_settings')->nullable()->after('type');
+        	$table->longText('field_options')->nullable()->after('field_settings');
+        	$table->longText('conditions')->nullable()->after('triggers');
         });
     }
 

@@ -14,7 +14,7 @@ class AddBehaviorMetadataToFlagAttributions extends Migration
     public function up()
     {
         Schema::table('flag_attributions', function (Blueprint $table) {
-        	$table->json('behavior_metadata')->nullable();
+        	$table->longText('behavior_metadata')->nullable();
         });
     }
 

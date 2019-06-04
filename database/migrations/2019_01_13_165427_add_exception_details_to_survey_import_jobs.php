@@ -15,7 +15,7 @@ class AddExceptionDetailsToSurveyImportJobs extends Migration
     {
         Schema::table("survey_import_jobs", function (Blueprint $table) {
         	$table->string('exception_message')->nullable()->after('stage');
-        	$table->json('exception_object')->nullable()->after('exception_message');
+        	$table->longText('exception_object')->nullable()->after('exception_message');
         });
     }
 

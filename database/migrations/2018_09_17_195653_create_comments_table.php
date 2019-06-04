@@ -22,7 +22,7 @@ class CreateCommentsTable extends Migration
 
             $table->uuid('user_id')->index();
             $table->longText('message')->nullable();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

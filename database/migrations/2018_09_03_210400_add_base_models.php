@@ -88,7 +88,7 @@ class AddBaseModels extends Migration
         	$table->string('name')->nullable();
         	$table->mediumText('description')->nullable();
 
-        	$table->json('triggers')->nullable();
+        	$table->longText('triggers')->nullable();
 
         	$table->timestamps();
         	$table->softDeletes();
@@ -109,7 +109,7 @@ class AddBaseModels extends Migration
 
 	        $table->string('value_string')->nullable();
 	        $table->integer('value_integer')->nullable();
-	        $table->json('value_json')->nullable();
+	        $table->longText('value_json')->nullable();
 
 	        $table->boolean('is_filled')->index()->default(false);
 
@@ -150,7 +150,7 @@ class AddBaseModels extends Migration
         	$table->string('name')->nullable();
         	$table->mediumText('description')->nullable();
 
-        	$table->json('triggers')->nullable();
+        	$table->longText('triggers')->nullable();
 
         	$table->boolean('is_visible')->index()->default(true);
 

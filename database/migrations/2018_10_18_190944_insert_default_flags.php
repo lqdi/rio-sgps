@@ -18,7 +18,7 @@ class InsertDefaultFlags extends Migration
 
     	Schema::table('flags', function (Blueprint $table) {
     		$table->string('behavior')->default('\SGPS\Behavior\DefaultFlag');
-    		$table->json('conditions')->nullable();
+    		$table->longText('conditions')->nullable();
     		$table->dropColumn('default_assigned_group_id');
 	    });
 
