@@ -5,6 +5,7 @@ namespace SGPS\Providers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Schema;
 use SGPS\Entity\Family;
 use SGPS\Entity\Flag;
 use SGPS\Entity\Group;
@@ -23,7 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-    	Carbon::setLocale('pt_BR');
+	    Schema::defaultStringLength(191);
+
+	    Carbon::setLocale('pt_BR');
 
     	Carbon::setToStringFormat(DateUtils::BR_DATE_TIME);
 
