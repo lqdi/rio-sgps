@@ -39,31 +39,49 @@
 					<label for="fld-field_type">Tipo de resposta</label>
 					<select required id="fld-field_type" name="field_type" class="form-control">
 						@foreach(\SGPS\Entity\Question::TYPES as $type)
-							<option @if($type === $question->field_type) selected @endif value="{{$typeID}}">{{trans('fields.type.' . $type)}}</option>
+							<option @if($type === $question->field_type) selected @endif value="{{$type}}">{{trans('fields.type.' . $type)}}</option>
 						@endforeach
 					</select>
 					<small>Nota: alterar o tipo de resposta não irá alterar o valor das respostas existentes.</small>
 				</div>
 
 				<div class="col-md-12">
-					<label for="fld-field_type">Configurações do campo</label>
-					<textarea class="form-control text-monospace" name="field_settings">{{json_encode($question->field_settings)}}</textarea>
+					<label for="fld-field_settings">Configurações do campo</label>
+					<textarea id="fld-field_settings" class="form-control text-monospace" name="field_settings">{{json_encode($question->field_settings)}}</textarea>
 				</div>
 
 				<div class="col-md-12">
-					<label for="fld-field_type">Opções do campo</label>
-					<textarea class="form-control text-monospace" name="field_options">{{json_encode($question->field_options)}}</textarea>
+					<label for="fld-field_options">Opções do campo</label>
+					<textarea id="fld-field_options" class="form-control text-monospace" name="field_options">{{json_encode($question->field_options)}}</textarea>
 				</div>
 
 				<div class="col-md-12">
-					<label for="fld-field_type">Condições da pergunta</label>
-					<textarea class="form-control text-monospace" name="conditions">{{json_encode($question->conditions)}}</textarea>
+					<label for="fld-conditions">Condições da pergunta</label>
+					<textarea id="fld-conditions" class="form-control text-monospace" name="conditions">{{json_encode($question->conditions)}}</textarea>
 				</div>
 
 				<div class="col-md-12">
-					<label for="fld-field_type">Gatilhos da pergunta</label>
-					<textarea class="form-control text-monospace" name="triggers">{{json_encode($question->triggers)}}</textarea>
+					<label for="fld-triggers">Gatilhos da pergunta</label>
+					<textarea id="fld-triggers" class="form-control text-monospace" name="triggers">{{json_encode($question->triggers)}}</textarea>
 				</div>
+
+				@if($question->id)
+					<div class="col-md-12">
+						<label for="fld-field_type">Categorias da pergunta</label>
+
+						<div class="row">
+							@foreach($categories as $category)
+								<div class="col-md-4">
+									<label>
+										<input type="checkbox" name="categories[]" value="{{$category->id}}" @if($question->categories->contains('id', $category->id)) checked @endif /> {{$category->name}}
+									</label>
+								</div>
+							@endforeach
+
+						</div>
+
+					</div>
+				@endif
 
 			</div>
 

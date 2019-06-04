@@ -15,6 +15,7 @@ namespace SGPS\Http\Controllers\Admin;
 
 
 use SGPS\Entity\Question;
+use SGPS\Entity\QuestionCategory;
 use SGPS\Http\Controllers\Controller;
 
 class QuestionsController extends Controller {
@@ -30,11 +31,13 @@ class QuestionsController extends Controller {
 
 	public function create() {
 		$question = new Question();
-		return view('admin.questions_edit', compact('question'));
+		$categories = QuestionCategory::all();
+		return view('admin.questions_edit', compact('question', 'categories'));
 	}
 
 	public function show(Question $question) {
-		return view('admin.questions_edit', compact('question'));
+		$categories = QuestionCategory::all();
+		return view('admin.questions_edit', compact('question', 'categories'));
 	}
 
 	public function save(?Question $question = null) {
@@ -46,6 +49,8 @@ class QuestionsController extends Controller {
 		$question->conditions = json_decode(request('conditions'));
 		$question->triggers = json_decode(request('triggers'));
 		$question->save();
+
+		$question->categories()->sync(request('categories', []));
 
 		return redirect()->route('admin.questions.show', [$question->id])
 			->with('success', 'record_updated');
