@@ -34,7 +34,7 @@ class SurveyPersonCSV implements WithHeadingRow, ToCollection, WithCustomCsvSett
 	public function collection(Collection $array) {
 
 		foreach($array as $member) { /* @var $member \Illuminate\Support\Collection */
-			$member['id'] = UuidUtils::fromSurveyGUID($member['globalid']);
+			$member['id'] = UuidUtils::fromSurveyGUID($member['objectid']);
 			$member['import_id'] = $this->importJob->id;
 			$member['family_id'] = UuidUtils::fromSurveyGUID($member['parentrowid']);
 
