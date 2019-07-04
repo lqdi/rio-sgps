@@ -41,6 +41,11 @@ class SurveyPersonCSV implements WithHeadingRow, ToCollection, WithCustomCsvSett
 			$this->convertDates($member);
 			$this->convertGender($member);
 
+			// Remove columns with no header
+			$member = $member->filter(function ($value, $key) {
+				return strlen(strval($key)) > 0;
+			});
+
 			ImportedMember::create($member->toArray());
 
 			logger()->debug("[survey_importer.member] Found: #{$member['id']} -> {$member['nome']}");

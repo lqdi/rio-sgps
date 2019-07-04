@@ -61,6 +61,11 @@ class SurveyFamilyCSV implements WithHeadingRow, ToCollection, WithCustomCsvSett
 			$this->convertDates($family);
 			$this->convertDecimals($family);
 
+			// Remove columns with no header
+			$family = $family->filter(function ($value, $key) {
+				return strlen(strval($key)) > 0;
+			});
+
 			ImportedFamily::create($family->toArray());
 
 			logger()->debug("[survey_importer.family] Found: #{$family['id']} -> {$family['logradouro']}");
