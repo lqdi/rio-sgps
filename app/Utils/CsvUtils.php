@@ -29,7 +29,11 @@ class CsvUtils {
 		if(!$in) return $in;
 		if(strlen(trim($in)) !== 19) throw new \InvalidArgumentException("Invalid CSV date: {$in}");
 
-		return Carbon::createFromFormat('d/m/Y H:i:s', $in)->toDateTimeString();
+		try {
+			return Carbon::createFromFormat('d/m/Y H:i:s', $in)->toDateTimeString();
+		} catch (\Throwable $ex) {
+			return null;
+		}
 	}
 
 }
