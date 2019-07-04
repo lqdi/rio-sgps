@@ -24,13 +24,18 @@ class CsvUtils {
 	}
 
 	public static function convertDateString(?string $in) : ?string {
-		// from: 16/10/2018 03:00:00
 
 		if(!$in) return $in;
 		if(strlen(trim($in)) !== 19) throw new \InvalidArgumentException("Invalid CSV date: {$in}");
 
 		try {
-			return Carbon::createFromFormat('d/m/Y H:i:s', $in)->toDateTimeString();
+
+			if(strpos($in, '-') !== false) { // from: 2018-10-16 03:00:00
+				return Carbon::createFromFormat('Y-m-d H:i:s', trim($in))->toDateTimeString();
+			} else { // from: 16/10/2018 03:00:00
+				return Carbon::createFromFormat('d/m/Y H:i:s', trim($in))->toDateTimeString();
+			}
+
 		} catch (\Throwable $ex) {
 			return null;
 		}
