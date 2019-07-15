@@ -17,6 +17,9 @@
 		</ul>
 		<div class="panel">
 			<div class="panel-content bg-light p-3">
+
+				@include('components.messages')
+
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="login-with-cerberus" role="tabpanel">
 

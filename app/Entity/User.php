@@ -329,6 +329,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		// External users cannot login with password
 		$user->setPassword(str_random(64));
 
+		$user->save();
+
 		return $user;
 	}
 }
